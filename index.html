@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>برنامه کلاسی دبیرستان شهید حسن باقری</title>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<header>
+  <img src="/assets/logo.jpg" alt="لوگوی دبیرستان شهید حسن باقری" class="logo">
+  <h1>برنامه کلاسی دبیرستان شهید حسن باقری</h1>
+  <p>نام دبیر را جستجو کنید تا برنامه هفتگی و کلاس بعدی او را ببینید</p>
+</header>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --glass-bg: rgba(255,255,255,0.15);
+    --glass-border: rgba(255,255,255,0.25);
+    --gold: #d4af37;
+    --gold-light: #f5d76e;
+    --green: #34d399;
+    --text-soft: rgba(255,255,255,0.75);
+  }
+  body {
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 45%, #24243e 100%);
+    min-height: 100vh; padding: 30px 20px 60px; color: #fff;
+    position: relative; overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before, body::after {
+    content: ""; position: fixed; border-radius: 50%;
+    filter: blur(90px); opacity: 0.55; z-index: 0; pointer-events: none;
+  }
+  body::before { width: 480px; height: 480px;
+    background: radial-gradient(circle, #7c3aed, transparent 70%);
+    top: -140px; right: -120px;
+    animation: float1 14s ease-in-out infinite; }
+  body::after { width: 520px; height: 520px;
+    background: radial-gradient(circle, #2563eb, transparent 70%);
+    bottom: -180px; left: -140px;
+    animation: float2 16s ease-in-out infinite; }
+  @keyframes float1 {
+    0%,100%{transform:translate(0,0) scale(1);}
+    50%{transform:translate(-40px,50px) scale(1.1);}
+  }
+  @keyframes float2 {
+    0%,100%{transform:translate(0,0) scale(1);}
+    50%{transform:translate(50px,-40px) scale(1.15);}
+  }
+  .bg-blob {
+    position: fixed; width: 400px; height: 400px; border-radius: 50%;
+    background: radial-gradient(circle, #db2777, transparent 70%);
+    filter: blur(100px); opacity: 0.4; top: 40%; left: 45%;
+    z-index: 0; pointer-events: none;
+    animation: float3 18s ease-in-out infinite;
+  }
+  @keyframes float3 {
+    0%,100%{transform:translate(-50%,-50%) scale(1);}
+    50%{transform:translate(-45%,-55%) scale(1.2);}
+  }
+
+  .container { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+
+  header { text-align: center; margin-bottom: 26px; padding: 16px; }
+  header h1 {
+    font-size: 1.9rem; font-weight: 800; margin-bottom: 10px; line-height: 1.5;
+    background: linear-gradient(135deg, #fff 0%, #f5d76e 45%, #d4af37 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; letter-spacing: -0.5px;
+  }
+  header p { color: var(--text-soft); font-size: 0.95rem; }
+/* ==== لوگو ==== */
+.logo {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  filter: drop-shadow(0 8px 24px rgba(212, 175, 55, 0.5))
+          drop-shadow(0 3px 10px rgba(0, 0, 0, 0.3));
+  animation: logoFloat 4.5s ease-in-out infinite;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 6px;
+  border: 1.5px solid rgba(212, 175, 55, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-6px) rotate(-1deg); }
+}
+
+/* واکنش‌گرایی برای موبایل */
+@media (max-width: 600px) {
+  .logo { width: 85px; height: 85px; }
+}
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+
+  .search-box { padding: 22px; margin-bottom: 20px; }
+  .search-box label { display: block; margin-bottom: 12px; font-weight: 600; }
+  .input-group { display: flex; gap: 10px; flex-wrap: wrap; }
+  input[type="text"] {
+    flex: 1; min-width: 200px; padding: 15px 20px; font-size: 1rem;
+    font-family: inherit; color: #fff;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 14px; transition: all 0.25s ease;
+  }
+  input[type="text"]::placeholder { color: rgba(255,255,255,0.5); }
+  input[type="text"]:focus {
+    outline: none; background: rgba(255,255,255,0.15);
+    border-color: rgba(212,175,55,0.7);
+    box-shadow: 0 0 0 4px rgba(212,175,55,0.15);
+  }
+  button {
+    padding: 15px 30px; font-size: 1rem; font-family: inherit; font-weight: 700;
+    background: linear-gradient(135deg, rgba(212,175,55,0.95), rgba(245,215,110,0.9));
+    border: 1px solid rgba(255,255,255,0.25); border-radius: 14px;
+    cursor: pointer; transition: all 0.25s ease; color: #2a1f00;
+    box-shadow: 0 4px 16px rgba(212,175,55,0.4); white-space: nowrap;
+  }
+  button:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,175,55,0.55); }
+
+  .next-class-card { padding: 24px; margin-bottom: 20px; display: none; animation: slideDown 0.5s ease; }
+  .next-class-card.visible { display: block; }
+  @keyframes slideDown {
+    from{opacity:0;transform:translateY(-20px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  .next-class-card.teaching {
+    border-color: rgba(52,211,153,0.5);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15),
+                0 0 40px rgba(52,211,153,0.25);
+  }
+  .next-class-card.upcoming {
+    border-color: rgba(212,175,55,0.5);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15),
+                0 0 40px rgba(212,175,55,0.25);
+  }
+
+  .next-class-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px; color: var(--text-soft);
+    font-size: 0.85rem; font-weight: 600;
+  }
+  .pulse-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--green); box-shadow: 0 0 0 0 rgba(52,211,153,0.7);
+    animation: pulse 2s infinite;
+  }
+  .pulse-dot.gold { background: var(--gold); box-shadow: 0 0 0 0 rgba(212,175,55,0.7); }
+  .pulse-dot.gray { background: #94a3b8; box-shadow: 0 0 0 0 rgba(148,163,184,0.5); }
+  @keyframes pulse {
+    0%{box-shadow:0 0 0 0 rgba(52,211,153,0.7);}
+    70%{box-shadow:0 0 0 12px rgba(52,211,153,0);}
+    100%{box-shadow:0 0 0 0 rgba(52,211,153,0);}
+  }
+
+  .countdown {
+    font-size: 2.4rem; font-weight: 800; line-height: 1.2; margin-bottom: 8px;
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(135deg, #fff, #f5d76e);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .next-class-card.teaching .countdown {
+    background: linear-gradient(135deg, #fff, #34d399);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .countdown-sub { font-size: 1rem; color: var(--text-soft); margin-bottom: 16px; }
+  .next-class-info {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.12);
+  }
+  .info-chip {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 8px 14px; border-radius: 10px; font-size: 0.85rem;
+  }
+  .info-chip strong { color: var(--gold-light); font-weight: 700; }
+
+  .result { padding: 26px; min-height: 120px; animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn {
+    from{opacity:0;transform:translateY(10px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+
+  .teacher-header {
+    display: flex; align-items: center; gap: 16px;
+    padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.15);
+    margin-bottom: 22px;
+  }
+  .avatar {
+    width: 58px; height: 58px; border-radius: 50%;
+    background: linear-gradient(135deg, rgba(212,175,55,0.9), rgba(245,215,110,0.9));
+    border: 1.5px solid rgba(255,255,255,0.35);
+    display: flex; align-items: center; justify-content: center;
+    color: #2a1f00; font-weight: 800; font-size: 1.4rem; flex-shrink: 0;
+  }
+  .teacher-header h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 5px; }
+  .teacher-header small { color: var(--text-soft); font-size: 0.83rem; }
+
+  /* ==== کارت انتخاب دبیر ==== */
+  .selection-header {
+    text-align: center;
+    padding: 10px 0 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    margin-bottom: 22px;
+  }
+  .selection-icon {
+    font-size: 2.8rem;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .selection-header h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #fff;
+  }
+  .selection-header p {
+    color: var(--text-soft);
+    font-size: 0.88rem;
+  }
+  .selection-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .selection-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .selection-card::before {
+    content: "";
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, #d4af37, #f5d76e);
+    border-radius: 4px;
+    transition: width 0.25s ease;
+  }
+  .selection-card:hover {
+    background: rgba(212,175,55,0.15);
+    border-color: rgba(212,175,55,0.5);
+    transform: translateX(-6px);
+    box-shadow: 0 8px 24px rgba(212,175,55,0.2);
+  }
+  .selection-card:hover::before { width: 6px; }
+  .selection-avatar {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(212,175,55,0.9), rgba(245,215,110,0.9));
+    border: 1.5px solid rgba(255,255,255,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2a1f00;
+    font-weight: 800;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  .selection-info { flex: 1; }
+  .selection-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .selection-subject {
+    font-size: 0.88rem;
+    color: var(--gold-light);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .selection-count {
+    font-size: 0.78rem;
+    color: var(--text-soft);
+  }
+  .selection-arrow {
+    font-size: 1.5rem;
+    color: var(--gold-light);
+    opacity: 0.5;
+    transition: all 0.25s ease;
+  }
+  .selection-card:hover .selection-arrow {
+    opacity: 1;
+    transform: translateX(-6px);
+  }
+
+  .class-group { margin-bottom: 22px; }
+  .class-group-title {
+    font-size: 0.95rem; font-weight: 700; color: var(--gold-light);
+    padding: 8px 14px; background: rgba(212,175,55,0.12);
+    border-right: 3px solid var(--gold); border-radius: 8px;
+    margin-bottom: 12px; display: inline-block;
+  }
+  .class-list { display: flex; flex-direction: column; gap: 10px; }
+  .class-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 16px; background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 14px; transition: all 0.25s ease;
+    position: relative; overflow: hidden;
+  }
+  .class-item::before {
+    content: ""; position: absolute; right: 0; top: 0; bottom: 0;
+    width: 4px; background: linear-gradient(180deg, #d4af37, #f5d76e);
+    border-radius: 4px;
+  }
+  .class-item.current {
+    background: rgba(52,211,153,0.12);
+    border-color: rgba(52,211,153,0.4);
+  }
+  .class-item.current::before { background: linear-gradient(180deg, #34d399, #10b981); }
+  .class-item:hover { background: rgba(255,255,255,0.13); transform: translateX(-5px); }
+
+  .period-badge {
+    background: linear-gradient(135deg, rgba(212,175,55,0.95), rgba(245,215,110,0.95));
+    color: #2a1f00; padding: 9px 14px; border-radius: 10px;
+    font-weight: 700; font-size: 0.85rem; white-space: nowrap;
+    min-width: 88px; text-align: center; flex-shrink: 0;
+  }
+  .class-item.current .period-badge {
+    background: linear-gradient(135deg, #34d399, #10b981); color: #042f2e;
+  }
+
+  .class-info { flex: 1; }
+  .class-info .name { font-weight: 600; margin-bottom: 5px; font-size: 0.95rem; }
+  .class-info .details { color: var(--text-soft); font-size: 0.8rem; }
+
+  .empty-state, .error-state {
+    text-align: center; padding: 45px 20px; color: var(--text-soft);
+  }
+  .empty-state .icon, .error-state .icon {
+    font-size: 3rem; margin-bottom: 14px; display: block;
+  }
+  .error-state { color: #fca5a5; }
+
+  .suggestions {
+    margin-top: 16px; display: flex; flex-wrap: wrap;
+    gap: 8px; justify-content: center;
+  }
+  .suggestion-chip {
+    padding: 7px 14px; background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 20px; font-size: 0.82rem;
+    color: #fff; cursor: pointer; transition: all 0.2s;
+  }
+  .suggestion-chip:hover {
+    background: rgba(212,175,55,0.2);
+    border-color: rgba(212,175,55,0.5);
+  }
+
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+  ::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.5); border-radius: 10px; }
+
+  @media (max-width: 600px) {
+    body { padding: 20px 14px 40px; }
+    header h1 { font-size: 1.25rem; }
+    .search-box, .result, .next-class-card { padding: 18px; }
+    .class-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .period-badge { width: 100%; }
+    .countdown { font-size: 1.8rem; }
+    .avatar { width: 50px; height: 50px; font-size: 1.2rem; }
+    .selection-card { padding: 14px 16px; }
+    .selection-avatar { width: 46px; height: 46px; font-size: 1.1rem; }
+    .selection-name { font-size: 0.95rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-blob"></div>
+
+<div class="container">
+  <header>
+    <h1>برنامه کلاسی دبیرستان شهید حسن باقری</h1>
+    <p>نام دبیر را جستجو کنید تا برنامه هفتگی و کلاس بعدی او را ببینید</p>
+  </header>
+
+  <div class="search-box glass">
+    <label for="si">جستجوی نام دبیر:</label>
+    <div class="input-group">
+      <input type="text" id="si" placeholder="مثلاً: کریمی، قریب، صالحی..." autocomplete="off">
+      <button onclick="doSearch()">🔍 جستجو</button>
+    </div>
+  </div>
+
+  <div class="next-class-card glass" id="ncc"></div>
+
+  <div class="result glass" id="res">
+    <div class="empty-state">
+      <span class="icon">👨‍🏫</span>
+      <p>برای مشاهده برنامه، نام دبیر را وارد کنید</p>
+      <div class="suggestions" id="sug"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ==========================================================
+   ساعت زنگ‌ها
+   ========================================================== */
+var PERIODS = {
+  1: { start: "08:00", end: "08:45" },
+  2: { start: "08:50", end: "09:35" },
+  3: { start: "10:00", end: "10:45" },
+  4: { start: "10:50", end: "11:35" }
+};
+
+var dayMap = {
+  "یکشنبه": 0, "دوشنبه": 1, "سه‌شنبه": 2,
+  "چهارشنبه": 3, "پنجشنبه": 4, "جمعه": 5, "شنبه": 6
+};
+
+var dayOrder = ["شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه"];
+
+/* ==========================================================
+   داده‌های خام - [نام کلاس, [[روز, [زنگ1, زنگ2, زنگ3, زنگ4]], ...]]
+   ========================================================== */
+var rawData = [
+  ["ریاضی ۱۲۱", [
+    ["شنبه",     ["حسابان - استاد صالحی","فیزیک - استاد قریب","هویت اجتماعی - استاد حسینخانی","ورزش - استاد قریب"]],
+    ["یکشنبه",   ["شیمی - استاد جعفری","هندسه - استاد رزاقی","زبان - استاد کریمی","مدیریت خانواده - استاد رزاقی"]],
+    ["دوشنبه",   ["دین و زندگی - استاد جلالیان","زبان - استاد کریمی","فارسی - استاد داداش پور","زنگ آزمون"]],
+    ["سه‌شنبه",  ["حسابان - استاد صالحی","نگارش - استاد داداش پور","سلامت و بهداشت - استاد صالحی","فیزیک - استاد قریب"]],
+    ["چهارشنبه", ["شیمی - استاد جعفری","عربی - استاد سهیلی","شیمی - استاد جعفری","گسسته - استاد حسینخانی"]]
+  ]],
+  ["ریاضی ۱۲۲", [
+    ["شنبه",     ["فیزیک - استاد قریب","حسابان - استاد صالحی","ورزش - استاد قریب","گسسته - استاد حسینخانی"]],
+    ["یکشنبه",   ["هندسه - استاد رزاقی","شیمی - استاد جعفری","مدیریت خانواده - استاد رزاقی","شیمی - استاد جعفری"]],
+    ["دوشنبه",   ["زبان - استاد کریمی","دین و زندگی - استاد جلالیان","زبان - استاد کریمی","زنگ آزمون"]],
+    ["سه‌شنبه",  ["فارسی - استاد داداش پور","حسابان - استاد صالحی","فیزیک - استاد قریب","سلامت و بهداشت - استاد صالحی"]],
+    ["چهارشنبه", ["نگارش - استاد داداش پور","هویت اجتماعی - استاد حسینخانی","عربی - استاد سهیلی","شیمی - استاد جعفری"]]
+  ]],
+  ["ریاضی ۱۲۳", [
+    ["شنبه",     ["زبان - استاد کریمی","گسسته - استاد حسینخانی","عربی - استاد سهیلی","فارسی - استاد برادران"]],
+    ["یکشنبه",   ["شیمی - استاد سمیعی","فیزیک - استاد رومیانی","زیست - استاد تقوی","فیزیک - استاد رومیانی"]],
+    ["دوشنبه",   ["شیمی - استاد سمیعی","سلامت و بهداشت - معاون دهم","ورزش - استاد عبداللهی","زنگ آزمون"]],
+    ["سه‌شنبه",  ["نگارش - استاد برادران","حسابان - استاد فضلی","دین و زندگی - استاد جلالیان","هندسه - استاد ترابی"]],
+    ["چهارشنبه", ["زبان - استاد کریمی","تاریخ - استاد شریفی","حسابان - استاد فضلی","هویت - معاون"]]
+  ]],
+  ["ریاضی ۱۰۱", [
+    ["شنبه",     ["ورزش - استاد عبداللهی","ریاضی - استاد روشنگر","جغرافیا - استاد پروندی","مهارت"]],
+    ["یکشنبه",   ["فیزیک - استاد رومیانی","فارسی - استاد ساجدی","فیزیک - استاد رومیانی","هندسه - استاد ترابی"]],
+    ["دوشنبه",   ["عربی - استاد برزگر","ریاضی - استاد روشنگر","دفاعی - معاون دهم","زنگ آزمون"]],
+    ["سه‌شنبه",  ["نگارش - استاد ساجدی","ریاضی - استاد روشنگر","دین و زندگی - استاد سهیلی","شیمی - استاد کریمی"]],
+    ["چهارشنبه", ["تفکر - استاد ترابی","شیمی - استاد کریمی","انگلیسی - استاد قدسی","آزمایشگاه - استاد کریمی"]]
+  ]],
+  ["ریاضی ۱۰۲", [
+    ["شنبه",     ["ریاضی - استاد روشنگر","هندسه - استاد ترابی","فارسی - استاد برادران","مهارت"]],
+    ["یکشنبه",   ["شیمی - استاد کریمی","ورزش - استاد عبداللهی","فیزیک - استاد یوسفی","شیمی - استاد کریمی"]],
+    ["دوشنبه",   ["انگلیسی - استاد قدسی","فیزیک - استاد یوسفی","دین و زندگی - معاون یازدهم","زنگ آزمون"]],
+    ["سه‌شنبه",  ["ریاضی - استاد روشنگر","نگارش - استاد برادران","آزمایشگاه - استاد کریمی","عربی - استاد سهیلی"]],
+    ["چهارشنبه", ["ریاضی - استاد روشنگر","جغرافیا - استاد پروندی","دفاعی - معاون یازدهم","تفکر - استاد ترابی"]]
+  ]],
+  ["ریاضی ۱۰۳", [
+    ["شنبه",     ["فارسی - استاد برادران","عربی - استاد آزاد","تفکر - استاد ترابی","مهارت"]],
+    ["یکشنبه",   ["ورزش - استاد عبداللهی","شیمی - استاد یوسفی","نگارش - استاد برادران","شیمی - استاد یوسفی"]],
+    ["دوشنبه",   ["فیزیک - استاد آتش بزرگ","دفاعی - معاون دهم","فیزیک - استاد آتش بزرگ","زنگ آزمون"]],
+    ["سه‌شنبه",  ["انگلیسی - استاد قدسی","ریاضی - استاد صادقی","جغرافیا - استاد پروندی","آزمایشگاه - استاد یوسفی"]],
+    ["چهارشنبه", ["ریاضی - استاد صادقی","ریاضی - استاد صادقی","هندسه - استاد ترابی","دین و زندگی - استاد سهیلی"]]
+  ]],
+  ["ریاضی ۱۰۴", [
+    ["شنبه",     ["هندسه - استاد ترابی","ورزش - استاد عبداللهی","ریاضی - استاد صادقی","مهارت"]],
+    ["یکشنبه",   ["عربی - استاد آزاد","فیزیک - استاد درخشانی","فارسی - استاد ساجدی","نگارش - استاد ساجدی"]],
+    ["دوشنبه",   ["شیمی - استاد یوسفی","ریاضی - استاد صادقی","ریاضی - استاد صادقی","زنگ آزمون"]],
+    ["سه‌شنبه",  ["شیمی - استاد یوسفی","آزمایشگاه - استاد یوسفی","دین و زندگی - استاد ساداتی","فیزیک - استاد درخشانی"]],
+    ["چهارشنبه", ["جغرافیا - استاد پروندی","تفکر - استاد ترابی","دفاعی - معاون دهم","انگلیسی - استاد قدسی"]]
+  ]],
+  ["ریاضی ۱۰۵", [
+    ["شنبه",     ["جغرافیا - استاد پروندی","ریاضی - استاد صادقی","فارسی - استاد ساجدی","مهارت"]],
+    ["یکشنبه",   ["شیمی - استاد یوسفی","هندسه - استاد صمیمی","فیزیک - استاد درخشانی","تفکر - استاد صمیمی"]],
+    ["دوشنبه",   ["ریاضی - استاد صادقی","مشاوره - استاد رامشینی","شیمی - استاد یوسفی","زنگ آزمون"]],
+    ["سه‌شنبه",  ["فیزیک - استاد درخشانی","انگلیسی - استاد قدسی","شیمی - استاد یوسفی","دین و زندگی - استاد ساداتی"]],
+    ["چهارشنبه", ["نگارش - استاد ساجدی","دفاعی - معاون دهم","ریاضی - استاد صادقی","ورزش - استاد عبداللهی"]]
+  ]],
+  ["انسانی ۱۰۸", [
+    ["شنبه",     ["ریاضی - استاد صادقی","فارسی - استاد برادران","جامعه شناسی - استاد طاووسی","مهارت"]],
+    ["یکشنبه",   ["علوم و فنون - استاد ساجدی","انگلیسی - استاد آزاد","دفاعی - استاد آزاد","منطق - استاد عزیزی"]],
+    ["دوشنبه",   ["علوم و فنون - استاد ساجدی","دین و زندگی - استاد برزگر","اقتصاد - استاد پروندی","زنگ آزمون"]],
+    ["سه‌شنبه",  ["ریاضی - استاد صادقی","جغرافیا - استاد پروندی","تفکر - استاد صادقی","نگارش - استاد برادران"]],
+    ["چهارشنبه", ["عربی - استاد آزاد","دینی - استاد برزگر","ورزش - استاد عبداللهی","تاریخ - استاد شریفی"]]
+  ]],
+  ["انسانی ۱۲۵", [
+    ["شنبه",     ["عربی - استاد سهیلی","زبان - استاد کریمی","فارسی - استاد فروغی","مشاوره - استاد رامشینی"]],
+    ["یکشنبه",   ["دین و زندگی - استاد ساداتی","فلسفه - استاد عزیزی","دین و زندگی - استاد ساداتی","تاریخ - استاد شریفی"]],
+    ["دوشنبه",   ["تحلیل فرهنگی - معاون","سلامت و بهداشت - استاد تقوی","ورزش - استاد عبداللهی","زنگ آزمون"]],
+    ["سه‌شنبه",  ["جامعه شناسی - استاد جلالیان","فارسی - استاد فروغی","ریاضی - استاد فضلی","جغرافیا - استاد رضائی مهر"]],
+    ["چهارشنبه", ["جامعه - استاد جلالیان","زبان - استاد کریمی","علوم و فنون - استاد داداش پور","ریاضی - استاد فضلی"]]
+  ]],
+  ["انسانی ۱۲۶", [
+    ["شنبه",     ["تاریخ - استاد شریفی","جامعه شناسی - استاد جلالیان","زبان - استاد کریمی","عربی - استاد سهیلی"]],
+    ["یکشنبه",   ["نگارش - استاد برادران","دین و زندگی - استاد ساداتی","فلسفه - استاد عزیزی","سلامت و بهداشت - استاد تقوی"]],
+    ["دوشنبه",   ["ریاضی - استاد صمیمی","ورزش - استاد عبداللهی","ریاضی - استاد صمیمی","زنگ آزمون"]],
+    ["سه‌شنبه",  ["فارسی - استاد فروغی","دین و زندگی - استاد ساداتی","جغرافیا - استاد رضائی مهر","تحلیل فرهنگی - استاد داداش پور"]],
+    ["چهارشنبه", ["جامعه - استاد جلالیان","فارسی - استاد فروغی","زبان - استاد کریمی","مشاوره - استاد رامشینی"]]
+  ]],
+  ["تجربی ۱۰۶", [
+    ["شنبه",     ["فارسی - استاد ساجدی","جغرافیا - استاد پروندی","عربی - استاد آزاد","ورزش - استاد عبداللهی"]],
+    ["یکشنبه",   ["فیزیک - استاد درخشانی","شیمی - استاد کریمی","زیست - استاد والی کیا","دین و زندگی - استاد ساداتی"]],
+    ["دوشنبه",   ["مهارت","نگارش - استاد ساجدی","ریاضی - استاد روشنگر","زنگ آزمون"]],
+    ["سه‌شنبه",  ["شیمی - استاد کریمی","فیزیک - استاد درخشانی","تفکر - استاد روشنگر","انگلیسی - استاد قدسی"]],
+    ["چهارشنبه", ["دفاعی - استاد والی کیا","ریاضی - استاد روشنگر","آزمایشگاه - استاد کریمی","زیست - استاد والی کیا"]]
+  ]],
+  ["تجربی ۱۰۷", [
+    ["شنبه",     ["عربی - استاد آزاد","فارسی - استاد ساجدی","ریاضی - استاد روشنگر","مهارت"]],
+    ["یکشنبه",   ["زیست - استاد والی کیا","دفاعی - استاد والی کیا","شیمی - استاد کریمی","فیزیک - استاد درخشانی"]],
+    ["دوشنبه",   ["ریاضی - استاد روشنگر","انگلیسی - استاد قدسی","نگارش - استاد ساجدی","زنگ آزمون"]],
+    ["سه‌شنبه",  ["دین و زندگی - استاد ساداتی","آزمایشگاه - استاد کریمی","فیزیک - استاد درخشانی","جغرافیا - استاد پروندی"]],
+    ["چهارشنبه", ["شیمی - استاد کریمی","زیست - استاد والی کیا","تفکر - استاد روشنگر","ورزش - استاد عبداللهی"]]
+  ]],
+  ["تجربی ۱۲۴", [
+    ["شنبه",     ["ریاضی - استاد حسینخانی","عربی - استاد سهیلی","زیست - استاد پرواز","سلامت و بهداشت - استاد پرواز"]],
+    ["یکشنبه",   ["زبان - استاد کریمی","زبان - استاد کریمی","شیمی - استاد جعفری","ورزش - استاد عبداللهی"]],
+    ["دوشنبه",   ["فارسی - استاد داداش پور","نگارش - استاد داداش پور","دین و زندگی - استاد جلالیان","زنگ آزمون"]],
+    ["سه‌شنبه",  ["فیزیک - استاد قریب","فیزیک - استاد قریب","زیست - استاد پرواز","مدیریت - استاد پرواز"]],
+    ["چهارشنبه", ["ریاضی - استاد حسینخانی","شیمی - استاد جعفری","هویت اجتماعی - استاد حسینخانی","مشاوره - استاد رامشینی"]]
+  ]]
+];
+
+/* ==========================================================
+   ساخت دیتابیس دبیران از داده‌های خام
+   ⚠️ دبیران هم‌نام با درس تفکیک می‌شوند
+   ========================================================== */
+
+/* نقشه تفکیک دبیران هم‌نام: کلید = "نام|درس" */
+var HOMONYM_MAP = {
+  "کریمی|زبان": "علی کریمی",
+  "کریمی|انگلیسی": "علی کریمی",
+  "کریمی|شیمی": "علیرضا کریمی",
+  "کریمی|آزمایشگاه": "علیرضا کریمی"
+};
+
+function buildDB(){
+  var db = {};
+  rawData.forEach(function(item){
+    var cn = item[0], sch = item[1];
+    sch.forEach(function(dr){
+      var day = dr[0], lessons = dr[1];
+      lessons.forEach(function(lt, idx){
+        if(!lt || !lt.trim() || lt === "زنگ آزمون" || lt === "مهارت") return;
+        var parts = lt.split(" - ");
+        if(parts.length < 2) return;
+        var subj = parts[0].trim();
+        var trRaw = parts[1].replace("استاد ", "").trim();
+        if(!trRaw || trRaw.indexOf("معاون") === 0) return;
+
+        /* چک کردن دبیران هم‌نام */
+        var key = trRaw + "|" + subj;
+        var displayName = HOMONYM_MAP[key] || trRaw;
+
+        if(!db[displayName]) db[displayName] = { name: displayName, classes: [] };
+        var p = idx + 1;
+        db[displayName].classes.push({
+          className: cn, day: day, period: p,
+          subject: subj,
+          start: PERIODS[p].start, end: PERIODS[p].end
+        });
+      });
+    });
+  });
+  return db;
+}
+
+var teacherDB = buildDB();
+var teacherNames = Object.keys(teacherDB).sort();
+
+/* محاسبه درس اصلی هر دبیر (پرتکرارترین درس) */
+Object.keys(teacherDB).forEach(function(name){
+  var counts = {};
+  teacherDB[name].classes.forEach(function(c){
+    counts[c.subject] = (counts[c.subject] || 0) + 1;
+  });
+  var topSubject = "";
+  var topCount = 0;
+  Object.keys(counts).forEach(function(s){
+    if(counts[s] > topCount){
+      topCount = counts[s];
+      topSubject = s;
+    }
+  });
+  teacherDB[name].mainSubject = topSubject;
+});
+
+/* ==========================================================
+   توابع کمکی
+   ========================================================== */
+function toFa(n){
+  var d = ["۰","۱","۲","۳","۴","۵","۶","۷","۸","۹"];
+  return String(n).replace(/\d/g, function(x){ return d[x]; });
+}
+function esc(s){
+  var d = document.createElement("div");
+  d.textContent = s;
+  return d.innerHTML;
+}
+function t2m(s){
+  var p = s.split(":");
+  return parseInt(p[0]) * 60 + parseInt(p[1]);
+}
+
+/* ==========================================================
+   جستجو
+   ========================================================== */
+var currentTeacher = null;
+var timer = null;
+
+function doSearch(){
+  var q = document.getElementById("si").value.trim();
+  var res = document.getElementById("res");
+  var ncc = document.getElementById("ncc");
+
+  if(timer){ clearInterval(timer); timer = null; }
+
+  if(!q){
+    res.innerHTML = '<div class="empty-state"><span class="icon">✏️</span><p>لطفاً نام دبیر را وارد کنید</p></div>';
+    ncc.classList.remove("visible");
+    currentTeacher = null;
+    return;
+  }
+
+  var matches = teacherNames.filter(function(n){ return n.indexOf(q) > -1; });
+
+  if(matches.length === 0){
+    res.innerHTML = '<div class="error-state"><span class="icon">❌</span><p>دبیری با نام «' + esc(q) + '» پیدا نشد</p></div>';
+    ncc.classList.remove("visible");
+    currentTeacher = null;
+    return;
+  }
+
+  /* === فقط یک دبیر پیدا شد → مستقیم نمایش بده === */
+  if(matches.length === 1){
+    currentTeacher = matches[0];
+    res.innerHTML = renderTeacher(teacherDB[matches[0]], true);
+    ncc.classList.add("visible");
+    updateNCC();
+    timer = setInterval(updateNCC, 1000);
+    return;
+  }
+
+  /* === چند دبیر پیدا شد → کارت انتخاب نشون بده === */
+  currentTeacher = null;
+  ncc.classList.remove("visible");
+
+  var selectionHtml = '<div class="selection-header">' +
+    '<span class="selection-icon">👥</span>' +
+    '<h2>چند دبیر با این نام پیدا شد</h2>' +
+    '<p>لطفاً دبیر مورد نظر خود را انتخاب کنید</p>' +
+    '</div>' +
+    '<div class="selection-list">';
+
+  matches.forEach(function(name){
+    var t = teacherDB[name];
+    var initial = name.charAt(0);
+    selectionHtml += '<div class="selection-card" onclick="selectTeacher(\'' + name.replace(/'/g, "\\'") + '\')">' +
+      '<div class="selection-avatar">' + initial + '</div>' +
+      '<div class="selection-info">' +
+        '<div class="selection-name">استاد ' + esc(name) + '</div>' +
+        '<div class="selection-subject">📚 ' + esc(t.mainSubject) + '</div>' +
+        '<div class="selection-count">' + toFa(t.classes.length) + ' کلاس در هفته</div>' +
+      '</div>' +
+      '<div class="selection-arrow">←</div>' +
+    '</div>';
+  });
+
+  selectionHtml += '</div>';
+  res.innerHTML = selectionHtml;
+}
+
+/* === انتخاب دبیر از لیست === */
+function selectTeacher(name){
+  var res = document.getElementById("res");
+  var ncc = document.getElementById("ncc");
+
+  currentTeacher = name;
+  res.innerHTML = renderTeacher(teacherDB[name], true);
+  ncc.classList.add("visible");
+  updateNCC();
+  if(timer) clearInterval(timer);
+  timer = setInterval(updateNCC, 1000);
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ==========================================================
+   رندر کردن کارت یک دبیر
+   ========================================================== */
+function renderTeacher(t, active){
+  var groups = {};
+  t.classes.forEach(function(c){
+    if(!groups[c.className]) groups[c.className] = [];
+    groups[c.className].push(c);
+  });
+  Object.keys(groups).forEach(function(k){
+    groups[k].sort(function(a, b){
+      var dd = dayOrder.indexOf(a.day) - dayOrder.indexOf(b.day);
+      if(dd !== 0) return dd;
+      return a.period - b.period;
+    });
+  });
+
+  var initial = t.name.charAt(0);
+  var html = '<div class="teacher-header"><div class="avatar">' + initial + '</div><div>' +
+    '<h2>استاد ' + esc(t.name) + '</h2>' +
+    '<small>📚 ' + esc(t.mainSubject) + ' | مجموع ' + toFa(t.classes.length) + ' کلاس در هفته</small>' +
+    '</div></div>';
+
+  var now = new Date();
+  var cDay = now.getDay(), cMin = now.getHours() * 60 + now.getMinutes();
+
+  Object.keys(groups).forEach(function(cn){
+    html += '<div class="class-group"><div class="class-group-title">📚 ' + esc(cn) + '</div><div class="class-list">';
+    groups[cn].forEach(function(c){
+      var isCur = false;
+      if(active && dayMap[c.day] === cDay && cMin >= t2m(c.start) && cMin < t2m(c.end)) isCur = true;
+      html += '<div class="class-item' + (isCur ? ' current' : '') + '">';
+      html += '<div class="period-badge">' + esc(c.day) + ' • زنگ ' + toFa(c.period) + '</div>';
+      html += '<div class="class-info"><div class="name">' + esc(c.subject) +
+        (isCur ? ' <span style="color:#6ee7b7">● در حال تدریس</span>' : '') + '</div>';
+      html += '<div class="details">🕐 ' + esc(c.start) + ' تا ' + esc(c.end) + '</div></div>';
+      html += '</div>';
+    });
+    html += '</div></div>';
+  });
+
+  return html;
+}
+
+/* ==========================================================
+   پیدا کردن کلاس فعلی و بعدی
+   ========================================================== */
+function findCurNext(t, now){
+  var cDay = now.getDay(), cMin = now.getHours() * 60 + now.getMinutes();
+  var cur = null;
+  for(var i = 0; i < t.classes.length; i++){
+    var c = t.classes[i];
+    if(dayMap[c.day] === cDay && cMin >= t2m(c.start) && cMin < t2m(c.end)){
+      cur = c;
+      break;
+    }
+  }
+  var next = null, minDiff = Infinity;
+  for(var j = 0; j < t.classes.length; j++){
+    var c2 = t.classes[j];
+    var cd = dayMap[c2.day];
+    var cs = t2m(c2.start);
+    var dd = (cd - cDay + 7) % 7;
+    var dm = dd * 24 * 60 + (cs - cMin);
+    if(dd === 0 && cs <= cMin) dm += 7 * 24 * 60;
+    if(dm > 0 && dm < minDiff){ minDiff = dm; next = c2; }
+  }
+  return { cur: cur, next: next };
+}
+
+/* ==========================================================
+   به‌روزرسانی کارت کلاس بعدی
+   ========================================================== */
+function updateNCC(){
+  if(!currentTeacher) return;
+  var card = document.getElementById("ncc");
+  var t = teacherDB[currentTeacher];
+  var now = new Date();
+  var fn = findCurNext(t, now);
+
+  /* === حالت ۱: الان در حال تدریس === */
+  if(fn.cur){
+    var cMin = now.getHours() * 60 + now.getMinutes();
+    var cSec = now.getSeconds();
+    var endMin = t2m(fn.cur.end);
+    var rm = endMin - cMin - 1;
+    var rs = 60 - cSec;
+    if(rs === 60){ rs = 0; rm++; }
+    card.className = "next-class-card glass visible teaching";
+    card.innerHTML = '<div class="next-class-header"><span class="pulse-dot"></span>در حال تدریس 🟢</div>' +
+      '<div class="countdown">' + toFa(rm) + ' دقیقه و ' + toFa(rs) + ' ثانیه</div>' +
+      '<div class="countdown-sub">تا پایان این کلاس</div>' +
+      '<div class="next-class-info"><div class="info-chip">📚 <strong>' + esc(fn.cur.subject) + '</strong></div>' +
+      '<div class="info-chip">🏫 ' + esc(fn.cur.className) + '</div>' +
+      '<div class="info-chip">🕐 ' + esc(fn.cur.start) + ' تا ' + esc(fn.cur.end) + '</div>' +
+      '<div class="info-chip">🔔 زنگ ' + toFa(fn.cur.period) + '</div></div>';
+    return;
+  }
+
+  /* === حالت ۲: کلاس بعدی هست === */
+  if(fn.next){
+    var cDay = now.getDay(), cMin = now.getHours() * 60 + now.getMinutes(), cSec = now.getSeconds();
+    var nd = dayMap[fn.next.day];
+    var ns = t2m(fn.next.start);
+    var dd = (nd - cDay + 7) % 7;
+    var tm = dd * 24 * 60 + (ns - cMin);
+    if(dd === 0 && ns <= cMin) tm += 7 * 24 * 60;
+
+    var THREE_HOURS = 3 * 60;
+
+    /* === حالت ۲-الف: کمتر از ۳ ساعت → تایمر شمارش معکوس === */
+    if(tm <= THREE_HOURS){
+      var d = Math.floor(tm / (24 * 60));
+      var h = Math.floor((tm % (24 * 60)) / 60);
+      var m = tm % 60;
+      var s = 60 - cSec;
+      if(s === 60) s = 0;
+      var txt = "";
+      if(d > 0) txt = toFa(d) + " روز و " + toFa(h) + " ساعت";
+      else if(h > 0) txt = toFa(h) + " ساعت و " + toFa(m) + " دقیقه";
+      else if(m > 0) txt = toFa(m) + " دقیقه و " + toFa(s) + " ثانیه";
+      else txt = toFa(s) + " ثانیه";
+
+      var close = tm <= 10;
+      card.className = "next-class-card glass visible " + (close ? "upcoming" : "");
+      card.innerHTML = '<div class="next-class-header"><span class="pulse-dot ' + (close ? "gold" : "gray") + '"></span>' +
+        (close ? "کلاس بعدی نزدیک است ⏰" : "کلاس بعدی شما") + '</div>' +
+        '<div class="countdown">' + txt + '</div>' +
+        '<div class="countdown-sub">تا شروع کلاس بعدی</div>' +
+        '<div class="next-class-info"><div class="info-chip">📚 <strong>' + esc(fn.next.subject) + '</strong></div>' +
+        '<div class="info-chip">🏫 ' + esc(fn.next.className) + '</div>' +
+        '<div class="info-chip">📅 ' + esc(fn.next.day) + '</div>' +
+        '<div class="info-chip">🕐 ' + esc(fn.next.start) + ' تا ' + esc(fn.next.end) + '</div>' +
+        '<div class="info-chip">🔔 زنگ ' + toFa(fn.next.period) + '</div></div>';
+      return;
+    }
+
+    /* === حالت ۲-ب: بیشتر از ۳ ساعت → نمایش روز کلاس === */
+    var dayText;
+    if(dd === 0){
+      dayText = "امروز";
+    } else if(dd === 1){
+      dayText = "فردا";
+    } else {
+      dayText = fn.next.day;
+    }
+
+    card.className = "next-class-card glass visible";
+    card.innerHTML = '<div class="next-class-header"><span class="pulse-dot gray"></span>کلاس بعدی شما</div>' +
+      '<div class="countdown" style="font-size:1.9rem">' + esc(dayText) + ' کلاس داری 📅</div>' +
+      '<div class="countdown-sub">ساعت ' + esc(fn.next.start) + ' - ' + esc(fn.next.day) + '</div>' +
+      '<div class="next-class-info"><div class="info-chip">📚 <strong>' + esc(fn.next.subject) + '</strong></div>' +
+      '<div class="info-chip">🏫 ' + esc(fn.next.className) + '</div>' +
+      '<div class="info-chip">🕐 ' + esc(fn.next.start) + ' تا ' + esc(fn.next.end) + '</div>' +
+      '<div class="info-chip">🔔 زنگ ' + toFa(fn.next.period) + '</div></div>';
+    return;
+  }
+
+  /* === حالت ۳: کلاسی نیست === */
+  card.className = "next-class-card glass visible";
+  card.innerHTML = '<div class="next-class-header"><span class="pulse-dot gray"></span>کلاس بعدی</div>' +
+    '<div class="countdown">کلاسی یافت نشد</div>';
+}
+
+/* ==========================================================
+   رویدادها
+   ========================================================== */
+document.getElementById("si").addEventListener("keypress", function(e){
+  if(e.key === "Enter") doSearch();
+});
+
+/* دبیران پیشنهادی */
+(function(){
+  var sug = document.getElementById("sug");
+  var pops = ["کریمی", "قریب", "صالحی", "روشنگر", "جعفری", "درخشانی"];
+  pops.forEach(function(n){
+    if(teacherNames.indexOf(n) > -1){
+      var c = document.createElement("div");
+      c.className = "suggestion-chip";
+      c.textContent = n;
+      c.onclick = function(){
+        document.getElementById("si").value = n;
+        doSearch();
+      };
+      sug.appendChild(c);
+    }
+  });
+})();
+</script>
+</body>
+</html>
