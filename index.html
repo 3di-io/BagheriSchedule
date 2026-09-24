@@ -5,11 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>برنامه کلاسی دبیرستان شهید حسن باقری</title>
 <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
-<header>
-  <img src="/assets/logo.jpg" alt="لوگوی دبیرستان شهید حسن باقری" class="logo">
-  <h1>برنامه کلاسی دبیرستان شهید حسن باقری</h1>
-  <p>نام دبیر را جستجو کنید تا برنامه هفتگی و کلاس بعدی او را ببینید</p>
-</header>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -61,7 +56,30 @@
 
   .container { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
 
+  /* ==== هدر ==== */
   header { text-align: center; margin-bottom: 26px; padding: 16px; }
+
+  .logo {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    filter: drop-shadow(0 8px 24px rgba(212, 175, 55, 0.5))
+            drop-shadow(0 3px 10px rgba(0, 0, 0, 0.3));
+    animation: logoFloat 4.5s ease-in-out infinite;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 6px;
+    border: 1.5px solid rgba(212, 175, 55, 0.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  @keyframes logoFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-6px) rotate(-1deg); }
+  }
+
   header h1 {
     font-size: 1.9rem; font-weight: 800; margin-bottom: 10px; line-height: 1.5;
     background: linear-gradient(135deg, #fff 0%, #f5d76e 45%, #d4af37 100%);
@@ -69,33 +87,7 @@
     background-clip: text; letter-spacing: -0.5px;
   }
   header p { color: var(--text-soft); font-size: 0.95rem; }
-/* ==== لوگو ==== */
-.logo {
-  width: 110px;
-  height: 110px;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto 14px;
-  border-radius: 50%;
-  filter: drop-shadow(0 8px 24px rgba(212, 175, 55, 0.5))
-          drop-shadow(0 3px 10px rgba(0, 0, 0, 0.3));
-  animation: logoFloat 4.5s ease-in-out infinite;
-  background: rgba(255, 255, 255, 0.08);
-  padding: 6px;
-  border: 1.5px solid rgba(212, 175, 55, 0.35);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
 
-@keyframes logoFloat {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50%      { transform: translateY(-6px) rotate(-1deg); }
-}
-
-/* واکنش‌گرایی برای موبایل */
-@media (max-width: 600px) {
-  .logo { width: 85px; height: 85px; }
-}
   .glass {
     background: var(--glass-bg);
     backdrop-filter: blur(20px) saturate(180%);
@@ -130,6 +122,7 @@
   }
   button:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,175,55,0.55); }
 
+  /* ==== کارت کلاس بعدی ==== */
   .next-class-card { padding: 24px; margin-bottom: 20px; display: none; animation: slideDown 0.5s ease; }
   .next-class-card.visible { display: block; }
   @keyframes slideDown {
@@ -190,6 +183,63 @@
   }
   .info-chip strong { color: var(--gold-light); font-weight: 700; }
 
+  /* ==== نوار پیشرفت کلاس ==== */
+  .progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 4px 0 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #34d399, #10b981);
+    border-radius: 10px;
+    transition: width 1s linear;
+    box-shadow: 0 0 12px rgba(52,211,153,0.5);
+  }
+  .progress-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-soft);
+    margin-bottom: 16px;
+  }
+
+  /* ==== هشدار پایان کلاس ==== */
+  .next-class-card.teaching.warning {
+    border-color: rgba(251, 191, 36, 0.6);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2),
+                0 0 40px rgba(251, 191, 36, 0.35);
+    animation: warningPulse 2s ease-in-out infinite;
+  }
+  .next-class-card.teaching.warning .countdown {
+    background: linear-gradient(135deg, #fff, #fbbf24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .next-class-card.teaching.warning .pulse-dot {
+    background: #fbbf24;
+    animation: pulseWarning 1s infinite;
+  }
+  .next-class-card.teaching.warning .progress-fill {
+    background: linear-gradient(90deg, #fbbf24, #f59e0b);
+    box-shadow: 0 0 12px rgba(251,191,36,0.6);
+  }
+  @keyframes warningPulse {
+    0%, 100% { box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 0 40px rgba(251,191,36,0.35); }
+    50%      { box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 0 55px rgba(251,191,36,0.6); }
+  }
+  @keyframes pulseWarning {
+    0%   { box-shadow: 0 0 0 0 rgba(251,191,36,0.7); }
+    70%  { box-shadow: 0 0 0 12px rgba(251,191,36,0); }
+    100% { box-shadow: 0 0 0 0 rgba(251,191,36,0); }
+  }
+
+  /* ==== نتیجه جستجو ==== */
   .result { padding: 26px; min-height: 120px; animation: fadeIn 0.4s ease; }
   @keyframes fadeIn {
     from{opacity:0;transform:translateY(10px);}
@@ -218,47 +268,24 @@
     border-bottom: 1px solid rgba(255,255,255,0.12);
     margin-bottom: 22px;
   }
-  .selection-icon {
-    font-size: 2.8rem;
-    display: block;
-    margin-bottom: 12px;
-  }
-  .selection-header h2 {
-    font-size: 1.15rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: #fff;
-  }
-  .selection-header p {
-    color: var(--text-soft);
-    font-size: 0.88rem;
-  }
-  .selection-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
+  .selection-icon { font-size: 2.8rem; display: block; margin-bottom: 12px; }
+  .selection-header h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; color: #fff; }
+  .selection-header p { color: var(--text-soft); font-size: 0.88rem; }
+  .selection-list { display: flex; flex-direction: column; gap: 12px; }
   .selection-card {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    display: flex; align-items: center; gap: 16px;
     padding: 18px 20px;
     background: rgba(255,255,255,0.07);
     border: 1px solid rgba(255,255,255,0.15);
     border-radius: 16px;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    position: relative;
-    overflow: hidden;
+    cursor: pointer; transition: all 0.25s ease;
+    position: relative; overflow: hidden;
   }
   .selection-card::before {
-    content: "";
-    position: absolute;
-    right: 0; top: 0; bottom: 0;
-    width: 4px;
+    content: ""; position: absolute;
+    right: 0; top: 0; bottom: 0; width: 4px;
     background: linear-gradient(180deg, #d4af37, #f5d76e);
-    border-radius: 4px;
-    transition: width 0.25s ease;
+    border-radius: 4px; transition: width 0.25s ease;
   }
   .selection-card:hover {
     background: rgba(212,175,55,0.15);
@@ -268,47 +295,20 @@
   }
   .selection-card:hover::before { width: 6px; }
   .selection-avatar {
-    width: 54px;
-    height: 54px;
-    border-radius: 50%;
+    width: 54px; height: 54px; border-radius: 50%;
     background: linear-gradient(135deg, rgba(212,175,55,0.9), rgba(245,215,110,0.9));
     border: 1.5px solid rgba(255,255,255,0.35);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #2a1f00;
-    font-weight: 800;
-    font-size: 1.3rem;
-    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: #2a1f00; font-weight: 800; font-size: 1.3rem; flex-shrink: 0;
   }
   .selection-info { flex: 1; }
-  .selection-name {
-    font-weight: 700;
-    font-size: 1.05rem;
-    color: #fff;
-    margin-bottom: 6px;
-  }
-  .selection-subject {
-    font-size: 0.88rem;
-    color: var(--gold-light);
-    margin-bottom: 4px;
-    font-weight: 600;
-  }
-  .selection-count {
-    font-size: 0.78rem;
-    color: var(--text-soft);
-  }
-  .selection-arrow {
-    font-size: 1.5rem;
-    color: var(--gold-light);
-    opacity: 0.5;
-    transition: all 0.25s ease;
-  }
-  .selection-card:hover .selection-arrow {
-    opacity: 1;
-    transform: translateX(-6px);
-  }
+  .selection-name { font-weight: 700; font-size: 1.05rem; color: #fff; margin-bottom: 6px; }
+  .selection-subject { font-size: 0.88rem; color: var(--gold-light); margin-bottom: 4px; font-weight: 600; }
+  .selection-count { font-size: 0.78rem; color: var(--text-soft); }
+  .selection-arrow { font-size: 1.5rem; color: var(--gold-light); opacity: 0.5; transition: all 0.25s ease; }
+  .selection-card:hover .selection-arrow { opacity: 1; transform: translateX(-6px); }
 
+  /* ==== لیست کلاس‌ها ==== */
   .class-group { margin-bottom: 22px; }
   .class-group-title {
     font-size: 0.95rem; font-weight: 700; color: var(--gold-light);
@@ -350,6 +350,7 @@
   .class-info .name { font-weight: 600; margin-bottom: 5px; font-size: 0.95rem; }
   .class-info .details { color: var(--text-soft); font-size: 0.8rem; }
 
+  /* ==== حالت‌های خالی / خطا ==== */
   .empty-state, .error-state {
     text-align: center; padding: 45px 20px; color: var(--text-soft);
   }
@@ -380,6 +381,7 @@
   @media (max-width: 600px) {
     body { padding: 20px 14px 40px; }
     header h1 { font-size: 1.25rem; }
+    .logo { width: 85px; height: 85px; }
     .search-box, .result, .next-class-card { padding: 18px; }
     .class-item { flex-direction: column; align-items: flex-start; gap: 10px; }
     .period-badge { width: 100%; }
@@ -397,6 +399,7 @@
 
 <div class="container">
   <header>
+    <img src="assets/logo.jpg" alt="لوگوی دبیرستان شهید حسن باقری" class="logo">
     <h1>برنامه کلاسی دبیرستان شهید حسن باقری</h1>
     <p>نام دبیر را جستجو کنید تا برنامه هفتگی و کلاس بعدی او را ببینید</p>
   </header>
@@ -422,13 +425,13 @@
 
 <script>
 /* ==========================================================
-   ساعت زنگ‌ها
+   ساعت زنگ‌ها (زمان‌های جدید)
    ========================================================== */
 var PERIODS = {
-  1: { start: "08:00", end: "08:45" },
-  2: { start: "08:50", end: "09:35" },
-  3: { start: "10:00", end: "10:45" },
-  4: { start: "10:50", end: "11:35" }
+  1: { start: "07:45", end: "09:15" },
+  2: { start: "09:30", end: "10:45" },
+  3: { start: "11:00", end: "12:15" },
+  4: { start: "12:45", end: "14:00" }
 };
 
 var dayMap = {
@@ -439,7 +442,7 @@ var dayMap = {
 var dayOrder = ["شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه"];
 
 /* ==========================================================
-   داده‌های خام - [نام کلاس, [[روز, [زنگ1, زنگ2, زنگ3, زنگ4]], ...]]
+   داده‌های خام
    ========================================================== */
 var rawData = [
   ["ریاضی ۱۲۱", [
@@ -543,11 +546,8 @@ var rawData = [
 ];
 
 /* ==========================================================
-   ساخت دیتابیس دبیران از داده‌های خام
-   ⚠️ دبیران هم‌نام با درس تفکیک می‌شوند
+   تفکیک دبیران هم‌نام
    ========================================================== */
-
-/* نقشه تفکیک دبیران هم‌نام: کلید = "نام|درس" */
 var HOMONYM_MAP = {
   "کریمی|زبان": "علی کریمی",
   "کریمی|انگلیسی": "علی کریمی",
@@ -569,7 +569,6 @@ function buildDB(){
         var trRaw = parts[1].replace("استاد ", "").trim();
         if(!trRaw || trRaw.indexOf("معاون") === 0) return;
 
-        /* چک کردن دبیران هم‌نام */
         var key = trRaw + "|" + subj;
         var displayName = HOMONYM_MAP[key] || trRaw;
 
@@ -589,19 +588,14 @@ function buildDB(){
 var teacherDB = buildDB();
 var teacherNames = Object.keys(teacherDB).sort();
 
-/* محاسبه درس اصلی هر دبیر (پرتکرارترین درس) */
 Object.keys(teacherDB).forEach(function(name){
   var counts = {};
   teacherDB[name].classes.forEach(function(c){
     counts[c.subject] = (counts[c.subject] || 0) + 1;
   });
-  var topSubject = "";
-  var topCount = 0;
+  var topSubject = "", topCount = 0;
   Object.keys(counts).forEach(function(s){
-    if(counts[s] > topCount){
-      topCount = counts[s];
-      topSubject = s;
-    }
+    if(counts[s] > topCount){ topCount = counts[s]; topSubject = s; }
   });
   teacherDB[name].mainSubject = topSubject;
 });
@@ -652,7 +646,6 @@ function doSearch(){
     return;
   }
 
-  /* === فقط یک دبیر پیدا شد → مستقیم نمایش بده === */
   if(matches.length === 1){
     currentTeacher = matches[0];
     res.innerHTML = renderTeacher(teacherDB[matches[0]], true);
@@ -662,7 +655,6 @@ function doSearch(){
     return;
   }
 
-  /* === چند دبیر پیدا شد → کارت انتخاب نشون بده === */
   currentTeacher = null;
   ncc.classList.remove("visible");
 
@@ -691,7 +683,6 @@ function doSearch(){
   res.innerHTML = selectionHtml;
 }
 
-/* === انتخاب دبیر از لیست === */
 function selectTeacher(name){
   var res = document.getElementById("res");
   var ncc = document.getElementById("ncc");
@@ -707,7 +698,7 @@ function selectTeacher(name){
 }
 
 /* ==========================================================
-   رندر کردن کارت یک دبیر
+   رندر کارت دبیر
    ========================================================== */
 function renderTeacher(t, active){
   var groups = {};
@@ -777,7 +768,7 @@ function findCurNext(t, now){
 }
 
 /* ==========================================================
-   به‌روزرسانی کارت کلاس بعدی
+   به‌روزرسانی کارت بالای صفحه
    ========================================================== */
 function updateNCC(){
   if(!currentTeacher) return;
@@ -791,21 +782,60 @@ function updateNCC(){
     var cMin = now.getHours() * 60 + now.getMinutes();
     var cSec = now.getSeconds();
     var endMin = t2m(fn.cur.end);
-    var rm = endMin - cMin - 1;
-    var rs = 60 - cSec;
-    if(rs === 60){ rs = 0; rm++; }
-    card.className = "next-class-card glass visible teaching";
-    card.innerHTML = '<div class="next-class-header"><span class="pulse-dot"></span>در حال تدریس 🟢</div>' +
-      '<div class="countdown">' + toFa(rm) + ' دقیقه و ' + toFa(rs) + ' ثانیه</div>' +
-      '<div class="countdown-sub">تا پایان این کلاس</div>' +
-      '<div class="next-class-info"><div class="info-chip">📚 <strong>' + esc(fn.cur.subject) + '</strong></div>' +
-      '<div class="info-chip">🏫 ' + esc(fn.cur.className) + '</div>' +
-      '<div class="info-chip">🕐 ' + esc(fn.cur.start) + ' تا ' + esc(fn.cur.end) + '</div>' +
-      '<div class="info-chip">🔔 زنگ ' + toFa(fn.cur.period) + '</div></div>';
+    var startMin = t2m(fn.cur.start);
+
+    var remainMin = endMin - cMin - 1;
+    var remainSec = 60 - cSec;
+    if(remainSec === 60){ remainSec = 0; remainMin++; }
+
+    var passedMin = cMin - startMin;
+
+    var hh = Math.floor(remainMin / 60);
+    var mm = remainMin % 60;
+
+    var timeText;
+    if(hh > 0){
+      timeText = toFa(hh) + ' ساعت و ' + toFa(mm) + ' دقیقه';
+    } else if(mm > 0){
+      timeText = toFa(mm) + ' دقیقه و ' + toFa(remainSec) + ' ثانیه';
+    } else {
+      timeText = toFa(remainSec) + ' ثانیه';
+    }
+
+    var totalMin = endMin - startMin;
+    var progress = Math.min(100, Math.max(0, (passedMin / totalMin) * 100));
+
+    var almostDone = remainMin < 5 && hh === 0;
+    var cardClass = almostDone ? 'teaching warning' : 'teaching';
+
+    card.className = "next-class-card glass visible " + cardClass;
+    card.innerHTML =
+      '<div class="next-class-header">' +
+        '<span class="pulse-dot"></span>' +
+        (almostDone ? 'کلاس شما تقریباً تمام شده ⏰' : 'در حال تدریس 🟢') +
+      '</div>' +
+      '<div class="countdown">' + timeText + '</div>' +
+      '<div class="countdown-sub">' +
+        (almostDone ? 'زودتر آماده پایان کلاس باش' : 'تا پایان این کلاس') +
+      '</div>' +
+      '<div class="progress-bar">' +
+        '<div class="progress-fill" style="width:' + progress + '%"></div>' +
+      '</div>' +
+      '<div class="progress-labels">' +
+        '<span>شروع: ' + esc(fn.cur.start) + '</span>' +
+        '<span>' + toFa(Math.round(progress)) + '٪ گذشت</span>' +
+        '<span>پایان: ' + esc(fn.cur.end) + '</span>' +
+      '</div>' +
+      '<div class="next-class-info">' +
+        '<div class="info-chip">📚 <strong>' + esc(fn.cur.subject) + '</strong></div>' +
+        '<div class="info-chip">🏫 ' + esc(fn.cur.className) + '</div>' +
+        '<div class="info-chip">🕐 ' + esc(fn.cur.start) + ' تا ' + esc(fn.cur.end) + '</div>' +
+        '<div class="info-chip">🔔 زنگ ' + toFa(fn.cur.period) + '</div>' +
+      '</div>';
     return;
   }
 
-  /* === حالت ۲: کلاس بعدی هست === */
+  /* === حالت ۲: کلاس بعدی === */
   if(fn.next){
     var cDay = now.getDay(), cMin = now.getHours() * 60 + now.getMinutes(), cSec = now.getSeconds();
     var nd = dayMap[fn.next.day];
@@ -816,7 +846,6 @@ function updateNCC(){
 
     var THREE_HOURS = 3 * 60;
 
-    /* === حالت ۲-الف: کمتر از ۳ ساعت → تایمر شمارش معکوس === */
     if(tm <= THREE_HOURS){
       var d = Math.floor(tm / (24 * 60));
       var h = Math.floor((tm % (24 * 60)) / 60);
@@ -843,15 +872,10 @@ function updateNCC(){
       return;
     }
 
-    /* === حالت ۲-ب: بیشتر از ۳ ساعت → نمایش روز کلاس === */
     var dayText;
-    if(dd === 0){
-      dayText = "امروز";
-    } else if(dd === 1){
-      dayText = "فردا";
-    } else {
-      dayText = fn.next.day;
-    }
+    if(dd === 0){ dayText = "امروز"; }
+    else if(dd === 1){ dayText = "فردا"; }
+    else { dayText = fn.next.day; }
 
     card.className = "next-class-card glass visible";
     card.innerHTML = '<div class="next-class-header"><span class="pulse-dot gray"></span>کلاس بعدی شما</div>' +
@@ -864,7 +888,6 @@ function updateNCC(){
     return;
   }
 
-  /* === حالت ۳: کلاسی نیست === */
   card.className = "next-class-card glass visible";
   card.innerHTML = '<div class="next-class-header"><span class="pulse-dot gray"></span>کلاس بعدی</div>' +
     '<div class="countdown">کلاسی یافت نشد</div>';
@@ -877,7 +900,6 @@ document.getElementById("si").addEventListener("keypress", function(e){
   if(e.key === "Enter") doSearch();
 });
 
-/* دبیران پیشنهادی */
 (function(){
   var sug = document.getElementById("sug");
   var pops = ["کریمی", "قریب", "صالحی", "روشنگر", "جعفری", "درخشانی"];
