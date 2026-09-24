@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>برنامه کلاسی دبیرستان شهید حسن باقری</title>
+<title>دبیرستان شهید حسن باقری — سامانه استعلام کلاس‌های اساتید</title>
 <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <style>
@@ -152,12 +152,55 @@
   }
 
   header h1 {
-    font-size: 1.9rem; font-weight: 800; margin-bottom: 10px; line-height: 1.5;
+    font-size: 2.1rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    line-height: 1.4;
     background: linear-gradient(135deg, var(--text-light) 0%, var(--gold-light) 45%, var(--gold) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text; letter-spacing: -0.5px;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
   }
-  header p { color: var(--text-soft); font-size: 0.95rem; }
+
+  /* زیرنویس */
+  .subtitle-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 6px;
+  }
+
+  .subtitle-line {
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,175,55,0.6), transparent);
+    border-radius: 1px;
+  }
+
+  .subtitle-text {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-soft);
+    letter-spacing: 0.3px;
+    position: relative;
+    padding: 0 4px;
+    white-space: nowrap;
+  }
+
+  .subtitle-text::before,
+  .subtitle-text::after {
+    content: "◆";
+    font-size: 0.5rem;
+    color: var(--gold);
+    opacity: 0.7;
+    vertical-align: middle;
+    margin: 0 6px;
+    position: relative;
+    top: -1px;
+  }
 
   .glass {
     background: var(--glass-bg);
@@ -776,7 +819,11 @@
 
   @media (max-width: 600px) {
     body { padding: 20px 14px 40px; }
-    header h1 { font-size: 1.25rem; }
+    header h1 { font-size: 1.4rem; }
+    .subtitle-text { font-size: 0.78rem; }
+    .subtitle-line { max-width: 30px; }
+    .subtitle-text::before,
+    .subtitle-text::after { margin: 0 4px; }
     .logo { width: 85px; height: 85px; }
     .search-box, .result, .next-class-card { padding: 18px; }
     input[type="text"] { font-size: 1rem; padding: 16px 52px 16px 52px; }
@@ -837,8 +884,12 @@
 <div class="container">
   <header>
     <img src="assets/logo.jpg" alt="لوگوی دبیرستان شهید حسن باقری" class="logo">
-    <h1>برنامه کلاسی دبیرستان شهید حسن باقری</h1>
-    <p>نام دبیر را جستجو کنید تا برنامه هفتگی و کلاس بعدی او را ببینید</p>
+    <h1>دبیرستان شهید حسن باقری</h1>
+    <div class="subtitle-wrap">
+      <span class="subtitle-line"></span>
+      <span class="subtitle-text">سامانه استعلام کلاس‌های اساتید</span>
+      <span class="subtitle-line"></span>
+    </div>
   </header>
 
   <div class="search-box glass">
@@ -1193,11 +1244,9 @@ function startQuoteRotation(){
   var strip = document.getElementById("quoteStrip");
   if(!textEl || !strip) return;
 
-  /* انتخاب یه نقل‌قول تصادفی */
   var idx = Math.floor(Math.random() * QUOTES.length);
   textEl.textContent = QUOTES[idx];
 
-  /* حذف کل باکس بعد از ۱۵ ثانیه */
   if(quoteHideTimer) clearTimeout(quoteHideTimer);
   quoteHideTimer = setTimeout(function(){
     strip.classList.add("hidden");
@@ -1763,7 +1812,6 @@ document.addEventListener("keydown", function(e){
   }
 });
 
-/* گوش دادن به تغییر تم دستگاه (اگه کاربر دستی انتخاب نکرده) */
 if(window.matchMedia){
   var darkMedia = window.matchMedia("(prefers-color-scheme: dark)");
   var lightMedia = window.matchMedia("(prefers-color-scheme: light)");
@@ -1787,12 +1835,10 @@ if(window.matchMedia){
   }
 }
 
-/* بارگذاری اولیه */
 applyTheme(loadTheme());
 checkURLParam();
 startQuoteRotation();
 
-/* فوکوس خودکار روی دسکتاپ */
 if(window.innerWidth > 600){
   setTimeout(function(){
     document.getElementById("si").focus();
