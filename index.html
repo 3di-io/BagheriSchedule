@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>برنامه کلاسی دبیرستان شهید حسن باقری</title>
 <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -56,7 +57,6 @@
 
   .container { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
 
-  /* ==== هدر ==== */
   header { text-align: center; margin-bottom: 26px; padding: 16px; }
 
   .logo {
@@ -97,7 +97,6 @@
     box-shadow: 0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15);
   }
 
-  /* ==== جعبه جستجو ==== */
   .search-box { padding: 22px; margin-bottom: 20px; }
   .search-box label { display: block; margin-bottom: 12px; font-weight: 600; }
   .search-wrapper {
@@ -131,7 +130,6 @@
     box-shadow: 0 0 0 4px rgba(212,175,55,0.15);
   }
 
-  /* دکمه پاک کردن */
   .clear-btn {
     position: absolute;
     left: 12px;
@@ -159,7 +157,6 @@
     box-shadow: none;
   }
 
-  /* ==== کارت کلاس بعدی ==== */
   .next-class-card { padding: 24px; margin-bottom: 20px; display: none; animation: slideDown 0.5s ease; }
   .next-class-card.visible { display: block; }
   @keyframes slideDown {
@@ -220,7 +217,6 @@
   }
   .info-chip strong { color: var(--gold-light); font-weight: 700; }
 
-  /* ==== نوار پیشرفت کلاس ==== */
   .progress-bar {
     width: 100%;
     height: 8px;
@@ -245,7 +241,6 @@
     margin-bottom: 16px;
   }
 
-  /* ==== هشدار پایان کلاس ==== */
   .next-class-card.teaching.warning {
     border-color: rgba(251, 191, 36, 0.6);
     box-shadow: 0 8px 32px rgba(0,0,0,0.2),
@@ -276,7 +271,6 @@
     100% { box-shadow: 0 0 0 0 rgba(251,191,36,0); }
   }
 
-  /* ==== نتیجه جستجو ==== */
   .result { padding: 26px; min-height: 120px; animation: fadeIn 0.4s ease; }
   @keyframes fadeIn {
     from{opacity:0;transform:translateY(10px);}
@@ -298,7 +292,6 @@
   .teacher-header h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 5px; }
   .teacher-header small { color: var(--text-soft); font-size: 0.83rem; }
 
-  /* ==== کارت انتخاب دبیر ==== */
   .selection-header {
     text-align: center;
     padding: 10px 0 24px;
@@ -345,7 +338,6 @@
   .selection-arrow { font-size: 1.5rem; color: var(--gold-light); opacity: 0.5; transition: all 0.25s ease; }
   .selection-card:hover .selection-arrow { opacity: 1; transform: translateX(-6px); }
 
-  /* ==== لیست کلاس‌ها ==== */
   .class-list { display: flex; flex-direction: column; gap: 10px; }
   .class-item {
     display: flex; align-items: center; gap: 14px;
@@ -380,7 +372,6 @@
   .class-info .name { font-weight: 600; margin-bottom: 5px; font-size: 0.95rem; }
   .class-info .details { color: var(--text-soft); font-size: 0.8rem; }
 
-  /* ==== شماره کلاس ==== */
   .class-number {
     background: rgba(255,255,255,0.1);
     border: 1px solid rgba(255,255,255,0.2);
@@ -404,7 +395,6 @@
     color: var(--gold-light);
   }
 
-  /* ==== بخش امروز ==== */
   .today-section { margin-bottom: 8px; }
 
   .today-header {
@@ -434,7 +424,6 @@
     border: 1px solid rgba(212,175,55,0.5);
   }
 
-  /* ==== حالت گذشته ==== */
   .class-item.past { opacity: 0.55; }
   .class-item.past::before {
     background: linear-gradient(180deg, #64748b, #94a3b8);
@@ -449,7 +438,6 @@
     color: #cbd5e1;
   }
 
-  /* ==== جداکننده هفته ==== */
   .week-divider {
     display: flex;
     align-items: center;
@@ -472,7 +460,6 @@
     white-space: nowrap;
   }
 
-  /* ==== عنوان روز در بقیه هفته ==== */
   .day-group-title {
     font-size: 0.88rem;
     font-weight: 700;
@@ -482,7 +469,6 @@
     border-right: 3px solid var(--gold);
   }
 
-  /* ==== حالت بدون کلاس ==== */
   .no-class-today {
     text-align: center;
     padding: 28px 20px;
@@ -507,7 +493,6 @@
     color: var(--text-soft);
   }
 
-  /* ==== حالت‌های خالی / خطا ==== */
   .empty-state, .error-state {
     text-align: center; padding: 45px 20px; color: var(--text-soft);
   }
@@ -531,7 +516,40 @@
     border-color: rgba(212,175,55,0.5);
   }
 
-  /* ==== فوتر ==== */
+  /* ==== دکمه‌های انتهای کارت دبیر ==== */
+  .teacher-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    font-weight: 700;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(212,175,55,0.4);
+    border-radius: 12px;
+    cursor: pointer;
+    color: var(--gold-light);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: all 0.25s ease;
+  }
+  .action-btn:hover {
+    background: rgba(212,175,55,0.15);
+    border-color: rgba(212,175,55,0.7);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212,175,55,0.3);
+  }
+
   .footer {
     text-align: center;
     padding: 30px 20px 10px;
@@ -559,6 +577,157 @@
     font-weight: 700;
   }
 
+  .qr-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeInModal 0.25s ease;
+  }
+  .qr-modal.visible { display: flex; }
+
+  @keyframes fadeInModal {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .qr-modal-content {
+    background: linear-gradient(135deg, rgba(48,43,99,0.98), rgba(36,36,62,0.98));
+    border: 1.5px solid rgba(212,175,55,0.4);
+    border-radius: 24px;
+    padding: 28px;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 60px rgba(212,175,55,0.15);
+    animation: slideUpModal 0.3s ease;
+  }
+
+  @keyframes slideUpModal {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .qr-close {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    box-shadow: none;
+    font-family: inherit;
+    transition: all 0.2s ease;
+  }
+  .qr-close:hover {
+    background: rgba(255,107,107,0.3);
+    border-color: rgba(255,107,107,0.5);
+    transform: rotate(90deg);
+  }
+
+  .qr-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--gold-light);
+    margin-bottom: 8px;
+  }
+
+  .qr-sub {
+    font-size: 0.88rem;
+    color: var(--text-soft);
+    margin-bottom: 20px;
+  }
+
+  .qr-box {
+    background: #fff;
+    padding: 16px;
+    border-radius: 16px;
+    margin: 0 auto 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    min-width: 220px;
+    min-height: 220px;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .qr-box img, .qr-box canvas {
+    display: block;
+    border-radius: 4px;
+  }
+
+  .qr-hint {
+    font-size: 0.8rem;
+    color: var(--text-soft);
+    margin-bottom: 16px;
+  }
+
+  .qr-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    font-weight: 700;
+    background: linear-gradient(135deg, rgba(212,175,55,0.95), rgba(245,215,110,0.9));
+    color: #2a1f00;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(212,175,55,0.4);
+    transition: all 0.25s ease;
+  }
+  .qr-download:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(212,175,55,0.5);
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: linear-gradient(135deg, #34d399, #10b981);
+    color: #042f2e;
+    padding: 14px 24px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 0.92rem;
+    box-shadow: 0 8px 32px rgba(52,211,153,0.4);
+    opacity: 0;
+    transition: all 0.35s ease;
+    z-index: 1100;
+    pointer-events: none;
+    max-width: 90vw;
+    text-align: center;
+  }
+  .toast.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .toast.error {
+    background: linear-gradient(135deg, #f87171, #ef4444);
+    color: #fff;
+    box-shadow: 0 8px 32px rgba(239,68,68,0.4);
+  }
+
   ::-webkit-scrollbar { width: 10px; }
   ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
   ::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.5); border-radius: 10px; }
@@ -579,6 +748,10 @@
     .today-header { flex-wrap: wrap; }
     .footer { padding: 22px 14px 8px; margin-top: 22px; }
     .footer-text { font-size: 0.78rem; }
+    .teacher-actions { flex-direction: column; align-items: stretch; }
+    .action-btn { justify-content: center; }
+    .qr-modal-content { padding: 22px; }
+    .qr-box { min-width: 180px; min-height: 180px; padding: 12px; }
   }
 </style>
 </head>
@@ -619,6 +792,19 @@
     </p>
   </footer>
 </div>
+
+<div class="qr-modal" id="qrModal" onclick="closeQR(event)">
+  <div class="qr-modal-content" onclick="event.stopPropagation()">
+    <button class="qr-close" onclick="closeQR()">✕</button>
+    <h3 class="qr-title">📱 QR Code</h3>
+    <p class="qr-sub" id="qrTeacherName"></p>
+    <div class="qr-box" id="qrBox"></div>
+    <p class="qr-hint">با دوربین گوشی اسکن کنید</p>
+    <button class="qr-download" onclick="downloadQR()">📥 دانلود تصویر</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
 /* ==========================================================
@@ -815,7 +1001,7 @@ function t2m(s){
 }
 
 /* ==========================================================
-   جستجو (زنده)
+   جستجو
    ========================================================== */
 var currentTeacher = null;
 var timer = null;
@@ -1013,11 +1199,19 @@ function renderTeacher(t, active){
     html += '</div>';
   }
 
+  /* ==== دکمه‌های اشتراک‌گذاری انتهای کارت ==== */
+  if(active){
+    html += '<div class="teacher-actions">';
+    html += '<button class="action-btn" onclick="shareLink()">🔗 کپی لینک</button>';
+    html += '<button class="action-btn" onclick="showQR()">📱 QR Code</button>';
+    html += '</div>';
+  }
+
   return html;
 }
 
 /* ==========================================================
-   پیدا کردن کلاس فعلی و بعدی
+   کلاس فعلی و بعدی
    ========================================================== */
 function findCurNext(t, now){
   var cDay = now.getDay(), cMin = now.getHours() * 60 + now.getMinutes();
@@ -1042,9 +1236,6 @@ function findCurNext(t, now){
   return { cur: cur, next: next };
 }
 
-/* ==========================================================
-   به‌روزرسانی کارت بالای صفحه
-   ========================================================== */
 function updateNCC(){
   if(!currentTeacher) return;
   var card = document.getElementById("ncc");
@@ -1052,7 +1243,6 @@ function updateNCC(){
   var now = new Date();
   var fn = findCurNext(t, now);
 
-  /* === حالت ۱: الان در حال تدریس === */
   if(fn.cur){
     var cMin = now.getHours() * 60 + now.getMinutes();
     var cSec = now.getSeconds();
@@ -1064,7 +1254,6 @@ function updateNCC(){
     if(remainSec === 60){ remainSec = 0; remainMin++; }
 
     var passedMin = cMin - startMin;
-
     var hh = Math.floor(remainMin / 60);
     var mm = remainMin % 60;
 
@@ -1110,7 +1299,6 @@ function updateNCC(){
     return;
   }
 
-  /* === حالت ۲: کلاس بعدی === */
   if(fn.next){
     var cDay = now.getDay(), cMin = now.getHours() * 60 + now.getMinutes(), cSec = now.getSeconds();
     var nd = dayMap[fn.next.day];
@@ -1169,6 +1357,136 @@ function updateNCC(){
 }
 
 /* ==========================================================
+   اشتراک‌گذاری و QR
+   ========================================================== */
+function buildTeacherURL(name){
+  var base = window.location.origin + window.location.pathname;
+  return base + "?teacher=" + encodeURIComponent(name);
+}
+
+function shareLink(){
+  if(!currentTeacher) return;
+  var url = buildTeacherURL(currentTeacher);
+
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(url).then(function(){
+      showToast("✅ لینک کپی شد!");
+    }).catch(function(){
+      fallbackCopy(url);
+    });
+  } else {
+    fallbackCopy(url);
+  }
+}
+
+function fallbackCopy(text){
+  var ta = document.createElement("textarea");
+  ta.value = text;
+  ta.style.position = "fixed";
+  ta.style.opacity = "0";
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand("copy");
+    showToast("✅ لینک کپی شد!");
+  } catch(e) {
+    showToast("❌ کپی نشد، دستی کپی کنید", true);
+    prompt("لینک دبیر:", text);
+  }
+  document.body.removeChild(ta);
+}
+
+var qrInstance = null;
+
+function showQR(){
+  if(!currentTeacher) return;
+
+  var modal = document.getElementById("qrModal");
+  var box = document.getElementById("qrBox");
+  var nameEl = document.getElementById("qrTeacherName");
+
+  box.innerHTML = "";
+  nameEl.textContent = "استاد " + currentTeacher;
+
+  var url = buildTeacherURL(currentTeacher);
+
+  try {
+    qrInstance = new QRCode(box, {
+      text: url,
+      width: 220,
+      height: 220,
+      colorDark: "#0f0c29",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+    modal.classList.add("visible");
+  } catch(e) {
+    showToast("❌ خطا در ساخت QR", true);
+    console.error(e);
+  }
+}
+
+function closeQR(event){
+  if(event && event.target && event.target.id !== "qrModal") return;
+  document.getElementById("qrModal").classList.remove("visible");
+}
+
+function downloadQR(){
+  var box = document.getElementById("qrBox");
+  var canvas = box.querySelector("canvas");
+  var img = box.querySelector("img");
+
+  var dataURL = null;
+  if(canvas){
+    dataURL = canvas.toDataURL("image/png");
+  } else if(img && img.src){
+    dataURL = img.src;
+  }
+
+  if(!dataURL){
+    showToast("❌ تصویری برای دانلود نیست", true);
+    return;
+  }
+
+  var link = document.createElement("a");
+  link.download = "QR-" + currentTeacher + ".png";
+  link.href = dataURL;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  showToast("✅ تصویر دانلود شد!");
+}
+
+var toastTimer = null;
+function showToast(msg, isError){
+  var toast = document.getElementById("toast");
+  if(!toast) return;
+
+  toast.textContent = msg;
+  toast.className = "toast visible" + (isError ? " error" : "");
+
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){
+    toast.className = "toast";
+  }, 2500);
+}
+
+/* ==========================================================
+   پارامتر URL
+   ========================================================== */
+function checkURLParam(){
+  var params = new URLSearchParams(window.location.search);
+  var teacher = params.get("teacher");
+
+  if(teacher){
+    var decoded = decodeURIComponent(teacher);
+    document.getElementById("si").value = decoded;
+    doSearch();
+  }
+}
+
+/* ==========================================================
    پیشنهادها
    ========================================================== */
 function buildSuggestions(){
@@ -1192,7 +1510,7 @@ function buildSuggestions(){
 }
 
 /* ==========================================================
-   رویدادها - جستجوی زنده با debounce
+   رویدادها
    ========================================================== */
 var liveSearchTimer = null;
 document.getElementById("si").addEventListener("input", function(){
@@ -1207,7 +1525,14 @@ document.getElementById("si").addEventListener("keypress", function(e){
   }
 });
 
+document.addEventListener("keydown", function(e){
+  if(e.key === "Escape"){
+    document.getElementById("qrModal").classList.remove("visible");
+  }
+});
+
 buildSuggestions();
+checkURLParam();
 </script>
 </body>
 </html>
