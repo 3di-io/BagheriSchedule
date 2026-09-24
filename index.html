@@ -97,15 +97,32 @@
     box-shadow: 0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15);
   }
 
+  /* ==== جعبه جستجو ==== */
   .search-box { padding: 22px; margin-bottom: 20px; }
   .search-box label { display: block; margin-bottom: 12px; font-weight: 600; }
-  .input-group { display: flex; gap: 10px; flex-wrap: wrap; }
+  .search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .search-icon {
+    position: absolute;
+    right: 18px;
+    font-size: 1.1rem;
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 1;
+  }
   input[type="text"] {
-    flex: 1; min-width: 200px; padding: 15px 20px; font-size: 1rem;
-    font-family: inherit; color: #fff;
+    width: 100%;
+    padding: 15px 50px 15px 50px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #fff;
     background: rgba(255,255,255,0.08);
     border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 14px; transition: all 0.25s ease;
+    border-radius: 14px;
+    transition: all 0.25s ease;
   }
   input[type="text"]::placeholder { color: rgba(255,255,255,0.5); }
   input[type="text"]:focus {
@@ -113,14 +130,34 @@
     border-color: rgba(212,175,55,0.7);
     box-shadow: 0 0 0 4px rgba(212,175,55,0.15);
   }
-  button {
-    padding: 15px 30px; font-size: 1rem; font-family: inherit; font-weight: 700;
-    background: linear-gradient(135deg, rgba(212,175,55,0.95), rgba(245,215,110,0.9));
-    border: 1px solid rgba(255,255,255,0.25); border-radius: 14px;
-    cursor: pointer; transition: all 0.25s ease; color: #2a1f00;
-    box-shadow: 0 4px 16px rgba(212,175,55,0.4); white-space: nowrap;
+
+  /* دکمه پاک کردن */
+  .clear-btn {
+    position: absolute;
+    left: 12px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+    box-shadow: none;
+    font-family: inherit;
   }
-  button:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,175,55,0.55); }
+  .clear-btn.visible { display: flex; }
+  .clear-btn:hover {
+    background: rgba(255, 107, 107, 0.3);
+    border-color: rgba(255, 107, 107, 0.5);
+    transform: scale(1.05);
+    box-shadow: none;
+  }
 
   /* ==== کارت کلاس بعدی ==== */
   .next-class-card { padding: 24px; margin-bottom: 20px; display: none; animation: slideDown 0.5s ease; }
@@ -309,13 +346,6 @@
   .selection-card:hover .selection-arrow { opacity: 1; transform: translateX(-6px); }
 
   /* ==== لیست کلاس‌ها ==== */
-  .class-group { margin-bottom: 22px; }
-  .class-group-title {
-    font-size: 0.95rem; font-weight: 700; color: var(--gold-light);
-    padding: 8px 14px; background: rgba(212,175,55,0.12);
-    border-right: 3px solid var(--gold); border-radius: 8px;
-    margin-bottom: 12px; display: inline-block;
-  }
   .class-list { display: flex; flex-direction: column; gap: 10px; }
   .class-item {
     display: flex; align-items: center; gap: 14px;
@@ -340,7 +370,7 @@
     background: linear-gradient(135deg, rgba(212,175,55,0.95), rgba(245,215,110,0.95));
     color: #2a1f00; padding: 9px 14px; border-radius: 10px;
     font-weight: 700; font-size: 0.85rem; white-space: nowrap;
-    min-width: 88px; text-align: center; flex-shrink: 0;
+    min-width: 80px; text-align: center; flex-shrink: 0;
   }
   .class-item.current .period-badge {
     background: linear-gradient(135deg, #34d399, #10b981); color: #042f2e;
@@ -349,6 +379,133 @@
   .class-info { flex: 1; }
   .class-info .name { font-weight: 600; margin-bottom: 5px; font-size: 0.95rem; }
   .class-info .details { color: var(--text-soft); font-size: 0.8rem; }
+
+  /* ==== شماره کلاس ==== */
+  .class-number {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all 0.25s ease;
+  }
+  .class-item.current .class-number {
+    background: rgba(52,211,153,0.25);
+    border-color: rgba(52,211,153,0.5);
+    color: #6ee7b7;
+  }
+  .class-item:hover .class-number {
+    background: rgba(212,175,55,0.2);
+    border-color: rgba(212,175,55,0.5);
+    color: var(--gold-light);
+  }
+
+  /* ==== بخش امروز ==== */
+  .today-section { margin-bottom: 8px; }
+
+  .today-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, rgba(212,175,55,0.22), rgba(245,215,110,0.12));
+    border: 1px solid rgba(212,175,55,0.4);
+    border-radius: 12px;
+    margin-bottom: 14px;
+  }
+  .today-icon { font-size: 1.3rem; }
+  .today-title {
+    flex: 1;
+    font-weight: 700;
+    color: var(--gold-light);
+    font-size: 1rem;
+  }
+  .today-count {
+    background: rgba(212,175,55,0.3);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    border: 1px solid rgba(212,175,55,0.5);
+  }
+
+  /* ==== حالت گذشته ==== */
+  .class-item.past { opacity: 0.55; }
+  .class-item.past::before {
+    background: linear-gradient(180deg, #64748b, #94a3b8);
+  }
+  .class-item.past .period-badge {
+    background: linear-gradient(135deg, #475569, #64748b);
+    color: #cbd5e1;
+  }
+  .class-item.past .class-number {
+    background: rgba(148,163,184,0.15);
+    border-color: rgba(148,163,184,0.3);
+    color: #cbd5e1;
+  }
+
+  /* ==== جداکننده هفته ==== */
+  .week-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 26px 0 20px;
+  }
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,175,55,0.4), transparent);
+  }
+  .divider-text {
+    color: var(--gold-light);
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 6px 16px;
+    background: rgba(212,175,55,0.1);
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  /* ==== عنوان روز در بقیه هفته ==== */
+  .day-group-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin: 18px 0 10px;
+    padding-right: 10px;
+    border-right: 3px solid var(--gold);
+  }
+
+  /* ==== حالت بدون کلاس ==== */
+  .no-class-today {
+    text-align: center;
+    padding: 28px 20px;
+    background: rgba(52,211,153,0.06);
+    border: 1px dashed rgba(52,211,153,0.3);
+    border-radius: 14px;
+    margin-bottom: 8px;
+  }
+  .no-class-icon {
+    font-size: 2.4rem;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .no-class-text {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #6ee7b7;
+    margin-bottom: 6px;
+  }
+  .no-class-sub {
+    font-size: 0.83rem;
+    color: var(--text-soft);
+  }
 
   /* ==== حالت‌های خالی / خطا ==== */
   .empty-state, .error-state {
@@ -383,13 +540,15 @@
     header h1 { font-size: 1.25rem; }
     .logo { width: 85px; height: 85px; }
     .search-box, .result, .next-class-card { padding: 18px; }
-    .class-item { flex-direction: column; align-items: flex-start; gap: 10px; }
-    .period-badge { width: 100%; }
+    .class-item { flex-wrap: wrap; }
+    .period-badge { min-width: 70px; }
+    .class-number { width: 100%; text-align: center; }
     .countdown { font-size: 1.8rem; }
     .avatar { width: 50px; height: 50px; font-size: 1.2rem; }
     .selection-card { padding: 14px 16px; }
     .selection-avatar { width: 46px; height: 46px; font-size: 1.1rem; }
     .selection-name { font-size: 0.95rem; }
+    .today-header { flex-wrap: wrap; }
   }
 </style>
 </head>
@@ -406,9 +565,10 @@
 
   <div class="search-box glass">
     <label for="si">جستجوی نام دبیر:</label>
-    <div class="input-group">
+    <div class="search-wrapper">
+      <span class="search-icon">🔍</span>
       <input type="text" id="si" placeholder="مثلاً: کریمی، قریب، صالحی..." autocomplete="off">
-      <button onclick="doSearch()">🔍 جستجو</button>
+      <button class="clear-btn" id="clearBtn" onclick="clearSearch()" title="پاک کردن">✕</button>
     </div>
   </div>
 
@@ -425,7 +585,7 @@
 
 <script>
 /* ==========================================================
-   ساعت زنگ‌ها (زمان‌های جدید)
+   ساعت زنگ‌ها
    ========================================================== */
 var PERIODS = {
   1: { start: "07:45", end: "09:15" },
@@ -618,22 +778,32 @@ function t2m(s){
 }
 
 /* ==========================================================
-   جستجو
+   جستجو (زنده)
    ========================================================== */
 var currentTeacher = null;
 var timer = null;
 
 function doSearch(){
-  var q = document.getElementById("si").value.trim();
+  var input = document.getElementById("si");
+  var q = input.value.trim();
   var res = document.getElementById("res");
   var ncc = document.getElementById("ncc");
+  var clearBtn = document.getElementById("clearBtn");
+
+  /* نمایش/مخفی کردن دکمه پاک کردن */
+  if(q.length > 0){
+    clearBtn.classList.add("visible");
+  } else {
+    clearBtn.classList.remove("visible");
+  }
 
   if(timer){ clearInterval(timer); timer = null; }
 
   if(!q){
-    res.innerHTML = '<div class="empty-state"><span class="icon">✏️</span><p>لطفاً نام دبیر را وارد کنید</p></div>';
+    res.innerHTML = '<div class="empty-state"><span class="icon">👨‍🏫</span><p>برای مشاهده برنامه، نام دبیر را وارد کنید</p><div class="suggestions" id="sug"></div></div>';
     ncc.classList.remove("visible");
     currentTeacher = null;
+    buildSuggestions();
     return;
   }
 
@@ -646,6 +816,7 @@ function doSearch(){
     return;
   }
 
+  /* فقط یک دبیر پیدا شد */
   if(matches.length === 1){
     currentTeacher = matches[0];
     res.innerHTML = renderTeacher(teacherDB[matches[0]], true);
@@ -655,6 +826,7 @@ function doSearch(){
     return;
   }
 
+  /* چند دبیر پیدا شد */
   currentTeacher = null;
   ncc.classList.remove("visible");
 
@@ -683,6 +855,12 @@ function doSearch(){
   res.innerHTML = selectionHtml;
 }
 
+function clearSearch(){
+  document.getElementById("si").value = "";
+  document.getElementById("si").focus();
+  doSearch();
+}
+
 function selectTeacher(name){
   var res = document.getElementById("res");
   var ncc = document.getElementById("ncc");
@@ -701,17 +879,29 @@ function selectTeacher(name){
    رندر کارت دبیر
    ========================================================== */
 function renderTeacher(t, active){
-  var groups = {};
-  t.classes.forEach(function(c){
-    if(!groups[c.className]) groups[c.className] = [];
-    groups[c.className].push(c);
+  var sorted = t.classes.slice().sort(function(a, b){
+    var dd = dayOrder.indexOf(a.day) - dayOrder.indexOf(b.day);
+    if(dd !== 0) return dd;
+    return a.period - b.period;
   });
-  Object.keys(groups).forEach(function(k){
-    groups[k].sort(function(a, b){
-      var dd = dayOrder.indexOf(a.day) - dayOrder.indexOf(b.day);
-      if(dd !== 0) return dd;
-      return a.period - b.period;
-    });
+
+  var now = new Date();
+  var cDay = now.getDay();
+  var cMin = now.getHours() * 60 + now.getMinutes();
+
+  var todayClasses = [];
+  var otherClasses = [];
+  sorted.forEach(function(c){
+    if(dayMap[c.day] === cDay){
+      todayClasses.push(c);
+    } else {
+      otherClasses.push(c);
+    }
+  });
+
+  var persianTodayName = "";
+  Object.keys(dayMap).forEach(function(k){
+    if(dayMap[k] === cDay) persianTodayName = k;
   });
 
   var initial = t.name.charAt(0);
@@ -720,23 +910,74 @@ function renderTeacher(t, active){
     '<small>📚 ' + esc(t.mainSubject) + ' | مجموع ' + toFa(t.classes.length) + ' کلاس در هفته</small>' +
     '</div></div>';
 
-  var now = new Date();
-  var cDay = now.getDay(), cMin = now.getHours() * 60 + now.getMinutes();
+  if(todayClasses.length > 0){
+    html += '<div class="today-section">';
+    html += '<div class="today-header">';
+    html += '<span class="today-icon">📅</span>';
+    html += '<span class="today-title">کلاس‌های امروز (' + esc(persianTodayName) + ')</span>';
+    html += '<span class="today-count">' + toFa(todayClasses.length) + ' کلاس</span>';
+    html += '</div>';
+    html += '<div class="class-list">';
 
-  Object.keys(groups).forEach(function(cn){
-    html += '<div class="class-group"><div class="class-group-title">📚 ' + esc(cn) + '</div><div class="class-list">';
-    groups[cn].forEach(function(c){
-      var isCur = false;
-      if(active && dayMap[c.day] === cDay && cMin >= t2m(c.start) && cMin < t2m(c.end)) isCur = true;
-      html += '<div class="class-item' + (isCur ? ' current' : '') + '">';
-      html += '<div class="period-badge">' + esc(c.day) + ' • زنگ ' + toFa(c.period) + '</div>';
-      html += '<div class="class-info"><div class="name">' + esc(c.subject) +
-        (isCur ? ' <span style="color:#6ee7b7">● در حال تدریس</span>' : '') + '</div>';
-      html += '<div class="details">🕐 ' + esc(c.start) + ' تا ' + esc(c.end) + '</div></div>';
+    todayClasses.forEach(function(c){
+      var isCur = active && cMin >= t2m(c.start) && cMin < t2m(c.end);
+      var isPast = cMin >= t2m(c.end);
+      var itemClass = 'class-item' + (isCur ? ' current' : '') + (isPast ? ' past' : '');
+
+      html += '<div class="' + itemClass + '">';
+      html += '<div class="period-badge">زنگ ' + toFa(c.period) + '</div>';
+      html += '<div class="class-info">';
+      html += '<div class="name">' + esc(c.subject) +
+              (isCur ? ' <span style="color:#6ee7b7">● در حال تدریس</span>' : '') +
+              (isPast ? ' <span style="color:#94a3b8">✓ گذشت</span>' : '') + '</div>';
+      html += '<div class="details">🕐 ' + esc(c.start) + ' تا ' + esc(c.end) + '</div>';
+      html += '</div>';
+      html += '<div class="class-number">🏫 ' + esc(c.className) + '</div>';
       html += '</div>';
     });
+
     html += '</div></div>';
-  });
+  } else {
+    html += '<div class="no-class-today">';
+    html += '<span class="no-class-icon">🎉</span>';
+    html += '<div class="no-class-text">امروز (' + esc(persianTodayName) + ') کلاسی نداری</div>';
+    html += '<div class="no-class-sub">روز استراحتت مبارک!</div>';
+    html += '</div>';
+  }
+
+  if(otherClasses.length > 0){
+    html += '<div class="week-divider">';
+    html += '<span class="divider-line"></span>';
+    html += '<span class="divider-text">📋 بقیه هفته</span>';
+    html += '<span class="divider-line"></span>';
+    html += '</div>';
+
+    var grouped = {};
+    otherClasses.forEach(function(c){
+      if(!grouped[c.day]) grouped[c.day] = [];
+      grouped[c.day].push(c);
+    });
+
+    html += '<div class="class-list">';
+
+    Object.keys(grouped).sort(function(a, b){
+      return dayOrder.indexOf(a) - dayOrder.indexOf(b);
+    }).forEach(function(day){
+      html += '<div class="day-group-title">' + esc(day) + '</div>';
+      grouped[day].forEach(function(c){
+        html += '<div class="class-item">';
+        html += '<div class="period-badge">زنگ ' + toFa(c.period) + '</div>';
+        html += '<div class="class-info">';
+        html += '<div class="name">' + esc(c.subject) + '</div>';
+        html += '<div class="details">🕐 ' + esc(c.start) + ' تا ' + esc(c.end) + '</div>';
+        html += '</div>';
+        html += '<div class="class-number">🏫 ' + esc(c.className) + '</div>';
+        html += '</div>';
+      });
+    });
+
+    html += '</div>';
+  }
 
   return html;
 }
@@ -894,14 +1135,12 @@ function updateNCC(){
 }
 
 /* ==========================================================
-   رویدادها
+   پیشنهادها
    ========================================================== */
-document.getElementById("si").addEventListener("keypress", function(e){
-  if(e.key === "Enter") doSearch();
-});
-
-(function(){
+function buildSuggestions(){
   var sug = document.getElementById("sug");
+  if(!sug) return;
+  sug.innerHTML = "";
   var pops = ["کریمی", "قریب", "صالحی", "روشنگر", "جعفری", "درخشانی"];
   pops.forEach(function(n){
     if(teacherNames.indexOf(n) > -1){
@@ -911,11 +1150,32 @@ document.getElementById("si").addEventListener("keypress", function(e){
       c.onclick = function(){
         document.getElementById("si").value = n;
         doSearch();
+        document.getElementById("si").focus();
       };
       sug.appendChild(c);
     }
   });
-})();
+}
+
+/* ==========================================================
+   رویدادها - جستجوی زنده با debounce
+   ========================================================== */
+var liveSearchTimer = null;
+document.getElementById("si").addEventListener("input", function(){
+  if(liveSearchTimer) clearTimeout(liveSearchTimer);
+  liveSearchTimer = setTimeout(doSearch, 150);
+});
+
+/* همچنان با Enter هم کار کنه */
+document.getElementById("si").addEventListener("keypress", function(e){
+  if(e.key === "Enter"){
+    if(liveSearchTimer) clearTimeout(liveSearchTimer);
+    doSearch();
+  }
+});
+
+/* ساخت پیشنهادهای اولیه */
+buildSuggestions();
 </script>
 </body>
 </html>
