@@ -18,7 +18,7 @@
   body {
     font-family: 'Vazirmatn', Tahoma, sans-serif;
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 45%, #24243e 100%);
-    min-height: 100vh; padding: 30px 20px 60px; color: #fff;
+    min-height: 100vh; padding: 30px 20px 40px; color: #fff;
     position: relative; overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
   }
@@ -531,6 +531,34 @@
     border-color: rgba(212,175,55,0.5);
   }
 
+  /* ==== فوتر ==== */
+  .footer {
+    text-align: center;
+    padding: 30px 20px 10px;
+    margin-top: 30px;
+  }
+  .footer-line {
+    width: 80px;
+    height: 2px;
+    margin: 0 auto 18px;
+    background: linear-gradient(90deg, transparent, rgba(212,175,55,0.7), transparent);
+    border-radius: 2px;
+  }
+  .footer-text {
+    color: var(--text-soft);
+    font-size: 0.88rem;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    line-height: 1.8;
+  }
+  .footer-text strong {
+    background: linear-gradient(135deg, #ffffff, #f5d76e, #d4af37);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+  }
+
   ::-webkit-scrollbar { width: 10px; }
   ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
   ::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.5); border-radius: 10px; }
@@ -549,6 +577,8 @@
     .selection-avatar { width: 46px; height: 46px; font-size: 1.1rem; }
     .selection-name { font-size: 0.95rem; }
     .today-header { flex-wrap: wrap; }
+    .footer { padding: 22px 14px 8px; margin-top: 22px; }
+    .footer-text { font-size: 0.78rem; }
   }
 </style>
 </head>
@@ -581,6 +611,13 @@
       <div class="suggestions" id="sug"></div>
     </div>
   </div>
+
+  <footer class="footer">
+    <div class="footer-line"></div>
+    <p class="footer-text">
+      طراحی و توسعه توسط <strong>تیم پشتیبانی دبیرستان باقری</strong>
+    </p>
+  </footer>
 </div>
 
 <script>
@@ -790,7 +827,6 @@ function doSearch(){
   var ncc = document.getElementById("ncc");
   var clearBtn = document.getElementById("clearBtn");
 
-  /* نمایش/مخفی کردن دکمه پاک کردن */
   if(q.length > 0){
     clearBtn.classList.add("visible");
   } else {
@@ -816,7 +852,6 @@ function doSearch(){
     return;
   }
 
-  /* فقط یک دبیر پیدا شد */
   if(matches.length === 1){
     currentTeacher = matches[0];
     res.innerHTML = renderTeacher(teacherDB[matches[0]], true);
@@ -826,7 +861,6 @@ function doSearch(){
     return;
   }
 
-  /* چند دبیر پیدا شد */
   currentTeacher = null;
   ncc.classList.remove("visible");
 
@@ -1166,7 +1200,6 @@ document.getElementById("si").addEventListener("input", function(){
   liveSearchTimer = setTimeout(doSearch, 150);
 });
 
-/* همچنان با Enter هم کار کنه */
 document.getElementById("si").addEventListener("keypress", function(e){
   if(e.key === "Enter"){
     if(liveSearchTimer) clearTimeout(liveSearchTimer);
@@ -1174,7 +1207,6 @@ document.getElementById("si").addEventListener("keypress", function(e){
   }
 });
 
-/* ساخت پیشنهادهای اولیه */
 buildSuggestions();
 </script>
 </body>
