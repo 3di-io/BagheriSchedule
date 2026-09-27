@@ -57,7 +57,7 @@
       radial-gradient(ellipse at top, var(--bg-2) 0%, transparent 50%),
       radial-gradient(ellipse at bottom, var(--bg-3) 0%, transparent 50%),
       var(--bg-1);
-    min-height: 100vh; padding: 30px 20px 40px;
+    min-height: 100vh; padding: 100px 20px 40px;
     color: var(--text-light);
     position: relative; overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
@@ -122,11 +122,42 @@
 
   .container { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
 
+  .site-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 72px;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background: rgba(12, 12, 12, 0.72);
+    border-bottom: 1px solid rgba(212,175,55,0.22);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 5px 22px rgba(0,0,0,0.16);
+  }
+  body.light .site-header {
+    background: rgba(255,255,255,0.78);
+    border-bottom-color: rgba(184,148,31,0.2);
+  }
+  .site-header-side { width: 48px; display:flex; align-items:center; justify-content:center; }
+  .site-header-update {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    display:flex; align-items:center; gap:8px;
+    color: var(--gold-light); font-size:13px; font-weight:700;
+    white-space:nowrap;
+    transition: opacity .45s ease, transform .45s ease;
+  }
+  body.light .site-header-update { color: var(--gold); }
+  .site-header-update.hidden { opacity:0; pointer-events:none; transform:translate(-50%,-8px); }
+  .update-dot { width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 10px rgba(52,211,153,.55); }
   header { text-align: center; margin-bottom: 22px; padding: 16px; }
 
   .theme-toggle {
-    position: fixed;
-    top: 20px; left: 20px;
+    position: relative;
+    top: auto; left: auto;
     width: 44px; height: 44px;
     border-radius: 50%;
     background: var(--glass-bg);
@@ -500,6 +531,8 @@
   }
 
   @media (max-width: 600px) {
+    body { padding-top: 78px; }
+
     .autocomplete-dropdown { max-height: 40vh; }
     .autocomplete-item { padding: 10px 12px; gap: 10px; }
     .autocomplete-avatar { width: 34px; height: 34px; font-size: 0.9rem; }
@@ -1134,7 +1167,10 @@
     .qr-modal-content { padding: 22px; }
     .qr-box { min-width: 180px; min-height: 180px; padding: 12px; }
 
-    .theme-toggle { top: 14px; left: 14px; width: 40px; height: 40px; }
+    .site-header { height:60px; padding:0 12px; }
+    .site-header-update { font-size:11px; gap:6px; }
+    .site-header-side { width:44px; }
+    .theme-toggle { width:40px; height:40px; }
 
     .info-chip { font-size: 0.8rem; padding: 7px 11px; }
   }
@@ -1146,7 +1182,7 @@
   }
 
 /* ===== Integrated Admin Panel ===== */
-.admin-menu-btn{position:fixed;top:22px;right:22px;z-index:1200;width:48px;height:48px;border:1px solid rgba(255,255,255,.18);border-radius:14px;background:rgba(20,28,40,.88);backdrop-filter:blur(10px);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;cursor:pointer;box-shadow:0 8px 25px rgba(0,0,0,.25)}
+.admin-menu-btn{position:relative;top:auto;right:auto;z-index:1200;width:48px;height:48px;border:1px solid rgba(255,255,255,.18);border-radius:14px;background:rgba(20,28,40,.88);backdrop-filter:blur(10px);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;cursor:pointer;box-shadow:0 8px 25px rgba(0,0,0,.25)}
 .admin-menu-btn span{display:block;width:22px;height:2px;border-radius:3px;background:#fff;transition:.2s}
 .admin-drawer-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:1250;display:none}
 .admin-drawer{position:fixed;top:0;right:0;width:min(330px,88vw);height:100vh;background:#111827;color:#fff;z-index:1260;transform:translateX(105%);transition:transform .25s ease;box-shadow:-12px 0 35px rgba(0,0,0,.35);padding:24px}
@@ -1205,8 +1241,25 @@
 </head>
 <body class="dark">
 
+<!-- هدر ثابت سایت -->
+<div class="site-header" id="siteHeader">
+  <div class="site-header-side">
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="تغییر تم" aria-label="تغییر تم">
+      <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
+  </div>
+  <div class="site-header-update" id="siteHeaderUpdate">
+    <span class="update-dot"></span>
+    <span>آخرین به‌روزرسانی: <strong id="lastUpdateDate">۵ مهر ۱۴۰۵</strong></span>
+  </div>
+  <div class="site-header-side">
+    <button class="admin-menu-btn" aria-label="باز کردن منو" onclick="openAdminMenu()"><span></span><span></span><span></span></button>
+  </div>
+</div>
+
 <!-- Integrated admin menu -->
-<button class="admin-menu-btn" aria-label="باز کردن منو" onclick="openAdminMenu()"><span></span><span></span><span></span></button>
 <div class="admin-drawer-backdrop" id="adminDrawerBackdrop" onclick="closeAdminMenu()"></div>
 <aside class="admin-drawer" id="adminDrawer" aria-label="منوی سایت">
   <div class="admin-drawer-head"><strong>منوی سایت</strong><button class="admin-close" onclick="closeAdminMenu()" aria-label="بستن">×</button></div>
@@ -1286,11 +1339,7 @@
 
 <div class="bg-blob"></div>
 
-<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="تغییر تم" aria-label="تغییر تم">
-  <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-  </svg>
-</button>
+
 
 <div class="container">
   <header>
@@ -2011,6 +2060,20 @@ var QUOTES = [
   "صبر و مهربانی، دو بال معلمی هستند."
 ];
 
+function setLastUpdateHeader(){
+  var el=document.getElementById("lastUpdateDate");
+  var box=document.getElementById("siteHeaderUpdate");
+  if(!el || !box) return;
+  try {
+    el.textContent=new Intl.DateTimeFormat("fa-IR-u-ca-persian",{year:"numeric",month:"long",day:"numeric"}).format(new Date());
+  } catch(e) { el.textContent="امروز"; }
+  box.classList.remove("hidden");
+  clearTimeout(window.lastUpdateHideTimer);
+  window.lastUpdateHideTimer=setTimeout(function(){ box.classList.add("hidden"); },25000);
+}
+window.addEventListener("pageshow", setLastUpdateHeader);
+window.addEventListener("DOMContentLoaded", setLastUpdateHeader);
+
 var quoteHideTimer = null;
 
 function startQuoteRotation(){
@@ -2024,6 +2087,7 @@ function startQuoteRotation(){
   quoteHideTimer = setTimeout(function(){ strip.classList.add("hidden"); }, 15000);
 }
 window.addEventListener("pageshow", startQuoteRotation);
+window.addEventListener("DOMContentLoaded", startQuoteRotation);
 
 /* ==========================================================
    اتوکامپلیت
