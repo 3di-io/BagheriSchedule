@@ -1169,17 +1169,18 @@
 .admin-rich-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.admin-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.admin-control{width:100%;padding:10px;border:1px solid #dbe3e8;border-radius:10px;background:#fff;font-family:inherit}.admin-list{display:grid;gap:9px}.admin-list-item{display:flex;justify-content:space-between;align-items:center;padding:11px;border:1px solid #e7edf1;border-radius:10px;background:#fbfcfd;font-size:12px}.admin-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.admin-search{flex:1;min-width:180px}.admin-danger{background:#fee2e2;color:#b91c1c}.admin-success{background:#dcfce7;color:#166534}.admin-muted{color:#718096;font-size:11px}@media(max-width:700px){.admin-rich-grid,.admin-form-grid{grid-template-columns:1fr}}
 
 .ad-page{display:none}.ad-page.active{display:block}.admin-rich-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.admin-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.admin-control{width:100%;padding:10px;border:1px solid #dbe3e8;border-radius:10px;background:#fff;font-family:inherit;margin-bottom:12px}.admin-list{display:grid;gap:9px}.admin-list-item{display:flex;justify-content:space-between;align-items:center;padding:11px;border:1px solid #e7edf1;border-radius:10px;background:#fbfcfd;font-size:12px}.admin-muted{font-size:10px;color:#7b8b96}.admin-toolbar{display:flex;gap:8px}.admin-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}.admin-card-head h3{margin:0;font-size:14px}@media(max-width:700px){.admin-rich-grid,.admin-form-grid{grid-template-columns:1fr}}
+
+#siteAnnouncement{display:none;position:relative;z-index:1100;margin:12px auto 18px;width:min(900px,calc(100% - 28px));padding:14px 18px;border-radius:14px;background:#fff7d6;color:#5b4300;border:1px solid #f0d477;box-shadow:0 8px 25px rgba(0,0,0,.08);direction:rtl;text-align:right}#siteAnnouncement.important{background:#ffe4e4;color:#7f1d1d;border-color:#f3a5a5}#siteAnnouncement .ann-title{font-weight:800;font-size:14px;margin-bottom:5px}#siteAnnouncement .ann-text{font-size:13px;line-height:1.9;white-space:pre-wrap}#siteAnnouncement .ann-close{position:absolute;left:10px;top:8px;border:0;background:transparent;font-size:20px;cursor:pointer;color:inherit}
 </style>
 </head>
 <body class="dark">
+<div id="siteAnnouncement" aria-live="polite"><button class="ann-close" onclick="dismissAnnouncement()" aria-label="بستن">×</button><div class="ann-title">📢 اطلاعیه</div><div class="ann-text" id="siteAnnouncementText"></div></div>
+
 <!-- Integrated admin menu -->
 <button class="admin-menu-btn" aria-label="باز کردن منو" onclick="openAdminMenu()"><span></span><span></span><span></span></button>
 <div class="admin-drawer-backdrop" id="adminDrawerBackdrop" onclick="closeAdminMenu()"></div>
 <aside class="admin-drawer" id="adminDrawer" aria-label="منوی سایت">
   <div class="admin-drawer-head"><strong>منوی سایت</strong><button class="admin-close" onclick="closeAdminMenu()" aria-label="بستن">×</button></div>
-  <a href="#" onclick="closeAdminMenu()">⌂&nbsp; صفحه اصلی</a>
-  <a href="#teachers" onclick="closeAdminMenu()">👨‍🏫&nbsp; دبیران</a>
-  <a href="#classes" onclick="closeAdminMenu()">🏫&nbsp; کلاس‌ها</a>
   <button class="menu-item admin-entry" onclick="closeAdminMenu();openAdminLogin()">⚙️&nbsp; پنل مدیریت</button>
 </aside>
 
@@ -1248,7 +1249,7 @@
 
       <div id="ad-bells" class="ad-page"><div class="admin-placeholder"><div class="admin-card-head"><h3>زمان‌بندی زنگ‌ها</h3><button class="admin-action" onclick="showAdminToast('زنگ جدید آماده شد')">＋ افزودن زنگ</button></div><table class="admin-table"><tr><th>زنگ</th><th>شروع</th><th>پایان</th><th>عملیات</th></tr><tr><td>۱</td><td>۷:۳۰</td><td>۸:۱۵</td><td>ویرایش</td></tr><tr><td>۲</td><td>۸:۲۰</td><td>۹:۰۵</td><td>ویرایش</td></tr><tr><td>۳</td><td>۹:۲۰</td><td>۱۰:۰۵</td><td>ویرایش</td></tr></table></div></div>
 
-      <div id="ad-announce" class="ad-page"><div class="admin-placeholder"><div class="admin-card-head"><h3>اطلاعیه‌ها</h3><button class="admin-action" onclick="showAdminToast('فرم اطلاعیه آماده شد')">＋ اطلاعیه جدید</button></div><div class="admin-list"><div class="admin-list-item"><span>به‌روزرسانی برنامه هفتگی</span><span class="admin-badge">منتشر شده</span></div><div class="admin-list-item"><span>اطلاعیه جدید مدرسه</span><span class="admin-badge">پیش‌نویس</span></div></div></div></div>
+      <div id="ad-announce" class="ad-page"><div class="admin-placeholder"><div class="admin-card-head"><h3>مدیریت اطلاعیه</h3><span class="admin-muted">نمایش برای کاربران: حداکثر ۲۴ ساعت</span></div><div class="admin-field"><label>متن اطلاعیه</label><textarea id="announcementText" class="admin-control" rows="5" placeholder="متن اطلاعیه را اینجا بنویسید..."></textarea></div><div class="admin-form-grid"><select id="announcementDuration" class="admin-control"><option value="24">نمایش به مدت ۲۴ ساعت</option><option value="12">نمایش به مدت ۱۲ ساعت</option><option value="6">نمایش به مدت ۶ ساعت</option><option value="1">نمایش به مدت ۱ ساعت</option></select><select id="announcementStyle" class="admin-control"><option value="normal">اطلاعیه عادی</option><option value="important">اطلاعیه مهم</option></select></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="admin-action" onclick="publishAnnouncement()">📢 انتشار اطلاعیه</button><button class="admin-action admin-danger" onclick="clearAnnouncement()">🗑 حذف اطلاعیه فعال</button></div><p id="announcementStatus" class="admin-muted" style="margin-top:12px"></p></div></div>
 
       <div id="ad-logs" class="ad-page"><div class="admin-placeholder"><div class="admin-card-head"><h3>تاریخچه تغییرات</h3></div><table class="admin-table"><tr><th>زمان</th><th>عملیات</th><th>بخش</th><th>کاربر</th></tr><tr><td>۱۴:۲۸</td><td>ویرایش برنامه</td><td>کلاس ۱۰۱</td><td>admin</td></tr><tr><td>۱۳:۵۰</td><td>افزودن دبیر</td><td>دبیران</td><td>admin</td></tr></table></div></div>
 
@@ -2706,6 +2707,33 @@ function closeAdminPanel(){document.getElementById('adminPanel').classList.remov
 
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeAdminMenu();closeAdminLogin();closeAdminPanel()}if(e.key==='Enter'&&document.getElementById('adminLoginModal').classList.contains('show')){e.preventDefault();adminLogin()}});
 window.addEventListener('DOMContentLoaded',function(){var pass=document.getElementById('adminPassword');if(pass){pass.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();adminLogin()}})}});
+</script>
+<script>
+function adminPage(btn,title){
+  document.querySelectorAll('.admin-panel-nav button').forEach(function(x){x.classList.remove('active')});
+  if(btn) btn.classList.add('active');
+  var titleEl=document.getElementById('adminPanelTitle'); if(titleEl) titleEl.textContent=title;
+  var key={'داشبورد':'dashboard','مدیریت دبیران':'teachers','مدیریت کلاس‌ها':'classes','برنامه هفتگی':'schedule','دروس':'subjects','ورود / خروج اطلاعات':'import','زمان‌بندی زنگ‌ها':'bells','اطلاعیه‌ها':'announce','تاریخچه تغییرات':'logs','تنظیمات':'settings'}[title];
+  document.querySelectorAll('.ad-page').forEach(function(x){x.classList.remove('active')});
+  var page=document.getElementById('ad-'+key); if(page) page.classList.add('active');
+  if(key==='announce') loadAnnouncementEditor();
+}
+function getAnnouncement(){try{return JSON.parse(localStorage.getItem('bagheriAnnouncement')||'null')}catch(e){return null}}
+function publishAnnouncement(){
+  var text=(document.getElementById('announcementText')||{}).value||''; text=text.trim();
+  var hours=parseInt((document.getElementById('announcementDuration')||{}).value||'24',10); if(hours>24) hours=24;
+  if(!text){showAdminToast('لطفاً متن اطلاعیه را وارد کنید');return}
+  var data={text:text,style:(document.getElementById('announcementStyle')||{}).value||'normal',createdAt:Date.now(),expiresAt:Date.now()+hours*60*60*1000};
+  localStorage.setItem('bagheriAnnouncement',JSON.stringify(data)); showAnnouncement(data); updateAnnouncementStatus(data); showAdminToast('اطلاعیه با موفقیت منتشر شد');
+}
+function clearAnnouncement(){localStorage.removeItem('bagheriAnnouncement'); hideAnnouncement(); loadAnnouncementEditor(); showAdminToast('اطلاعیه فعال حذف شد')}
+function loadAnnouncementEditor(){var d=getAnnouncement(), t=document.getElementById('announcementText'), st=document.getElementById('announcementStatus');if(t)t.value=d?d.text:'';if(st){if(d&&d.expiresAt>Date.now()){var left=Math.ceil((d.expiresAt-Date.now())/3600000);st.textContent='اطلاعیه فعال است و حدود '+left+' ساعت دیگر منقضی می‌شود.'}else st.textContent='در حال حاضر اطلاعیه فعالی وجود ندارد.'}}
+function updateAnnouncementStatus(d){var st=document.getElementById('announcementStatus');if(st){var left=Math.max(0,Math.ceil((d.expiresAt-Date.now())/3600000));st.textContent='منتشر شد؛ تا '+left+' ساعت آینده برای کاربران نمایش داده می‌شود.'}}
+function showAnnouncement(d){var box=document.getElementById('siteAnnouncement'), txt=document.getElementById('siteAnnouncementText');if(!box||!txt||!d)return;if(d.expiresAt<=Date.now()){hideAnnouncement();localStorage.removeItem('bagheriAnnouncement');return}txt.textContent=d.text;box.classList.toggle('important',d.style==='important');box.style.display='block'}
+function hideAnnouncement(){var box=document.getElementById('siteAnnouncement');if(box)box.style.display='none'}
+function dismissAnnouncement(){hideAnnouncement();try{sessionStorage.setItem('bagheriAnnouncementDismissed','1')}catch(e){}}
+function initAnnouncement(){var d=getAnnouncement();if(!d)return;if(d.expiresAt<=Date.now()){localStorage.removeItem('bagheriAnnouncement');return}var dismissed=false;try{dismissed=sessionStorage.getItem('bagheriAnnouncementDismissed')==='1'}catch(e){}if(!dismissed)showAnnouncement(d)}
+window.addEventListener('DOMContentLoaded',function(){initAnnouncement();setInterval(function(){var d=getAnnouncement();if(d&&d.expiresAt<=Date.now()){localStorage.removeItem('bagheriAnnouncement');hideAnnouncement()}},60000)});
 </script>
 </body>
 </html>
