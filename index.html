@@ -1241,7 +1241,7 @@
 
       <div id="ad-teachers" class="ad-page"><div class="admin-placeholder"><div class="admin-card-head"><h3>مدیریت دبیران</h3><button class="admin-action" onclick="addTeacherRow()">＋ افزودن دبیر</button></div><input class="admin-control" placeholder="جستجوی دبیر..." oninput="filterAdminTable(this,'adTeachersTable')"><table id="adTeachersTable" class="admin-table"><tr><th>نام دبیر</th><th>درس</th><th>وضعیت</th><th>عملیات</th></tr><tr><td>دکتر میرزایی</td><td>ریاضی</td><td><span class="admin-badge">فعال</span></td><td><button class="admin-edit-btn" onclick="editAdminRow(this)">ویرایش</button></td></tr><tr><td>علی رضایی</td><td>فیزیک</td><td><span class="admin-badge">فعال</span></td><td><button class="admin-edit-btn" onclick="editAdminRow(this)">ویرایش</button></td></tr><tr><td>محمد احمدی</td><td>ادبیات</td><td><span class="admin-badge">فعال</span></td><td><button class="admin-edit-btn" onclick="editAdminRow(this)">ویرایش</button></td></tr></table></div></div>
 
-      <div id="ad-classes" class="ad-page"><div class="admin-placeholder"><div class="admin-card-head"><h3>مدیریت کلاس‌ها</h3><button class="admin-action" onclick="addClassRow()">＋ افزودن کلاس</button></div><input class="admin-control" placeholder="جستجوی شماره کلاس..." oninput="filterAdminTable(this,'adClassesTable')"><table id="adClassesTable" class="admin-table"><tr><th>شماره</th><th>پایه</th><th>رشته</th><th>وضعیت</th><th>عملیات</th></tr><tr><td>۱۰۱</td><td>دهم</td><td>ریاضی</td><td><span class="admin-badge">فعال</span></td><td><button class="admin-edit-btn" onclick="editAdminRow(this)">ویرایش</button></td></tr><tr><td>۱۰۲</td><td>دهم</td><td>تجربی</td><td><span class="admin-badge">فعال</span></td><td><button class="admin-edit-btn" onclick="editAdminRow(this)">ویرایش</button></td></tr><tr><td>۱۰۳</td><td>دهم</td><td>انسانی</td><td><span class="admin-badge">فعال</span></td><td><button class="admin-edit-btn" onclick="editAdminRow(this)">ویرایش</button></td></tr><tr><td>۱۰۴</td><td>یازدهم</td><td>ریاضی</td><td><span class="admin-badge">فعال</span></td><td><button class="admin-edit-btn" onclick="editAdminRow(this)">ویرایش</button></td></tr></table></div></div>
+      <div id="ad-classes" class="ad-page"><div class="admin-placeholder"><div class="admin-card-head"><h3>مدیریت کلاس‌ها</h3><button class="admin-action" onclick="addClassRow()">＋ افزودن کلاس</button></div><input class="admin-control" placeholder="جستجوی شماره کلاس..." oninput="filterAdminTable(this,'adClassesTable')"><table id="adClassesTable" class="admin-table"><thead><tr><th>شماره</th><th>پایه</th><th>رشته</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody id="adClassesBody"></tbody></table></div></div>
 
       <div id="ad-schedule" class="ad-page"><div class="admin-placeholder"><div class="admin-card-head"><h3>برنامه هفتگی</h3><button class="admin-action" onclick="saveScheduleSettings()">💾 ذخیره تغییرات</button></div><div class="admin-form-grid"><select class="admin-control"><option>شنبه</option><option>یکشنبه</option><option>دوشنبه</option><option>سه‌شنبه</option><option>چهارشنبه</option></select><select class="admin-control"><option>کلاس ۱۰۱</option><option>کلاس ۱۰۲</option><option>کلاس ۱۰۳</option></select></div><table class="admin-table"><tr><th>زنگ</th><th>درس</th><th>دبیر</th><th>عملیات</th></tr><tr><td>۱</td><td>ریاضی</td><td>دکتر میرزایی</td><td><button class="admin-edit-btn" onclick="editAdminRow(this)">ویرایش</button></td></tr><tr><td>۲</td><td>فیزیک</td><td>علی رضایی</td><td><button class="admin-edit-btn" onclick="editAdminRow(this)">ویرایش</button></td></tr><tr><td>۳</td><td>ادبیات</td><td>محمد احمدی</td><td><button class="admin-edit-btn" onclick="editAdminRow(this)">ویرایش</button></td></tr></table></div></div>
 
@@ -1653,11 +1653,19 @@ var allClasses = [];
     if(!seen[item[0]]){ seen[item[0]] = true; allClasses.push(item[0]); }
   });
   allClasses.sort(function(a, b){
-    /* مرتب‌سازی عددی بر اساس عدد آخر */
-    var numA = parseInt(a.replace(/\D/g, "")) || 0;
-    var numB = parseInt(b.replace(/\D/g, "")) || 0;
-    if(numA !== numB) return numB - numA;
-    return a.localeCompare(b, "fa");
+    /* مرتب‌سازی صعودی بر اساس شماره کلاس؛ پشتیبانی از ارقام فارسی و عربی */
+    function classNumber(value){
+      var normalized = String(value)
+        .replace(/[۰-۹]/g, function(ch){ return String("۰۱۲۳۴۵۶۷۸۹".indexOf(ch)); })
+        .replace(/[٠-٩]/g, function(ch){ return String("٠١٢٣٤٥٦٧٨٩".indexOf(ch)); });
+      var match = normalized.match(/\d+/g);
+      if(!match || !match.length) return 999999;
+      return parseInt(match[match.length - 1], 10);
+    }
+    var numA = classNumber(a);
+    var numB = classNumber(b);
+    if(numA !== numB) return numA - numB;
+    return String(a).localeCompare(String(b), "fa");
   });
 })();
 
@@ -1911,7 +1919,6 @@ function renderAllTeachers(){
       '<div class="selection-info">' +
         '<div class="selection-name">' + (isVirtual ? esc(name) : 'استاد ' + esc(name)) + '</div>' +
         '<div class="selection-subject">📚 ' + esc(subjects.join(" • ")) + '</div>' +
-        '<div class="selection-count">' + toFa(t.classes.length) + ' کلاس در هفته</div>' +
       '</div>' +
       '<div class="selection-arrow">←</div>' +
     '</div>';
@@ -2687,6 +2694,7 @@ if(window.matchMedia){
   }
 }
 
+renderAdminClassesTable();
 applyTheme(loadTheme());
 checkURLParam();
 startQuoteRotation();
@@ -2725,6 +2733,26 @@ function buildTeacherExportRows(){
 function escapeExportCell(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function exportExcel(){var rows=buildTeacherExportRows(),html='<html><head><meta charset="UTF-8"></head><body><table border="1" dir="rtl"><tr>'+rows[0].map(function(c){return '<th>'+escapeExportCell(c)+'</th>'}).join('')+'</tr>';rows.slice(1).forEach(function(r){html+='<tr>'+r.map(function(c){return '<td>'+escapeExportCell(c)+'</td>'}).join('')+'</tr>'});html+='</table></body></html>';var blob=new Blob(['\ufeff'+html],{type:'application/vnd.ms-excel;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='BagheriSchedule_Teachers_Classes.xls';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},300);showAdminToast('خروجی کامل Excel شامل استاد، درس و کلاس‌ها آماده شد')}
 function exportPDF(){var rows=buildTeacherExportRows(),w=window.open('','_blank');if(!w){showAdminToast('پنجره خروجی PDF توسط مرورگر مسدود شده است');return}var html='<table><thead><tr>'+rows[0].map(function(c){return '<th>'+escapeExportCell(c)+'</th>'}).join('')+'</tr></thead><tbody>';rows.slice(1).forEach(function(r){html+='<tr>'+r.map(function(c){return '<td>'+escapeExportCell(c)+'</td>'}).join('')+'</tr>'});html+='</tbody></table>';w.document.write('<!doctype html><html dir="rtl"><head><meta charset="UTF-8"><title>گزارش اساتید و کلاس‌ها</title><style>@page{size:A4 landscape;margin:12mm}body{font-family:Tahoma,Arial,sans-serif;color:#111}h1{text-align:center;font-size:18px}p{text-align:center;color:#666;font-size:10px}table{width:100%;border-collapse:collapse;font-size:9px}th,td{border:1px solid #999;padding:6px;text-align:center}th{font-weight:700}</style></head><body><h1>گزارش اساتید، دروس و کلاس‌ها</h1><p>دبیرستان شهید حسن باقری — '+new Date().toLocaleDateString('fa-IR')+'</p>'+html+'</body></html>');w.document.close();w.focus();setTimeout(function(){w.print()},400);showAdminToast('گزارش PDF آماده شد؛ گزینه Save as PDF را انتخاب کنید')}
+function renderAdminClassesTable(){
+  var body=document.getElementById('adClassesBody');
+  if(!body || typeof allClasses==='undefined') return;
+  var classes=allClasses.slice();
+  body.innerHTML='';
+  classes.forEach(function(className){
+    var tr=document.createElement('tr');
+    var parts=String(className).trim().split(/\s+/);
+    var number=parts.length ? parts[parts.length-1] : className;
+    var grade='—';
+    var n=String(number).replace(/[۰-۹]/g,function(ch){return String('۰۱۲۳۴۵۶۷۸۹'.indexOf(ch));}).replace(/[٠-٩]/g,function(ch){return String('٠١٢٣٤٥٦٧٨٩'.indexOf(ch));});
+    var num=parseInt(n,10);
+    if(!isNaN(num)){ grade=(num>=100&&num<110)?'دهم':(num>=110&&num<120)?'یازدهم':(num>=120&&num<130)?'دوازدهم':'—'; }
+    var field=parts.slice(0,-1).join(' ');
+    var رشته=field || '—';
+    tr.innerHTML='<td>'+escapeHtmlAdmin(number)+'</td><td>'+escapeHtmlAdmin(grade)+'</td><td>'+escapeHtmlAdmin(رشته)+'</td><td><span class="admin-badge">فعال</span></td><td><button class="admin-edit-btn" onclick="editAdminRow(this)">ویرایش</button></td>';
+    body.appendChild(tr);
+  });
+}
+function escapeHtmlAdmin(v){var d=document.createElement('div');d.textContent=String(v==null?'':v);return d.innerHTML;}
 function editAdminRow(btn){var row=btn.closest('tr');if(!row)return;var cells=row.querySelectorAll('td'),table=row.closest('table');if(table.id==='adTeachersTable'){var v=prompt('نام استاد:',cells[0].innerText.trim());if(v===null)return;cells[0].innerText=v.trim();v=prompt('درس:',cells[1].innerText.trim());if(v!==null)cells[1].innerText=v.trim()}else if(table.id==='adClassesTable'){var labels=['شماره کلاس','پایه','رشته'];for(var i=0;i<3;i++){var v=prompt(labels[i]+':',cells[i].innerText.trim());if(v!==null)cells[i].innerText=v.trim()}}else{for(var i=0;i<cells.length-1;i++){var v=prompt('مقدار '+(table.rows[0].cells[i].innerText||'')+':',cells[i].innerText.trim());if(v!==null)cells[i].innerText=v.trim()}}showAdminToast('تغییرات ذخیره شد')}
 function editSubjectItem(btn){var item=btn.closest('.admin-list-item'),sp=item.querySelectorAll('span'),v=prompt('نام درس:',sp[0].innerText.trim());if(v===null)return;sp[0].innerText=v.trim();v=prompt('نام دبیر:',sp[1].innerText.trim());if(v!==null)sp[1].innerText=v.trim();showAdminToast('درس ویرایش شد')}
 function addTeacherRow(){var t=document.getElementById('adTeachersTable'),r=t.insertRow(-1);r.innerHTML='<td>استاد جدید</td><td>درس جدید</td><td><span class="admin-badge">فعال</span></td><td><button class="admin-edit-btn" onclick="editAdminRow(this)">ویرایش</button></td>';showAdminToast('دبیر جدید اضافه شد')}
@@ -2740,6 +2768,7 @@ function adminPage(btn,title){
   var key={'داشبورد':'dashboard','مدیریت دبیران':'teachers','مدیریت کلاس‌ها':'classes','برنامه هفتگی':'schedule','دروس':'subjects','ورود / خروج اطلاعات':'import','زمان‌بندی زنگ‌ها':'bells','اطلاعیه‌ها':'announce','تاریخچه تغییرات':'logs','تنظیمات':'settings'}[title];
   document.querySelectorAll('.ad-page').forEach(function(x){x.classList.remove('active')});
   var page=document.getElementById('ad-'+key); if(page) page.classList.add('active');
+  if(key==='classes'){ renderAdminClassesTable(); }
   if(key==='announce') loadAnnouncementEditor();
 }
 function getAnnouncement(){try{return JSON.parse(localStorage.getItem('bagheriAnnouncement')||'null')}catch(e){return null}}
