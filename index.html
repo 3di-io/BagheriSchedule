@@ -1165,6 +1165,10 @@
 .admin-panel{position:fixed;inset:0;z-index:1450;display:none;background:#f3f4f6;color:#111827}.admin-panel.show{display:flex}.admin-panel-sidebar{width:255px;background:#111827;color:#fff;padding:22px 14px;overflow:auto}.admin-panel-brand{font-size:18px;font-weight:800;padding:8px 12px 22px}.admin-panel-nav button{width:100%;border:0;background:transparent;color:#d1d5db;padding:12px;border-radius:10px;font-family:inherit;text-align:right;cursor:pointer;margin:2px 0}.admin-panel-nav button.active,.admin-panel-nav button:hover{background:#1f2937;color:#fff}.admin-panel-main{flex:1;overflow:auto}.admin-panel-top{height:72px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;padding:0 26px;position:sticky;top:0;z-index:2}.admin-panel-top h2{font-size:19px}.admin-logout{border:0;background:#fee2e2;color:#b91c1c;border-radius:9px;padding:9px 14px;font-family:inherit;cursor:pointer}.admin-content{padding:26px}.admin-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:22px}.admin-stat{background:#fff;border-radius:16px;padding:20px;border:1px solid #e5e7eb}.admin-stat small{color:#6b7280}.admin-stat strong{display:block;font-size:27px;margin-top:8px}.admin-placeholder{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:24px}.admin-placeholder h3{margin-bottom:8px}.admin-placeholder p{color:#6b7280;font-size:14px;line-height:1.9}
 @media(max-width:800px){.admin-panel-sidebar{width:205px}.admin-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-content{padding:18px}}
 @media(max-width:600px){.admin-menu-btn{top:12px;right:12px;width:44px;height:44px}.admin-panel{display:none}.admin-panel.show{display:block}.admin-panel-sidebar{display:none}.admin-panel-top{padding:0 16px}.admin-content{padding:14px}.admin-cards{grid-template-columns:1fr 1fr;gap:10px}.admin-stat{padding:15px}.admin-stat strong{font-size:22px}}
+
+.admin-rich-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.admin-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.admin-control{width:100%;padding:10px;border:1px solid #dbe3e8;border-radius:10px;background:#fff;font-family:inherit}.admin-list{display:grid;gap:9px}.admin-list-item{display:flex;justify-content:space-between;align-items:center;padding:11px;border:1px solid #e7edf1;border-radius:10px;background:#fbfcfd;font-size:12px}.admin-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.admin-search{flex:1;min-width:180px}.admin-danger{background:#fee2e2;color:#b91c1c}.admin-success{background:#dcfce7;color:#166534}.admin-muted{color:#718096;font-size:11px}@media(max-width:700px){.admin-rich-grid,.admin-form-grid{grid-template-columns:1fr}}
+
+.ad-page{display:none}.ad-page.active{display:block}.admin-rich-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.admin-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.admin-control{width:100%;padding:10px;border:1px solid #dbe3e8;border-radius:10px;background:#fff;font-family:inherit;margin-bottom:12px}.admin-list{display:grid;gap:9px}.admin-list-item{display:flex;justify-content:space-between;align-items:center;padding:11px;border:1px solid #e7edf1;border-radius:10px;background:#fbfcfd;font-size:12px}.admin-muted{font-size:10px;color:#7b8b96}.admin-toolbar{display:flex;gap:8px}.admin-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}.admin-card-head h3{margin:0;font-size:14px}@media(max-width:700px){.admin-rich-grid,.admin-form-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body class="dark">
@@ -1210,13 +1214,45 @@
   <main class="admin-panel-main">
     <header class="admin-panel-top"><h2 id="adminPanelTitle">داشبورد</h2><button class="admin-logout" onclick="closeAdminPanel()">خروج از پنل</button></header>
     <section class="admin-content">
-      <div class="admin-cards">
-        <div class="admin-stat"><small>دبیران</small><strong id="adminTeacherCount">—</strong></div>
-        <div class="admin-stat"><small>کلاس‌ها</small><strong id="adminClassCount">—</strong></div>
-        <div class="admin-stat"><small>دروس</small><strong>—</strong></div>
-        <div class="admin-stat"><small>وضعیت سامانه</small><strong style="font-size:18px">فعال</strong></div>
+      <div id="ad-dashboard" class="ad-page active">
+        <div class="admin-cards">
+          <div class="admin-stat">👨‍🏫<small>دبیران</small><strong>۳۲</strong></div>
+          <div class="admin-stat">🏫<small>کلاس‌ها</small><strong>۲۶</strong></div>
+          <div class="admin-stat">📚<small>دروس</small><strong>۱۸</strong></div>
+          <div class="admin-stat">📅<small>برنامه‌های ثبت‌شده</small><strong>۲۴۸</strong></div>
+        </div>
+        <div class="admin-rich-grid">
+          <div class="admin-placeholder"><h3>دسترسی سریع</h3><div class="admin-quick-grid">
+            <button class="admin-quick" onclick="adminPage(document.querySelectorAll('.admin-panel-nav button')[3],'برنامه هفتگی')">📅 ویرایش برنامه</button>
+            <button class="admin-quick" onclick="adminPage(document.querySelectorAll('.admin-panel-nav button')[1],'مدیریت دبیران')">👨‍🏫 مدیریت دبیران</button>
+            <button class="admin-quick" onclick="adminPage(document.querySelectorAll('.admin-panel-nav button')[2],'مدیریت کلاس‌ها')">🏫 مدیریت کلاس‌ها</button>
+            <button class="admin-quick" onclick="showAdminToast('نسخه پشتیبان آماده شد')">💾 پشتیبان‌گیری</button>
+          </div></div>
+          <div class="admin-placeholder"><h3>آخرین فعالیت‌ها</h3><div class="admin-list">
+            <div class="admin-list-item"><span>ویرایش برنامه کلاس ۱۰۱</span><span class="admin-muted">امروز ۱۴:۲۸</span></div>
+            <div class="admin-list-item"><span>به‌روزرسانی فهرست دبیران</span><span class="admin-muted">امروز ۱۳:۵۰</span></div>
+            <div class="admin-list-item"><span>آخرین پشتیبان‌گیری</span><span class="admin-muted">دیروز</span></div>
+          </div></div>
+        </div>
       </div>
-      <div class="admin-placeholder"><h3 id="adminSectionTitle">داشبورد مدیریت</h3><p id="adminSectionText">از منوی سمت راست می‌توانید بخش موردنظر را انتخاب کنید. این نسخه، رابط کاربری پنل مدیریت را در همان سایت نمایش می‌دهد.</p></div>
+
+      <div id="ad-teachers" class="ad-page"><div class="admin-placeholder"><div class="admin-card-head"><h3>مدیریت دبیران</h3><button class="admin-action" onclick="showAdminToast('فرم افزودن دبیر آماده شد')">＋ افزودن دبیر</button></div><input class="admin-control" placeholder="جستجوی دبیر..." oninput="filterAdminTable(this,'adTeachersTable')"><table id="adTeachersTable" class="admin-table"><tr><th>نام دبیر</th><th>درس</th><th>وضعیت</th><th>عملیات</th></tr><tr><td>دکتر میرزایی</td><td>ریاضی</td><td><span class="admin-badge">فعال</span></td><td>ویرایش</td></tr><tr><td>علی رضایی</td><td>فیزیک</td><td><span class="admin-badge">فعال</span></td><td>ویرایش</td></tr><tr><td>محمد احمدی</td><td>ادبیات</td><td><span class="admin-badge">فعال</span></td><td>ویرایش</td></tr></table></div></div>
+
+      <div id="ad-classes" class="ad-page"><div class="admin-placeholder"><div class="admin-card-head"><h3>مدیریت کلاس‌ها</h3><button class="admin-action" onclick="showAdminToast('فرم افزودن کلاس آماده شد')">＋ افزودن کلاس</button></div><input class="admin-control" placeholder="جستجوی شماره کلاس..." oninput="filterAdminTable(this,'adClassesTable')"><table id="adClassesTable" class="admin-table"><tr><th>شماره</th><th>پایه</th><th>رشته</th><th>وضعیت</th><th>عملیات</th></tr><tr><td>۱۰۱</td><td>دهم</td><td>ریاضی</td><td><span class="admin-badge">فعال</span></td><td>ویرایش</td></tr><tr><td>۱۰۲</td><td>دهم</td><td>تجربی</td><td><span class="admin-badge">فعال</span></td><td>ویرایش</td></tr><tr><td>۱۰۳</td><td>دهم</td><td>انسانی</td><td><span class="admin-badge">فعال</span></td><td>ویرایش</td></tr><tr><td>۱۰۴</td><td>یازدهم</td><td>ریاضی</td><td><span class="admin-badge">فعال</span></td><td>ویرایش</td></tr></table></div></div>
+
+      <div id="ad-schedule" class="ad-page"><div class="admin-placeholder"><div class="admin-card-head"><h3>برنامه هفتگی</h3><button class="admin-action" onclick="showAdminToast('تغییرات برنامه ذخیره شد')">💾 ذخیره تغییرات</button></div><div class="admin-form-grid"><select class="admin-control"><option>شنبه</option><option>یکشنبه</option><option>دوشنبه</option><option>سه‌شنبه</option><option>چهارشنبه</option></select><select class="admin-control"><option>کلاس ۱۰۱</option><option>کلاس ۱۰۲</option><option>کلاس ۱۰۳</option></select></div><table class="admin-table"><tr><th>زنگ</th><th>درس</th><th>دبیر</th><th>عملیات</th></tr><tr><td>۱</td><td>ریاضی</td><td>دکتر میرزایی</td><td>ویرایش</td></tr><tr><td>۲</td><td>فیزیک</td><td>علی رضایی</td><td>ویرایش</td></tr><tr><td>۳</td><td>ادبیات</td><td>محمد احمدی</td><td>ویرایش</td></tr></table></div></div>
+
+      <div id="ad-subjects" class="ad-page"><div class="admin-placeholder"><div class="admin-card-head"><h3>مدیریت دروس</h3><button class="admin-action" onclick="showAdminToast('فرم افزودن درس آماده شد')">＋ افزودن درس</button></div><div class="admin-list"><div class="admin-list-item"><span>ریاضی</span><span>دکتر میرزایی</span></div><div class="admin-list-item"><span>فیزیک</span><span>علی رضایی</span></div><div class="admin-list-item"><span>ادبیات</span><span>محمد احمدی</span></div><div class="admin-list-item"><span>شیمی</span><span>—</span></div></div></div></div>
+
+      <div id="ad-import" class="ad-page"><div class="admin-placeholder"><div class="admin-card-head"><h3>ورود / خروج اطلاعات</h3></div><div class="admin-quick-grid"><button class="admin-quick" onclick="showAdminToast('انتخاب فایل Excel/CSV')">📤 ورود Excel / CSV</button><button class="admin-quick" onclick="showAdminToast('خروجی آماده شد')">📥 خروجی Excel / CSV</button><button class="admin-quick" onclick="showAdminToast('نسخه پشتیبان ساخته شد')">💾 ساخت نسخه پشتیبان</button><button class="admin-quick" onclick="showAdminToast('انتخاب فایل پشتیبان')">↩️ بازیابی نسخه پشتیبان</button></div><p class="admin-muted">این دکمه‌ها در مرحله بعد به داده‌های واقعی سایت متصل می‌شوند.</p></div></div>
+
+      <div id="ad-bells" class="ad-page"><div class="admin-placeholder"><div class="admin-card-head"><h3>زمان‌بندی زنگ‌ها</h3><button class="admin-action" onclick="showAdminToast('زنگ جدید آماده شد')">＋ افزودن زنگ</button></div><table class="admin-table"><tr><th>زنگ</th><th>شروع</th><th>پایان</th><th>عملیات</th></tr><tr><td>۱</td><td>۷:۳۰</td><td>۸:۱۵</td><td>ویرایش</td></tr><tr><td>۲</td><td>۸:۲۰</td><td>۹:۰۵</td><td>ویرایش</td></tr><tr><td>۳</td><td>۹:۲۰</td><td>۱۰:۰۵</td><td>ویرایش</td></tr></table></div></div>
+
+      <div id="ad-announce" class="ad-page"><div class="admin-placeholder"><div class="admin-card-head"><h3>اطلاعیه‌ها</h3><button class="admin-action" onclick="showAdminToast('فرم اطلاعیه آماده شد')">＋ اطلاعیه جدید</button></div><div class="admin-list"><div class="admin-list-item"><span>به‌روزرسانی برنامه هفتگی</span><span class="admin-badge">منتشر شده</span></div><div class="admin-list-item"><span>اطلاعیه جدید مدرسه</span><span class="admin-badge">پیش‌نویس</span></div></div></div></div>
+
+      <div id="ad-logs" class="ad-page"><div class="admin-placeholder"><div class="admin-card-head"><h3>تاریخچه تغییرات</h3></div><table class="admin-table"><tr><th>زمان</th><th>عملیات</th><th>بخش</th><th>کاربر</th></tr><tr><td>۱۴:۲۸</td><td>ویرایش برنامه</td><td>کلاس ۱۰۱</td><td>admin</td></tr><tr><td>۱۳:۵۰</td><td>افزودن دبیر</td><td>دبیران</td><td>admin</td></tr></table></div></div>
+
+      <div id="ad-settings" class="ad-page"><div class="admin-placeholder"><div class="admin-card-head"><h3>تنظیمات سامانه</h3><button class="admin-action" onclick="showAdminToast('تنظیمات ذخیره شد')">ذخیره</button></div><div class="admin-field"><label>نام مدرسه</label><input class="admin-control" value="دبیرستان شهید حسن باقری"></div><div class="admin-field"><label>عنوان سامانه</label><input class="admin-control" value="سامانه استعلام کلاس‌های اساتید"></div><div class="admin-field"><label>نام کاربری مدیر</label><input class="admin-control" value="admin" readonly></div><p class="admin-muted">احراز هویت این نسخه برای پیش‌نمایش است و در نسخه نهایی باید به سرویس احراز هویت واقعی متصل شود.</p></div></div>
     </section>
   </main>
 </div>
@@ -2665,9 +2701,9 @@ function openAdminMenu(){document.getElementById('adminDrawer').classList.add('o
 function closeAdminMenu(){document.getElementById('adminDrawer').classList.remove('open');document.getElementById('adminDrawerBackdrop').classList.remove('open')}
 function openAdminLogin(){document.getElementById('adminLoginModal').classList.add('show');setTimeout(()=>document.getElementById('adminUsername').focus(),80)}
 function closeAdminLogin(){document.getElementById('adminLoginModal').classList.remove('show');document.getElementById('adminLoginError').textContent=''}
-function adminLogin(){const u=document.getElementById('adminUsername').value.trim();const p=document.getElementById('adminPassword').value;const e=document.getElementById('adminLoginError');if(u==='admin'&&p==='123456'){closeAdminLogin();document.getElementById('adminPanel').classList.add('show')}else{e.textContent='نام کاربری یا رمز عبور نادرست است.'}}
+function adminLogin(){const u=document.getElementById('adminUsername').value.trim();const p=document.getElementById('adminPassword').value;const e=document.getElementById('adminLoginError');if(u==='admin'&&p==='123erfanSedighi456'){closeAdminLogin();document.getElementById('adminPanel').classList.add('show')}else{e.textContent='نام کاربری یا رمز عبور نادرست است.'}}
 function closeAdminPanel(){document.getElementById('adminPanel').classList.remove('show')}
-function adminPage(btn,title){document.querySelectorAll('.admin-panel-nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.getElementById('adminPanelTitle').textContent=title;document.getElementById('adminSectionTitle').textContent=title;document.getElementById('adminSectionText').textContent='این بخش از پنل مدیریت آماده توسعه و اتصال به اطلاعات واقعی سامانه است.'}
+
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeAdminMenu();closeAdminLogin();closeAdminPanel()}if(e.key==='Enter'&&document.getElementById('adminLoginModal').classList.contains('show'))adminLogin()});
 </script>
 </body>
