@@ -251,9 +251,20 @@
       0 0 0 1px rgba(212,175,55,0.08);
   }
 
-  .search-box { padding: 22px; margin-bottom: 16px; }
+  .search-box {
+    padding: 22px;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 100;
+    overflow: visible;
+  }
   .search-box label { display: block; margin-bottom: 12px; font-weight: 600; color: var(--text-light); }
-  .search-wrapper { position: relative; display: flex; align-items: center; }
+  .search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: visible;
+  }
   .search-icon {
     position: absolute; right: 18px;
     display: flex; align-items: center; justify-content: center;
@@ -295,6 +306,7 @@
     align-items: center; justify-content: center;
     transition: all 0.2s ease;
     padding: 0; box-shadow: none; font-family: inherit;
+    z-index: 2;
   }
   .clear-btn.visible { display: flex; }
   .clear-btn:hover {
@@ -304,7 +316,6 @@
     transform: scale(1.05);
   }
 
-  /* ==== دراپ‌دان اتوکامپلیت ==== */
   .autocomplete-dropdown {
     position: absolute;
     top: calc(100% + 8px);
@@ -316,12 +327,12 @@
     border: 1.5px solid var(--glass-border);
     border-radius: 14px;
     box-shadow:
-      0 12px 40px rgba(0,0,0,0.5),
-      0 0 30px rgba(212,175,55,0.15),
+      0 12px 40px rgba(0,0,0,0.6),
+      0 0 30px rgba(212,175,55,0.2),
       inset 0 1px 0 rgba(212,175,55,0.1);
-    max-height: 320px;
+    max-height: 400px;
     overflow-y: auto;
-    z-index: 50;
+    z-index: 9999;
     display: none;
     animation: dropdownIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -337,7 +348,7 @@
 
   .autocomplete-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 12px;
     padding: 12px 16px;
     cursor: pointer;
@@ -377,6 +388,7 @@
     font-size: 1rem;
     flex-shrink: 0;
     box-shadow: 0 2px 8px rgba(212,175,55,0.25);
+    margin-top: 2px;
   }
 
   .autocomplete-info {
@@ -388,7 +400,7 @@
     font-weight: 700;
     font-size: 0.92rem;
     color: var(--text-light);
-    margin-bottom: 3px;
+    margin-bottom: 5px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -402,10 +414,28 @@
     font-weight: 800;
   }
 
-  .autocomplete-subject {
-    font-size: 0.75rem;
+  /* ==== چیپ‌های دروس در اتوکامپلیت ==== */
+  .autocomplete-subjects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 2px;
+  }
+
+  .subject-chip {
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    background: rgba(212,175,55,0.12);
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 6px;
     color: var(--gold-light);
     font-weight: 600;
+    white-space: nowrap;
+  }
+  body.light .subject-chip {
+    background: rgba(184,148,31,0.1);
+    border-color: rgba(184,148,31,0.35);
+    color: var(--gold);
   }
 
   .autocomplete-count {
@@ -417,6 +447,7 @@
     border-radius: 8px;
     white-space: nowrap;
     flex-shrink: 0;
+    margin-top: 2px;
   }
 
   .autocomplete-empty {
@@ -427,27 +458,21 @@
   }
 
   @media (max-width: 600px) {
-    .autocomplete-dropdown {
-      max-height: 260px;
-    }
-    .autocomplete-item {
-      padding: 10px 12px;
-      gap: 10px;
-    }
-    .autocomplete-avatar {
-      width: 34px;
-      height: 34px;
-      font-size: 0.9rem;
-    }
-    .autocomplete-name {
-      font-size: 0.85rem;
-    }
-    .autocomplete-subject {
-      font-size: 0.7rem;
-    }
+    .autocomplete-dropdown { max-height: 320px; }
+    .autocomplete-item { padding: 10px 12px; gap: 10px; }
+    .autocomplete-avatar { width: 34px; height: 34px; font-size: 0.9rem; }
+    .autocomplete-name { font-size: 0.85rem; }
+    .subject-chip { font-size: 0.62rem; padding: 2px 6px; }
   }
 
-  .next-class-card { padding: 24px; margin-bottom: 16px; display: none; animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+  .next-class-card {
+    padding: 24px;
+    margin-bottom: 16px;
+    display: none;
+    animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 1;
+  }
   .next-class-card.visible { display: block; }
   @keyframes slideDown {
     from{opacity:0;transform:translateY(-20px);}
@@ -556,7 +581,13 @@
     100% { box-shadow: 0 0 0 0 rgba(251,191,36,0); }
   }
 
-  .result { padding: 26px; min-height: 0; animation: fadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+  .result {
+    padding: 26px;
+    min-height: 0;
+    animation: fadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 1;
+  }
   @keyframes fadeIn {
     from{opacity:0;transform:translateY(10px);}
     to{opacity:1;transform:translateY(0);}
@@ -1131,9 +1162,6 @@
 <div class="toast" id="toast"></div>
 
 <script>
-/* ==========================================================
-   ساعت زنگ‌ها
-   ========================================================== */
 var PERIODS = {
   1: { start: "07:45", end: "09:15" },
   2: { start: "09:30", end: "10:45" },
@@ -1148,11 +1176,7 @@ var dayMap = {
 
 var dayOrder = ["شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه"];
 
-/* ==========================================================
-   داده‌های خام - ۲۱ کلاس
-   ========================================================== */
 var rawData = [
-  /* ============ کنکور ریاضی ============ */
   ["ریاضی ۱۲۱", [
     ["شنبه",     ["حسابان - استاد صالحی","فیزیک - استاد قریب","هویت اجتماعی - استاد حسینخانی","ورزش - استاد قریب"]],
     ["یکشنبه",   ["شیمی - استاد جعفری","هندسه - استاد رزاقی","زبان - استاد کریمی","مدیریت خانواده - استاد رزاقی"]],
@@ -1174,8 +1198,6 @@ var rawData = [
     ["سه‌شنبه",  ["نگارش - استاد برادران","حسابان - استاد فضلی","دین و زندگی - استاد جلالیان","هندسه - استاد روشنگر"]],
     ["چهارشنبه", ["زبان - استاد کریمی","مشاوره - استاد شهاب / هویت - استاد شریفی","حسابان - استاد فضلی","مشاوره - استاد رامشینی"]]
   ]],
-
-  /* ============ دهم ریاضی ============ */
   ["ریاضی ۱۰۱", [
     ["شنبه",     ["ورزش - استاد عبداللهی","ریاضی - استاد روشنگر","جغرافیا - استاد پروندی","مهارت"]],
     ["یکشنبه",   ["فیزیک - استاد رومیانی","فارسی - استاد ساجدی","فیزیک - استاد رومیانی","هندسه - استاد ترابی"]],
@@ -1211,8 +1233,6 @@ var rawData = [
     ["سه‌شنبه",  ["فیزیک - استاد درخشانی","انگلیسی - استاد قدسی","شیمی - استاد یوسفی","دین و زندگی - استاد ساداتی"]],
     ["چهارشنبه", ["نگارش - استاد ساجدی","دفاعی - استاد وطنی","ریاضی - استاد صادقی","ورزش - استاد عبداللهی"]]
   ]],
-
-  /* ============ یازدهم ریاضی ============ */
   ["ریاضی ۱۱۱", [
     ["شنبه",     ["شیمی - استاد سمیعی","مشاوره - استاد رامشینی / مشاوره - استاد یارتبار","فیزیک - استاد اسکندری","ورزش - استاد عبداللهی"]],
     ["یکشنبه",   ["هندسه - استاد مقیمی","حسابان - استاد کوهی","شیمی - استاد سمیعی","فیزیک - استاد اسکندری"]],
@@ -1241,8 +1261,6 @@ var rawData = [
     ["سه‌شنبه",  ["شیمی - استاد سمیعی","زمین شناسی - استاد سلطانی","هندسه - استاد مقیمی","کارآفرینی - استاد مقیمی"]],
     ["چهارشنبه", ["آمار و احتمال - استاد مقیمی","حسابان - استاد کوهی","انگلیسی - استاد علوی","مشاوره - استاد رامشینی"]]
   ]],
-
-  /* ============ انسانی ============ */
   ["انسانی ۱۰۸", [
     ["شنبه",     ["ریاضی - استاد صادقی","فارسی - استاد برادران","جامعه شناسی - استاد طاووسی","مهارت"]],
     ["یکشنبه",   ["علوم و فنون - استاد ساجدی","انگلیسی - استاد آزاد","دفاعی - استاد آزاد","منطق - استاد عزیزی"]],
@@ -1278,8 +1296,6 @@ var rawData = [
     ["سه‌شنبه",  ["فارسی - استاد فروغی","دین و زندگی - استاد ساداتی","جغرافیا - استاد رضائی مهر","تحلیل فرهنگی - استاد داداش پور"]],
     ["چهارشنبه", ["جامعه - استاد جلالیان / مدیریت - استاد محمدوردی","فارسی - استاد فروغی","زبان - استاد کریمی","مشاوره - استاد رامشینی"]]
   ]],
-
-  /* ============ تجربی ============ */
   ["تجربی ۱۰۶", [
     ["شنبه",     ["فارسی - استاد ساجدی","جغرافیا - استاد پروندی","عربی - استاد آزاد","مهارت"]],
     ["یکشنبه",   ["فیزیک - استاد درخشانی","شیمی - استاد کریمی","زیست - استاد والی کیا","دین و زندگی - استاد ساداتی"]],
@@ -1310,9 +1326,6 @@ var rawData = [
   ]]
 ];
 
-/* ==========================================================
-   تفکیک دبیران هم‌نام
-   ========================================================== */
 var HOMONYM_MAP = {
   "کریمی|زبان": "علی کریمی",
   "کریمی|انگلیسی": "علی کریمی",
@@ -1320,9 +1333,6 @@ var HOMONYM_MAP = {
   "کریمی|آزمایشگاه": "علیرضا کریمی"
 };
 
-/* ==========================================================
-   نرمال‌سازی متن
-   ========================================================== */
 function normalize(str){
   if(!str) return "";
   return String(str)
@@ -1337,9 +1347,6 @@ function normalize(str){
     .toLowerCase();
 }
 
-/* ==========================================================
-   استخراج دبیران از یک متن درس
-   ========================================================== */
 function extractTeachers(lessonText){
   var result = [];
   if(!lessonText || !lessonText.trim()) return result;
@@ -1361,9 +1368,6 @@ function extractTeachers(lessonText){
   return result;
 }
 
-/* ==========================================================
-   ساخت دیتابیس
-   ========================================================== */
 function buildDB(){
   var db = {};
   rawData.forEach(function(item){
@@ -1409,23 +1413,14 @@ Object.keys(teacherDB).forEach(function(name){
   });
   teacherDB[name].mainSubject = topSubject;
 
-  var searchText = [
-    name, topSubject,
-    Object.keys(teacherDB[name].subjects).join(" "),
-    Object.keys(teacherDB[name].classNames).join(" ")
-  ].join(" ");
-
   searchIndex.push({
     name: name,
-    normalized: normalize(searchText),
+    normalized: normalize(name),
     normalizedName: normalize(name),
     mainSubject: topSubject
   });
 });
 
-/* ==========================================================
-   توابع کمکی
-   ========================================================== */
 function toFa(n){
   var d = ["۰","۱","۲","۳","۴","۵","۶","۷","۸","۹"];
   return String(n).replace(/\d/g, function(x){ return d[x]; });
@@ -1451,28 +1446,17 @@ function highlight(text, query){
   return esc(before) + '<mark class="highlight">' + esc(middle) + '</mark>' + esc(after);
 }
 
-/* ==========================================================
-   تم
-   ========================================================== */
 var STORAGE = { theme: "bagheri_theme" };
 
 function loadTheme(){
   try {
     var saved = localStorage.getItem(STORAGE.theme);
-    if(saved === "dark" || saved === "light"){
-      return saved;
-    }
+    if(saved === "dark" || saved === "light"){ return saved; }
   } catch(e) {}
-
   if(window.matchMedia){
-    if(window.matchMedia("(prefers-color-scheme: dark)").matches){
-      return "dark";
-    }
-    if(window.matchMedia("(prefers-color-scheme: light)").matches){
-      return "light";
-    }
+    if(window.matchMedia("(prefers-color-scheme: dark)").matches){ return "dark"; }
+    if(window.matchMedia("(prefers-color-scheme: light)").matches){ return "light"; }
   }
-
   return "dark";
 }
 function saveTheme(t){
@@ -1496,9 +1480,6 @@ function toggleTheme(){
   showToast(next === "dark" ? "🌙 حالت تاریک" : "☀️ حالت روشن");
 }
 
-/* ==========================================================
-   نقل‌قول در فوتر
-   ========================================================== */
 var QUOTES = [
   "معلمی، هنر بیدار کردن کنجکاوی است.",
   "بهترین معلم، کسی است که شاگرد را از خودش بهتر بسازد.",
@@ -1528,9 +1509,6 @@ function startQuoteRotation(){
   }, 15000);
 }
 
-/* ==========================================================
-   اتوکامپلیت
-   ========================================================== */
 var autocompleteActiveIdx = -1;
 var autocompleteItems = [];
 
@@ -1559,7 +1537,7 @@ function showAutocomplete(query){
   var matches = [];
 
   searchIndex.forEach(function(item){
-    if(item.normalized.indexOf(normalizedQuery) > -1){
+    if(item.normalizedName.indexOf(normalizedQuery) > -1){
       matches.push(item);
     }
   });
@@ -1580,13 +1558,21 @@ function showAutocomplete(query){
   var html = "";
   matches.forEach(function(item, idx){
     var initial = item.name.charAt(0);
+    var totalClasses = teacherDB[item.name].classes.length;
+    var subjectsList = Object.keys(teacherDB[item.name].subjects);
+
     html += '<div class="autocomplete-item" data-idx="' + idx + '" onclick="selectAutocomplete(' + idx + ')">';
     html += '<div class="autocomplete-avatar">' + initial + '</div>';
     html += '<div class="autocomplete-info">';
     html += '<div class="autocomplete-name">استاد ' + highlightAutocomplete(item.name, query) + '</div>';
-    html += '<div class="autocomplete-subject">📚 ' + esc(item.mainSubject) + '</div>';
+    /* ==== چیپ‌های همه‌ی دروس ==== */
+    html += '<div class="autocomplete-subjects">';
+    subjectsList.forEach(function(s){
+      html += '<span class="subject-chip">📚 ' + esc(s) + '</span>';
+    });
     html += '</div>';
-    html += '<div class="autocomplete-count">' + toFa(teacherDB[item.name].classes.length) + ' کلاس</div>';
+    html += '</div>';
+    html += '<div class="autocomplete-count">' + toFa(totalClasses) + ' کلاس</div>';
     html += '</div>';
   });
 
@@ -1621,20 +1607,13 @@ function moveAutocompleteSelection(dir){
 
   autocompleteActiveIdx += dir;
 
-  if(autocompleteActiveIdx < 0){
-    autocompleteActiveIdx = items.length - 1;
-  }
-  if(autocompleteActiveIdx >= items.length){
-    autocompleteActiveIdx = 0;
-  }
+  if(autocompleteActiveIdx < 0){ autocompleteActiveIdx = items.length - 1; }
+  if(autocompleteActiveIdx >= items.length){ autocompleteActiveIdx = 0; }
 
   items[autocompleteActiveIdx].classList.add("active");
   items[autocompleteActiveIdx].scrollIntoView({ block: "nearest", behavior: "smooth" });
 }
 
-/* ==========================================================
-   جستجو
-   ========================================================== */
 var currentTeacher = null;
 var timer = null;
 
@@ -1645,11 +1624,8 @@ function doSearch(){
   var ncc = document.getElementById("ncc");
   var clearBtn = document.getElementById("clearBtn");
 
-  if(q.length > 0){
-    clearBtn.classList.add("visible");
-  } else {
-    clearBtn.classList.remove("visible");
-  }
+  if(q.length > 0){ clearBtn.classList.add("visible"); }
+  else { clearBtn.classList.remove("visible"); }
 
   if(timer){ clearInterval(timer); timer = null; }
 
@@ -1767,9 +1743,6 @@ function selectTeacher(name){
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-/* ==========================================================
-   رندر کارت دبیر
-   ========================================================== */
 function renderTeacher(t, active, query){
   var sorted = t.classes.slice().sort(function(a, b){
     var dd = dayOrder.indexOf(a.day) - dayOrder.indexOf(b.day);
@@ -1784,11 +1757,8 @@ function renderTeacher(t, active, query){
   var todayClasses = [];
   var otherClasses = [];
   sorted.forEach(function(c){
-    if(dayMap[c.day] === cDay){
-      todayClasses.push(c);
-    } else {
-      otherClasses.push(c);
-    }
+    if(dayMap[c.day] === cDay){ todayClasses.push(c); }
+    else { otherClasses.push(c); }
   });
 
   var persianTodayName = "";
@@ -1885,9 +1855,6 @@ function renderTeacher(t, active, query){
   return html;
 }
 
-/* ==========================================================
-   کلاس فعلی و بعدی دبیر
-   ========================================================== */
 function findCurNext(t, now){
   var cDay = now.getDay(), cMin = now.getHours() * 60 + now.getMinutes();
   var cur = null;
@@ -1933,13 +1900,9 @@ function updateNCC(){
     var mm = remainMin % 60;
 
     var timeText;
-    if(hh > 0){
-      timeText = toFa(hh) + ' ساعت و ' + toFa(mm) + ' دقیقه';
-    } else if(mm > 0){
-      timeText = toFa(mm) + ' دقیقه و ' + toFa(remainSec) + ' ثانیه';
-    } else {
-      timeText = toFa(remainSec) + ' ثانیه';
-    }
+    if(hh > 0){ timeText = toFa(hh) + ' ساعت و ' + toFa(mm) + ' دقیقه'; }
+    else if(mm > 0){ timeText = toFa(mm) + ' دقیقه و ' + toFa(remainSec) + ' ثانیه'; }
+    else { timeText = toFa(remainSec) + ' ثانیه'; }
 
     var totalMin = endMin - startMin;
     var progress = Math.min(100, Math.max(0, (passedMin / totalMin) * 100));
@@ -2031,9 +1994,6 @@ function updateNCC(){
     '<div class="countdown">کلاسی یافت نشد</div>';
 }
 
-/* ==========================================================
-   اشتراک‌گذاری
-   ========================================================== */
 function buildTeacherURL(name){
   var base = window.location.origin + window.location.pathname;
   return base + "?teacher=" + encodeURIComponent(name);
@@ -2071,9 +2031,6 @@ function fallbackCopy(text){
   document.body.removeChild(ta);
 }
 
-/* ==========================================================
-   QR
-   ========================================================== */
 var qrInstance = null;
 
 function showQR(){
@@ -2114,11 +2071,8 @@ function downloadQR(){
   var img = box.querySelector("img");
 
   var dataURL = null;
-  if(canvas){
-    dataURL = canvas.toDataURL("image/png");
-  } else if(img && img.src){
-    dataURL = img.src;
-  }
+  if(canvas){ dataURL = canvas.toDataURL("image/png"); }
+  else if(img && img.src){ dataURL = img.src; }
 
   if(!dataURL){
     showToast("❌ تصویری برای دانلود نیست", true);
@@ -2135,9 +2089,6 @@ function downloadQR(){
   showToast("✅ تصویر دانلود شد!");
 }
 
-/* ==========================================================
-   توست
-   ========================================================== */
 var toastTimer = null;
 function showToast(msg, isError){
   var toast = document.getElementById("toast");
@@ -2152,9 +2103,6 @@ function showToast(msg, isError){
   }, 2500);
 }
 
-/* ==========================================================
-   پارامتر URL
-   ========================================================== */
 function checkURLParam(){
   var params = new URLSearchParams(window.location.search);
   var teacher = params.get("teacher");
@@ -2166,9 +2114,6 @@ function checkURLParam(){
   }
 }
 
-/* ==========================================================
-   رویدادها
-   ========================================================== */
 var si = document.getElementById("si");
 var liveSearchTimer2 = null;
 
