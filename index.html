@@ -1144,9 +1144,83 @@
     .period-badge, .class-number { width: 100%; }
     .class-number { text-align: center; }
   }
+
+/* ===== Integrated Admin Panel ===== */
+.admin-menu-btn{position:fixed;top:22px;right:22px;z-index:1200;width:48px;height:48px;border:1px solid rgba(255,255,255,.18);border-radius:14px;background:rgba(20,28,40,.88);backdrop-filter:blur(10px);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;cursor:pointer;box-shadow:0 8px 25px rgba(0,0,0,.25)}
+.admin-menu-btn span{display:block;width:22px;height:2px;border-radius:3px;background:#fff;transition:.2s}
+.admin-drawer-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:1250;display:none}
+.admin-drawer{position:fixed;top:0;right:0;width:min(330px,88vw);height:100vh;background:#111827;color:#fff;z-index:1260;transform:translateX(105%);transition:transform .25s ease;box-shadow:-12px 0 35px rgba(0,0,0,.35);padding:24px}
+.admin-drawer.open{transform:translateX(0)}
+.admin-drawer-backdrop.open{display:block}
+.admin-drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.admin-drawer-head strong{font-size:18px}.admin-close{border:0;background:transparent;color:#fff;font-size:28px;cursor:pointer;line-height:1}
+.admin-drawer a,.admin-drawer button.menu-item{width:100%;display:flex;align-items:center;gap:10px;padding:14px 15px;margin:7px 0;border:0;border-radius:12px;background:transparent;color:#fff;text-decoration:none;font-family:inherit;font-size:14px;cursor:pointer;text-align:right}
+.admin-drawer a:hover,.admin-drawer button.menu-item:hover{background:rgba(255,255,255,.08)}
+.admin-drawer .admin-entry{background:linear-gradient(135deg,#2563eb,#4f46e5);font-weight:700;margin-top:14px}
+.admin-modal{position:fixed;inset:0;z-index:1400;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.62);backdrop-filter:blur(5px);padding:18px}
+.admin-modal.show{display:flex}
+.admin-login-card{width:min(420px,100%);background:#fff;color:#111827;border-radius:20px;padding:28px;box-shadow:0 25px 70px rgba(0,0,0,.35);position:relative}
+.admin-login-card h2{margin-bottom:8px;font-size:22px}.admin-login-card p{color:#6b7280;font-size:13px;margin-bottom:20px}.admin-field{margin-bottom:14px}.admin-field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}.admin-field input{width:100%;height:46px;border:1px solid #d1d5db;border-radius:11px;padding:0 13px;font:inherit;outline:none}.admin-field input:focus{border-color:#4f46e5;box-shadow:0 0 0 3px rgba(79,70,229,.12)}
+.admin-login-actions{display:flex;gap:10px;margin-top:18px}.admin-primary,.admin-secondary{flex:1;height:45px;border:0;border-radius:11px;font-family:inherit;font-weight:700;cursor:pointer}.admin-primary{background:#4f46e5;color:#fff}.admin-secondary{background:#eef2f7;color:#374151}.admin-error{color:#dc2626;font-size:12px;min-height:18px;margin-top:6px}
+.admin-panel{position:fixed;inset:0;z-index:1450;display:none;background:#f3f4f6;color:#111827}.admin-panel.show{display:flex}.admin-panel-sidebar{width:255px;background:#111827;color:#fff;padding:22px 14px;overflow:auto}.admin-panel-brand{font-size:18px;font-weight:800;padding:8px 12px 22px}.admin-panel-nav button{width:100%;border:0;background:transparent;color:#d1d5db;padding:12px;border-radius:10px;font-family:inherit;text-align:right;cursor:pointer;margin:2px 0}.admin-panel-nav button.active,.admin-panel-nav button:hover{background:#1f2937;color:#fff}.admin-panel-main{flex:1;overflow:auto}.admin-panel-top{height:72px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;padding:0 26px;position:sticky;top:0;z-index:2}.admin-panel-top h2{font-size:19px}.admin-logout{border:0;background:#fee2e2;color:#b91c1c;border-radius:9px;padding:9px 14px;font-family:inherit;cursor:pointer}.admin-content{padding:26px}.admin-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:22px}.admin-stat{background:#fff;border-radius:16px;padding:20px;border:1px solid #e5e7eb}.admin-stat small{color:#6b7280}.admin-stat strong{display:block;font-size:27px;margin-top:8px}.admin-placeholder{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:24px}.admin-placeholder h3{margin-bottom:8px}.admin-placeholder p{color:#6b7280;font-size:14px;line-height:1.9}
+@media(max-width:800px){.admin-panel-sidebar{width:205px}.admin-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-content{padding:18px}}
+@media(max-width:600px){.admin-menu-btn{top:12px;right:12px;width:44px;height:44px}.admin-panel{display:none}.admin-panel.show{display:block}.admin-panel-sidebar{display:none}.admin-panel-top{padding:0 16px}.admin-content{padding:14px}.admin-cards{grid-template-columns:1fr 1fr;gap:10px}.admin-stat{padding:15px}.admin-stat strong{font-size:22px}}
 </style>
 </head>
 <body class="dark">
+<!-- Integrated admin menu -->
+<button class="admin-menu-btn" aria-label="باز کردن منو" onclick="openAdminMenu()"><span></span><span></span><span></span></button>
+<div class="admin-drawer-backdrop" id="adminDrawerBackdrop" onclick="closeAdminMenu()"></div>
+<aside class="admin-drawer" id="adminDrawer" aria-label="منوی سایت">
+  <div class="admin-drawer-head"><strong>منوی سایت</strong><button class="admin-close" onclick="closeAdminMenu()" aria-label="بستن">×</button></div>
+  <a href="#" onclick="closeAdminMenu()">⌂&nbsp; صفحه اصلی</a>
+  <a href="#teachers" onclick="closeAdminMenu()">👨‍🏫&nbsp; دبیران</a>
+  <a href="#classes" onclick="closeAdminMenu()">🏫&nbsp; کلاس‌ها</a>
+  <button class="menu-item admin-entry" onclick="closeAdminMenu();openAdminLogin()">⚙️&nbsp; پنل مدیریت</button>
+</aside>
+
+<div class="admin-modal" id="adminLoginModal">
+  <div class="admin-login-card">
+    <button class="admin-close" style="position:absolute;top:14px;left:16px;color:#6b7280" onclick="closeAdminLogin()">×</button>
+    <h2>ورود به پنل مدیریت</h2>
+    <p>برای ورود، نام کاربری و رمز عبور مدیر را وارد کنید.</p>
+    <div class="admin-field"><label for="adminUsername">نام کاربری</label><input id="adminUsername" type="text" autocomplete="username" placeholder="نام کاربری"></div>
+    <div class="admin-field"><label for="adminPassword">رمز عبور</label><input id="adminPassword" type="password" autocomplete="current-password" placeholder="رمز عبور"></div>
+    <div class="admin-error" id="adminLoginError"></div>
+    <div class="admin-login-actions"><button class="admin-secondary" onclick="closeAdminLogin()">انصراف</button><button class="admin-primary" onclick="adminLogin()">ورود</button></div>
+  </div>
+</div>
+
+<div class="admin-panel" id="adminPanel">
+  <aside class="admin-panel-sidebar">
+    <div class="admin-panel-brand">⚙️ پنل مدیریت</div>
+    <nav class="admin-panel-nav">
+      <button class="active" onclick="adminPage(this,'داشبورد')">📊 داشبورد</button>
+      <button onclick="adminPage(this,'مدیریت دبیران')">👨‍🏫 مدیریت دبیران</button>
+      <button onclick="adminPage(this,'مدیریت کلاس‌ها')">🏫 مدیریت کلاس‌ها</button>
+      <button onclick="adminPage(this,'برنامه هفتگی')">📅 برنامه هفتگی</button>
+      <button onclick="adminPage(this,'دروس')">📚 دروس</button>
+      <button onclick="adminPage(this,'ورود / خروج اطلاعات')">📥 ورود / خروج اطلاعات</button>
+      <button onclick="adminPage(this,'زمان‌بندی زنگ‌ها')">⏰ زمان‌بندی زنگ‌ها</button>
+      <button onclick="adminPage(this,'اطلاعیه‌ها')">📢 اطلاعیه‌ها</button>
+      <button onclick="adminPage(this,'تاریخچه تغییرات')">🕘 تاریخچه تغییرات</button>
+      <button onclick="adminPage(this,'تنظیمات')">⚙️ تنظیمات</button>
+    </nav>
+  </aside>
+  <main class="admin-panel-main">
+    <header class="admin-panel-top"><h2 id="adminPanelTitle">داشبورد</h2><button class="admin-logout" onclick="closeAdminPanel()">خروج از پنل</button></header>
+    <section class="admin-content">
+      <div class="admin-cards">
+        <div class="admin-stat"><small>دبیران</small><strong id="adminTeacherCount">—</strong></div>
+        <div class="admin-stat"><small>کلاس‌ها</small><strong id="adminClassCount">—</strong></div>
+        <div class="admin-stat"><small>دروس</small><strong>—</strong></div>
+        <div class="admin-stat"><small>وضعیت سامانه</small><strong style="font-size:18px">فعال</strong></div>
+      </div>
+      <div class="admin-placeholder"><h3 id="adminSectionTitle">داشبورد مدیریت</h3><p id="adminSectionText">از منوی سمت راست می‌توانید بخش موردنظر را انتخاب کنید. این نسخه، رابط کاربری پنل مدیریت را در همان سایت نمایش می‌دهد.</p></div>
+    </section>
+  </main>
+</div>
+
 
 <div class="bg-blob"></div>
 
@@ -1274,147 +1348,147 @@ var rawData = [
   ["ریاضی ۱۲۱", [
     ["شنبه",     ["حسابان - استاد صالحی","فیزیک - استاد قریب","هویت اجتماعی - استاد حسینخانی","ورزش - استاد قریب"]],
     ["یکشنبه",   ["شیمی - استاد جعفری","هندسه - استاد رزاقی","زبان - استاد کریمی","مدیریت خانواده - استاد رزاقی"]],
-    ["دوشنبه",   ["دین و زندگی - استاد جلالیان","زبان - استاد کریمی","فارسی - استاد داداش پور"]],
+    ["دوشنبه",   ["دین و زندگی - استاد جلالیان","زبان - استاد کریمی","فارسی - استاد داداش پور","زنگ آزمون"]],
     ["سه‌شنبه",  ["حسابان - استاد صالحی","نگارش - استاد داداش پور","سلامت و بهداشت - استاد صالحی","فیزیک - استاد قریب"]],
     ["چهارشنبه", ["شیمی - استاد جعفری","عربی - استاد سهیلی","شیمی - استاد جعفری","گسسته - استاد حسینخانی"]]
   ]],
   ["ریاضی ۱۲۲", [
     ["شنبه",     ["فیزیک - استاد قریب","حسابان - استاد صالحی","ورزش - استاد قریب","گسسته - استاد حسینخانی"]],
     ["یکشنبه",   ["هندسه - استاد رزاقی","شیمی - استاد جعفری","مدیریت خانواده - استاد رزاقی","شیمی - استاد جعفری"]],
-    ["دوشنبه",   ["زبان - استاد کریمی","دین و زندگی - استاد جلالیان","زبان - استاد کریمی"]],
+    ["دوشنبه",   ["زبان - استاد کریمی","دین و زندگی - استاد جلالیان","زبان - استاد کریمی","زنگ آزمون"]],
     ["سه‌شنبه",  ["فارسی - استاد داداش پور","حسابان - استاد صالحی","فیزیک - استاد قریب","سلامت و بهداشت - استاد صالحی"]],
     ["چهارشنبه", ["نگارش - استاد داداش پور","هویت اجتماعی - استاد حسینخانی","عربی - استاد سهیلی","شیمی - استاد جعفری"]]
   ]],
   ["ریاضی ۱۲۳", [
     ["شنبه",     ["زبان - استاد کریمی","گسسته - استاد حسینخانی","عربی - استاد سهیلی","فارسی - استاد برادران"]],
     ["یکشنبه",   ["شیمی - استاد سمیعی","فیزیک - استاد رومیانی","سلامت و بهداشت - استاد تقوی","فیزیک - استاد رومیانی"]],
-    ["دوشنبه",   ["شیمی - استاد سمیعی","مدیریت - استاد محمدوردی","ورزش - استاد عبداللهی"]],
+    ["دوشنبه",   ["شیمی - استاد سمیعی","مدیریت - استاد محمدوردی","ورزش - استاد عبداللهی","زنگ آزمون"]],
     ["سه‌شنبه",  ["نگارش - استاد برادران","حسابان - استاد فضلی","دین و زندگی - استاد جلالیان","هندسه - استاد روشنگر"]],
     ["چهارشنبه", ["زبان - استاد کریمی","مشاوره - استاد شهاب / هویت - استاد شریفی","حسابان - استاد فضلی","مشاوره - استاد رامشینی"]]
   ]],
   ["ریاضی ۱۰۱", [
     ["شنبه",     ["ورزش - استاد عبداللهی","ریاضی - استاد روشنگر","جغرافیا - استاد پروندی","مهارت"]],
     ["یکشنبه",   ["فیزیک - استاد رومیانی","فارسی - استاد ساجدی","فیزیک - استاد رومیانی","هندسه - استاد ترابی"]],
-    ["دوشنبه",   ["عربی - استاد برزگر","ریاضی - استاد روشنگر","دفاعی - استاد شهاب"]],
+    ["دوشنبه",   ["عربی - استاد برزگر","ریاضی - استاد روشنگر","دفاعی - استاد شهاب","زنگ آزمون"]],
     ["سه‌شنبه",  ["نگارش - استاد ساجدی","ریاضی - استاد روشنگر","دین و زندگی - استاد سهیلی","شیمی - استاد کریمی"]],
     ["چهارشنبه", ["تفکر - استاد ترابی","شیمی - استاد کریمی","انگلیسی - استاد قدسی","آزمایشگاه - استاد کریمی"]]
   ]],
   ["ریاضی ۱۰۲", [
     ["شنبه",     ["ریاضی - استاد روشنگر","هندسه - استاد ترابی","فارسی - استاد برادران","مهارت"]],
     ["یکشنبه",   ["شیمی - استاد کریمی","ورزش - استاد عبداللهی","فیزیک - استاد یوسفی","شیمی - استاد کریمی"]],
-    ["دوشنبه",   ["انگلیسی - استاد قدسی","فیزیک - استاد یوسفی","دین و زندگی - استاد برزگر"]],
+    ["دوشنبه",   ["انگلیسی - استاد قدسی","فیزیک - استاد یوسفی","دین و زندگی - استاد برزگر","زنگ آزمون"]],
     ["سه‌شنبه",  ["ریاضی - استاد روشنگر","نگارش - استاد برادران","آزمایشگاه - استاد کریمی","عربی - استاد سهیلی"]],
     ["چهارشنبه", ["ریاضی - استاد روشنگر","جغرافیا - استاد پروندی","دفاعی - استاد شهاب","تفکر - استاد ترابی"]]
   ]],
   ["ریاضی ۱۰۳", [
     ["شنبه",     ["فارسی - استاد برادران","عربی - استاد آزاد","تفکر - استاد ترابی","مهارت"]],
     ["یکشنبه",   ["ورزش - استاد عبداللهی","شیمی - استاد یوسفی","نگارش - استاد برادران","شیمی - استاد یوسفی"]],
-    ["دوشنبه",   ["فیزیک - استاد آتش بزرگ","دفاعی - استاد اصفهانی","فیزیک - استاد آتش بزرگ"]],
+    ["دوشنبه",   ["فیزیک - استاد آتش بزرگ","دفاعی - استاد اصفهانی","فیزیک - استاد آتش بزرگ","زنگ آزمون"]],
     ["سه‌شنبه",  ["انگلیسی - استاد قدسی","ریاضی - استاد صادقی","جغرافیا - استاد پروندی","آزمایشگاه - استاد یوسفی"]],
     ["چهارشنبه", ["ریاضی - استاد صادقی","ریاضی - استاد صادقی","هندسه - استاد ترابی","دین و زندگی - استاد سهیلی"]]
   ]],
   ["ریاضی ۱۰۴", [
     ["شنبه",     ["هندسه - استاد ترابی","ورزش - استاد عبداللهی","ریاضی - استاد صادقی","مهارت"]],
     ["یکشنبه",   ["عربی - استاد آزاد","فیزیک - استاد درخشانی","فارسی - استاد ساجدی","نگارش - استاد ساجدی"]],
-    ["دوشنبه",   ["شیمی - استاد یوسفی","ریاضی - استاد صادقی","ریاضی - استاد صادقی"]],
+    ["دوشنبه",   ["شیمی - استاد یوسفی","ریاضی - استاد صادقی","ریاضی - استاد صادقی","زنگ آزمون"]],
     ["سه‌شنبه",  ["شیمی - استاد یوسفی","آزمایشگاه - استاد یوسفی","دین و زندگی - استاد ساداتی","فیزیک - استاد درخشانی"]],
     ["چهارشنبه", ["جغرافیا - استاد پروندی","تفکر - استاد ترابی","دفاعی - استاد وطنی","انگلیسی - استاد قدسی"]]
   ]],
   ["ریاضی ۱۰۵", [
     ["شنبه",     ["جغرافیا - استاد پروندی","ریاضی - استاد صادقی","فارسی - استاد ساجدی","مهارت"]],
     ["یکشنبه",   ["شیمی - استاد یوسفی","هندسه - استاد صمیمی","فیزیک - استاد درخشانی","تفکر - استاد صمیمی"]],
-    ["دوشنبه",   ["ریاضی - استاد صادقی","مشاوره - استاد رامشینی","شیمی - استاد یوسفی"]],
+    ["دوشنبه",   ["ریاضی - استاد صادقی","مشاوره - استاد رامشینی","شیمی - استاد یوسفی","زنگ آزمون"]],
     ["سه‌شنبه",  ["فیزیک - استاد درخشانی","انگلیسی - استاد قدسی","شیمی - استاد یوسفی","دین و زندگی - استاد ساداتی"]],
     ["چهارشنبه", ["نگارش - استاد ساجدی","دفاعی - استاد وطنی","ریاضی - استاد صادقی","ورزش - استاد عبداللهی"]]
   ]],
   ["ریاضی ۱۱۱", [
     ["شنبه",     ["شیمی - استاد سمیعی","مشاوره - استاد رامشینی / مشاوره - استاد یارتبار","فیزیک - استاد اسکندری","ورزش - استاد عبداللهی"]],
     ["یکشنبه",   ["هندسه - استاد مقیمی","حسابان - استاد کوهی","شیمی - استاد سمیعی","فیزیک - استاد اسکندری"]],
-    ["دوشنبه",   ["دین و زندگی - استاد اصفهانی","عربی - استاد آزاد","انگلیسی - استاد قدسی"]],
+    ["دوشنبه",   ["دین و زندگی - استاد اصفهانی","عربی - استاد آزاد","انگلیسی - استاد قدسی","زنگ آزمون"]],
     ["سه‌شنبه",  ["زمین شناسی - استاد سلطانی","آمار و احتمال - استاد مقیمی","نگارش - استاد فروغی / انگلیسی - استاد قدسی","انسان و محیط - استاد تقوی"]],
     ["چهارشنبه", ["تاریخ - استاد شریفی","کارآفرینی - استاد مقیمی","فارسی - استاد فروغی","حسابان - استاد کوهی"]]
   ]],
   ["ریاضی ۱۱۲", [
     ["شنبه",     ["انگلیسی - استاد قدسی","شیمی - استاد سمیعی","زمین شناسی - استاد آتش بزرگ","مشاوره - استاد رامشینی / مشاوره - استاد یارتبار"]],
     ["یکشنبه",   ["تاریخ - استاد شریفی","فیزیک - استاد اسکندری","هندسه - استاد مقیمی","حسابان - استاد کوهی"]],
-    ["دوشنبه",   ["فیزیک - استاد اسکندری","دین و زندگی - استاد وطنی","عربی - استاد آزاد"]],
+    ["دوشنبه",   ["فیزیک - استاد اسکندری","دین و زندگی - استاد وطنی","عربی - استاد آزاد","زنگ آزمون"]],
     ["سه‌شنبه",  ["آمار و احتمال - استاد مقیمی","انسان و محیط - استاد تقوی","نگارش - استاد فروغی / انگلیسی - استاد قدسی","شیمی - استاد سمیعی"]],
     ["چهارشنبه", ["حسابان - استاد کوهی","ورزش - استاد عبداللهی","کارآفرینی - استاد مقیمی","فارسی - استاد فروغی"]]
   ]],
   ["ریاضی ۱۱۳", [
     ["شنبه",     ["فیزیک - استاد اسکندری","فارسی - استاد فروغی","مشاوره - استاد رامشینی / مشاوره - استاد یارتبار","تاریخ - استاد شریفی"]],
     ["یکشنبه",   ["حسابان - استاد کوهی","هندسه - استاد مقیمی","فیزیک - استاد اسکندری","آمار و احتمال - استاد مقیمی"]],
-    ["دوشنبه",   ["عربی - استاد آزاد","شیمی - استاد سمیعی","دین و زندگی - استاد اصفهانی"]],
+    ["دوشنبه",   ["عربی - استاد آزاد","شیمی - استاد سمیعی","دین و زندگی - استاد اصفهانی","زنگ آزمون"]],
     ["سه‌شنبه",  ["ورزش - استاد عبداللهی","شیمی - استاد سمیعی","انسان و محیط - استاد سلطانی","زمین شناسی - استاد سلطانی"]],
     ["چهارشنبه", ["نگارش - استاد فروغی / انگلیسی - استاد قدسی","انگلیسی - استاد قدسی","حسابان - استاد کوهی","کارآفرینی - استاد مقیمی"]]
   ]],
   ["ریاضی ۱۱۴", [
     ["شنبه",     ["فارسی - استاد فروغی","تاریخ - استاد شریفی","شیمی - استاد سمیعی","نگارش - استاد فروغی / انگلیسی - استاد علوی"]],
     ["یکشنبه",   ["فیزیک - استاد اسکندری","انسان و محیط - استاد تقوی","حسابان - استاد کوهی","عربی - استاد آزاد"]],
-    ["دوشنبه",   ["ورزش - استاد عبداللهی","فیزیک - استاد اسکندری","دین و زندگی - استاد وطنی"]],
+    ["دوشنبه",   ["ورزش - استاد عبداللهی","فیزیک - استاد اسکندری","دین و زندگی - استاد وطنی","زنگ آزمون"]],
     ["سه‌شنبه",  ["شیمی - استاد سمیعی","زمین شناسی - استاد سلطانی","هندسه - استاد مقیمی","کارآفرینی - استاد مقیمی"]],
     ["چهارشنبه", ["آمار و احتمال - استاد مقیمی","حسابان - استاد کوهی","انگلیسی - استاد علوی","مشاوره - استاد رامشینی"]]
   ]],
   ["انسانی ۱۰۸", [
     ["شنبه",     ["ریاضی - استاد صادقی","فارسی - استاد برادران","جامعه شناسی - استاد طاووسی","مهارت"]],
     ["یکشنبه",   ["علوم و فنون - استاد ساجدی","انگلیسی - استاد آزاد","دفاعی - استاد آزاد","منطق - استاد عزیزی"]],
-    ["دوشنبه",   ["علوم و فنون - استاد ساجدی","دین و زندگی - استاد برزگر","اقتصاد - استاد پروندی"]],
+    ["دوشنبه",   ["علوم و فنون - استاد ساجدی","دین و زندگی - استاد برزگر","اقتصاد - استاد پروندی","زنگ آزمون"]],
     ["سه‌شنبه",  ["ریاضی - استاد صادقی","جغرافیا - استاد پروندی","تفکر - استاد صادقی","نگارش - استاد برادران"]],
     ["چهارشنبه", ["عربی - استاد آزاد","دینی - استاد برزگر / تاریخ - استاد شریفی","ورزش - استاد عبداللهی","تاریخ - استاد شریفی"]]
   ]],
   ["انسانی ۱۱۶", [
     ["شنبه",     ["جامعه شناسی - استاد طاووسی","جامعه - استاد طاووسی / انگلیسی - استاد علوی","دین و زندگی - استاد جلالیان","مهارت"]],
     ["یکشنبه",   ["انسان و محیط - استاد تقوی","تاریخ - استاد شریفی","ورزش - استاد عبداللهی","فارسی - استاد برادران"]],
-    ["دوشنبه",   ["روانشناسی - استاد عزیزی","جغرافیا - استاد پروندی","فلسفه - استاد عزیزی"]],
+    ["دوشنبه",   ["روانشناسی - استاد عزیزی","جغرافیا - استاد پروندی","فلسفه - استاد عزیزی","زنگ آزمون"]],
     ["سه‌شنبه",  ["عربی - استاد سهیلی","دین و زندگی - استاد جلالیان","علوم و فنون - استاد داداش پور / نگارش - استاد برادران","ریاضی - استاد فضلی"]],
     ["چهارشنبه", ["ریاضی - استاد فضلی","علوم و فنون - استاد داداش پور","جغرافیا - استاد پروندی / تاریخ - استاد شریفی","انگلیسی - استاد علوی"]]
   ]],
   ["انسانی ۱۱۷", [
     ["شنبه",     ["دین و زندگی - استاد جلالیان","جامعه - استاد طاووسی / انگلیسی - استاد علوی","زبان - استاد علوی","جامعه شناسی - استاد طاووسی"]],
     ["یکشنبه",   ["فلسفه - استاد عزیزی","فارسی - استاد برادران","تاریخ - استاد شریفی","مشاوره - استاد رامشینی / مشاوره - استاد یارتبار"]],
-    ["دوشنبه",   ["جغرافیا - استاد پروندی","روانشناسی - استاد عزیزی","انسان و محیط - استاد تقوی"]],
+    ["دوشنبه",   ["جغرافیا - استاد پروندی","روانشناسی - استاد عزیزی","انسان و محیط - استاد تقوی","زنگ آزمون"]],
     ["سه‌شنبه",  ["ریاضی - استاد فضلی","عربی - استاد سهیلی","علوم و فنون - استاد داداش پور / نگارش - استاد برادران","دین و زندگی - استاد جلالیان"]],
     ["چهارشنبه", ["ورزش - استاد عبداللهی","ریاضی - استاد فضلی","جغرافیا - استاد پروندی / تاریخ - استاد شریفی","علوم و فنون - استاد داداش پور"]]
   ]],
   ["انسانی ۱۲۵", [
     ["شنبه",     ["عربی - استاد سهیلی","زبان - استاد کریمی","فارسی - استاد فروغی","مهارت"]],
     ["یکشنبه",   ["دین و زندگی - استاد ساداتی","فلسفه - استاد عزیزی","دین و زندگی - استاد ساداتی","تاریخ - استاد شریفی"]],
-    ["دوشنبه",   ["تحلیل فرهنگی - استاد محمدوردی","سلامت و بهداشت - استاد تقوی","ورزش - استاد عبداللهی"]],
+    ["دوشنبه",   ["تحلیل فرهنگی - استاد محمدوردی","سلامت و بهداشت - استاد تقوی","ورزش - استاد عبداللهی","زنگ آزمون"]],
     ["سه‌شنبه",  ["جامعه شناسی - استاد جلالیان","فارسی - استاد فروغی","ریاضی - استاد فضلی","جغرافیا - استاد رضائی مهر"]],
     ["چهارشنبه", ["مدیریت - استاد محمدوردی / جامعه - استاد جلالیان","زبان - استاد کریمی","علوم و فنون - استاد داداش پور","ریاضی - استاد فضلی"]]
   ]],
   ["انسانی ۱۲۶", [
     ["شنبه",     ["تاریخ - استاد شریفی","جامعه شناسی - استاد جلالیان","زبان - استاد کریمی","عربی - استاد سهیلی"]],
     ["یکشنبه",   ["علوم و فنون - استاد برادران","دین و زندگی - استاد ساداتی","فلسفه - استاد عزیزی","سلامت و بهداشت - استاد تقوی"]],
-    ["دوشنبه",   ["ریاضی - استاد صمیمی","ورزش - استاد عبداللهی","ریاضی - استاد صمیمی"]],
+    ["دوشنبه",   ["ریاضی - استاد صمیمی","ورزش - استاد عبداللهی","ریاضی - استاد صمیمی","زنگ آزمون"]],
     ["سه‌شنبه",  ["فارسی - استاد فروغی","دین و زندگی - استاد ساداتی","جغرافیا - استاد رضائی مهر","تحلیل فرهنگی - استاد داداش پور"]],
     ["چهارشنبه", ["جامعه - استاد جلالیان / مدیریت - استاد محمدوردی","فارسی - استاد فروغی","زبان - استاد کریمی","مشاوره - استاد رامشینی"]]
   ]],
   ["تجربی ۱۰۶", [
     ["شنبه",     ["فارسی - استاد ساجدی","جغرافیا - استاد پروندی","عربی - استاد آزاد","مهارت"]],
     ["یکشنبه",   ["فیزیک - استاد درخشانی","شیمی - استاد کریمی","زیست - استاد والی کیا","دین و زندگی - استاد ساداتی"]],
-    ["دوشنبه",   ["ورزش - استاد عبداللهی","نگارش - استاد ساجدی","ریاضی - استاد روشنگر"]],
+    ["دوشنبه",   ["ورزش - استاد عبداللهی","نگارش - استاد ساجدی","ریاضی - استاد روشنگر","زنگ آزمون"]],
     ["سه‌شنبه",  ["شیمی - استاد کریمی","فیزیک - استاد درخشانی","تفکر - استاد روشنگر","انگلیسی - استاد قدسی"]],
     ["چهارشنبه", ["دفاعی - استاد والی کیا","ریاضی - استاد روشنگر","آزمایشگاه - استاد کریمی","زیست - استاد والی کیا"]]
   ]],
   ["تجربی ۱۰۷", [
     ["شنبه",     ["عربی - استاد آزاد","فارسی - استاد ساجدی","ریاضی - استاد روشنگر","مهارت"]],
     ["یکشنبه",   ["زیست - استاد والی کیا","دفاعی - استاد والی کیا","شیمی - استاد کریمی","فیزیک - استاد درخشانی"]],
-    ["دوشنبه",   ["ریاضی - استاد روشنگر","انگلیسی - استاد قدسی","نگارش - استاد ساجدی"]],
+    ["دوشنبه",   ["ریاضی - استاد روشنگر","انگلیسی - استاد قدسی","نگارش - استاد ساجدی","زنگ آزمون"]],
     ["سه‌شنبه",  ["دین و زندگی - استاد ساداتی","آزمایشگاه - استاد کریمی","فیزیک - استاد درخشانی","جغرافیا - استاد پروندی"]],
     ["چهارشنبه", ["شیمی - استاد کریمی","زیست - استاد والی کیا","ریاضی - استاد روشنگر","ورزش - استاد عبداللهی"]]
   ]],
   ["تجربی ۱۱۵", [
     ["شنبه",     ["زبان - استاد علوی","فیزیک - استاد اسکندری","تاریخ - استاد شریفی","نگارش - استاد فروغی / انگلیسی - استاد علوی"]],
     ["یکشنبه",   ["ریاضی - استاد صمیمی","شیمی - استاد سمیعی","ریاضی - استاد صمیمی","زیست - استاد والی کیا"]],
-    ["دوشنبه",   ["انسان و محیط - استاد تقوی","ریاضی - استاد صمیمی","فیزیک - استاد اسکندری"]],
+    ["دوشنبه",   ["انسان و محیط - استاد تقوی","ریاضی - استاد صمیمی","فیزیک - استاد اسکندری","زنگ آزمون"]],
     ["سه‌شنبه",  ["زمین شناسی - استاد تقوی","ورزش - استاد عبداللهی","شیمی - استاد سمیعی","فارسی - استاد فروغی"]],
     ["چهارشنبه", ["عربی - استاد سهیلی","دین و زندگی - استاد جلالیان","زیست - استاد والی کیا","مشاوره - استاد رامشینی"]]
   ]],
   ["تجربی ۱۲۴", [
     ["شنبه",     ["ریاضی - استاد حسینخانی","عربی - استاد سهیلی","زیست - استاد پرواز","سلامت و بهداشت - استاد پرواز"]],
     ["یکشنبه",   ["زبان - استاد کریمی","زبان - استاد کریمی","شیمی - استاد جعفری","ورزش - استاد عبداللهی"]],
-    ["دوشنبه",   ["فارسی - استاد داداش پور","نگارش - استاد داداش پور","دین و زندگی - استاد جلالیان"]],
+    ["دوشنبه",   ["فارسی - استاد داداش پور","نگارش - استاد داداش پور","دین و زندگی - استاد جلالیان","زنگ آزمون"]],
     ["سه‌شنبه",  ["فیزیک - استاد قریب","فیزیک - استاد قریب","زیست - استاد پرواز","مدیریت - استاد پرواز"]],
     ["چهارشنبه", ["ریاضی - استاد حسینخانی","شیمی - استاد جعفری","هویت اجتماعی - استاد حسینخانی","مشاوره - استاد رامشینی"]]
   ]]
@@ -1471,6 +1545,20 @@ function buildDB(){
       lessons.forEach(function(lt, idx){
         if(!lt || !lt.trim()) return;
 
+        /* ==== زنگ آزمون (دبیر مجازی) ==== */
+        if(lt === "زنگ آزمون"){
+          if(!db["زنگ آزمون"]) db["زنگ آزمون"] = { name: "زنگ آزمون", classes: [], subjects: {}, classNames: {}, isVirtual: true };
+          var p = idx + 1;
+          db["زنگ آزمون"].classes.push({
+            className: cn, day: day, period: p,
+            subject: "زنگ آزمون",
+            start: PERIODS[p].start, end: PERIODS[p].end
+          });
+          db["زنگ آزمون"].subjects["زنگ آزمون"] = true;
+          db["زنگ آزمون"].classNames[cn] = true;
+          return;
+        }
+
         /* ==== مهارت نادیده ==== */
         if(lt === "مهارت") return;
 
@@ -1526,17 +1614,10 @@ var allClasses = [];
     if(!seen[item[0]]){ seen[item[0]] = true; allClasses.push(item[0]); }
   });
   allClasses.sort(function(a, b){
-    /* مرتب‌سازی واقعی بر اساس شماره کلاس؛ پشتیبانی از اعداد فارسی و انگلیسی */
-    function classNumber(name){
-      var normalized = String(name)
-        .replace(/[۰-۹]/g, function(ch){ return String("۰۱۲۳۴۵۶۷۸۹".indexOf(ch)); })
-        .replace(/[^0-9]/g, "");
-      return parseInt(normalized, 10) || 0;
-    }
-
-    var numA = classNumber(a);
-    var numB = classNumber(b);
-    if(numA !== numB) return numA - numB;
+    /* مرتب‌سازی عددی بر اساس عدد آخر */
+    var numA = parseInt(a.replace(/\D/g, "")) || 0;
+    var numB = parseInt(b.replace(/\D/g, "")) || 0;
+    if(numA !== numB) return numB - numA;
     return a.localeCompare(b, "fa");
   });
 })();
@@ -1616,7 +1697,7 @@ function renderClassesList(){
       if(item[0] !== cn) return;
       item[1].forEach(function(dr){
         dr[1].forEach(function(lt){
-          if(!lt || !lt.trim() || lt === "مهارت") return;
+          if(!lt || !lt.trim() || lt === "زنگ آزمون" || lt === "مهارت") return;
           var entries = extractTeachers(lt);
           entries.forEach(function(e){ teachersSet[e.teacher] = true; });
         });
@@ -1726,6 +1807,9 @@ function showClassSchedule(className){
       if(!lt || !lt.trim()){
         subjectText = "—";
         teacherText = "خالی";
+      } else if(lt === "زنگ آزمون"){
+        subjectText = "📝 زنگ آزمون";
+        teacherText = "کل کلاس";
       } else if(lt === "مهارت"){
         subjectText = "🎯 مهارت";
         teacherText = "—";
@@ -1781,11 +1865,14 @@ function renderAllTeachers(){
     var t = teacherDB[name];
     var initial = name.charAt(0);
     var subjects = Object.keys(t.subjects);
-      html += '<div class="selection-card" onclick="jumpToTeacher(\'' + name.replace(/'/g, "\\'") + '\')">' +
-      '<div class="selection-avatar">' + initial + '</div>' +
+    var isVirtual = t.isVirtual;
+
+    html += '<div class="selection-card" onclick="jumpToTeacher(\'' + name.replace(/'/g, "\\'") + '\')">' +
+      '<div class="selection-avatar">' + (isVirtual ? '📝' : initial) + '</div>' +
       '<div class="selection-info">' +
-        '<div class="selection-name">استاد ' + esc(name) + '</div>' +
+        '<div class="selection-name">' + (isVirtual ? esc(name) : 'استاد ' + esc(name)) + '</div>' +
         '<div class="selection-subject">📚 ' + esc(subjects.join(" • ")) + '</div>' +
+        '<div class="selection-count">' + toFa(t.classes.length) + ' کلاس در هفته</div>' +
       '</div>' +
       '<div class="selection-arrow">←</div>' +
     '</div>';
@@ -2059,6 +2146,7 @@ function doSearch(){
       '<div class="selection-info">' +
         '<div class="selection-name">استاد ' + highlight(name, q) + '</div>' +
         '<div class="selection-subject">📚 ' + esc(t.mainSubject) + '</div>' +
+        '<div class="selection-count">' + toFa(t.classes.length) + ' کلاس در هفته</div>' +
       '</div>' +
       '<div class="selection-arrow">←</div>' +
     '</div>';
@@ -2133,10 +2221,12 @@ function renderTeacher(t, active, query){
   });
 
   var initial = t.name.charAt(0);
+  var isVirtual = t.isVirtual;
+
   var html = '<div class="teacher-header">';
-  html += '<div class="avatar">' + initial + '</div>';
+  html += '<div class="avatar">' + (isVirtual ? '📝' : initial) + '</div>';
   html += '<div>';
-  html += '<h2>' + (query ? highlight(t.name, query) : 'استاد ' + esc(t.name)) + '</h2>';
+  html += '<h2>' + (isVirtual ? esc(t.name) : (query ? highlight(t.name, query) : 'استاد ' + esc(t.name))) + '</h2>';
   html += '<small>📚 ' + esc(t.mainSubject) + ' | مجموع ' + toFa(t.classes.length) + ' کلاس در هفته</small>';
   html += '</div>';
   html += '</div>';
@@ -2210,7 +2300,7 @@ function renderTeacher(t, active, query){
     html += '</div>';
   }
 
-  if(active){
+  if(active && !isVirtual){
     html += '<div class="teacher-actions">';
     html += '<button class="action-btn" onclick="shareLink()">🔗 کپی لینک</button>';
     html += '<button class="action-btn" onclick="showQR()">📱 QR Code</button>';
@@ -2485,35 +2575,8 @@ var liveSearchTimer2 = null;
 si.addEventListener("input", function(){
   var q = si.value.trim();
   showAutocomplete(q);
-
   if(liveSearchTimer2) clearTimeout(liveSearchTimer2);
-
-  /*
-     تا وقتی نام استاد کامل نشده، هیچ کارت برنامه‌ای نمایش داده نشود.
-     فقط وقتی نام واردشده دقیقاً با نام یکی از دبیران برابر باشد،
-     جستجو و نمایش برنامه انجام می‌شود.
-  */
-  var normalizedQuery = normalize(q);
-  var exactTeacher = null;
-  if(normalizedQuery){
-    searchIndex.forEach(function(item){
-      if(!exactTeacher && item.normalized === normalizedQuery){
-        exactTeacher = item.name;
-      }
-    });
-  }
-
-  if(exactTeacher){
-    liveSearchTimer2 = setTimeout(doSearch, 120);
-  } else {
-    var res = document.getElementById("res");
-    var ncc = document.getElementById("ncc");
-    if(timer){ clearInterval(timer); timer = null; }
-    currentTeacher = null;
-    res.style.display = "none";
-    res.innerHTML = "";
-    ncc.classList.remove("visible");
-  }
+  liveSearchTimer2 = setTimeout(doSearch, 120);
 });
 
 si.addEventListener("keydown", function(e){
@@ -2531,24 +2594,9 @@ si.addEventListener("keydown", function(e){
     selectAutocomplete(autocompleteActiveIdx);
   } else if(e.key === "Enter"){
     e.preventDefault();
-    if(liveSearchTimer2) clearTimeout(liveSearchTimer2);
-
-    /* اگر یک گزینه در اتوکامپلیت انتخاب شده، همان گزینه را قطعی انتخاب کن. */
-    if(isVisible && autocompleteActiveIdx > -1){
-      selectAutocomplete(autocompleteActiveIdx);
-      return;
-    }
-
-    /* Enter روی متن ناقص نباید برنامه‌ای را نمایش دهد. */
-    var q = si.value.trim();
-    var normalizedQuery = normalize(q);
-    var exactTeacher = false;
-    searchIndex.forEach(function(item){
-      if(item.normalized === normalizedQuery){ exactTeacher = true; }
-    });
-
     hideAutocomplete();
-    if(exactTeacher){ doSearch(); }
+    if(liveSearchTimer2) clearTimeout(liveSearchTimer2);
+    doSearch();
   } else if(e.key === "Escape"){
     hideAutocomplete();
   }
@@ -2610,6 +2658,17 @@ if(window.innerWidth > 600){
     si.focus();
   }, 300);
 }
+</script>
+
+<script>
+function openAdminMenu(){document.getElementById('adminDrawer').classList.add('open');document.getElementById('adminDrawerBackdrop').classList.add('open')}
+function closeAdminMenu(){document.getElementById('adminDrawer').classList.remove('open');document.getElementById('adminDrawerBackdrop').classList.remove('open')}
+function openAdminLogin(){document.getElementById('adminLoginModal').classList.add('show');setTimeout(()=>document.getElementById('adminUsername').focus(),80)}
+function closeAdminLogin(){document.getElementById('adminLoginModal').classList.remove('show');document.getElementById('adminLoginError').textContent=''}
+function adminLogin(){const u=document.getElementById('adminUsername').value.trim();const p=document.getElementById('adminPassword').value;const e=document.getElementById('adminLoginError');if(u==='admin'&&p==='123456'){closeAdminLogin();document.getElementById('adminPanel').classList.add('show')}else{e.textContent='نام کاربری یا رمز عبور نادرست است.'}}
+function closeAdminPanel(){document.getElementById('adminPanel').classList.remove('show')}
+function adminPage(btn,title){document.querySelectorAll('.admin-panel-nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.getElementById('adminPanelTitle').textContent=title;document.getElementById('adminSectionTitle').textContent=title;document.getElementById('adminSectionText').textContent='این بخش از پنل مدیریت آماده توسعه و اتصال به اطلاعات واقعی سامانه است.'}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeAdminMenu();closeAdminLogin();closeAdminPanel()}if(e.key==='Enter'&&document.getElementById('adminLoginModal').classList.contains('show'))adminLogin()});
 </script>
 </body>
 </html>
