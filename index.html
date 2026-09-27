@@ -125,29 +125,25 @@
   header { text-align: center; margin-bottom: 22px; padding: 92px 16px 16px; }
 
 .site-header {
-  position: fixed; top: 0; left: 0; right: 0; height: 64px; z-index: 1100;
+  position: fixed; top: 0; left: 0; right: 0; height: 72px; z-index: 1100;
   display: flex; align-items: center; justify-content: center;
-  padding: 0 78px;
-  background: rgba(10,10,10,.84);
-  border-bottom: 1px solid rgba(212,175,55,.18);
-  backdrop-filter: blur(18px) saturate(125%); -webkit-backdrop-filter: blur(18px) saturate(125%);
-  box-shadow: 0 6px 22px rgba(0,0,0,.16);
+  padding: 0 82px;
+  background: rgba(10,10,10,.78);
+  border-bottom: 1px solid rgba(212,175,55,.22);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 5px 24px rgba(0,0,0,.18);
 }
-body.light .site-header { background: rgba(255,255,255,.88); }
+body.light .site-header { background: rgba(255,255,255,.82); }
 .site-header-update {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  max-width: min(520px, calc(100vw - 160px));
-  min-height: 38px; box-sizing: border-box;
-  color: var(--text-light); font-size: 12.5px; font-weight: 600;
-  line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  padding: 7px 15px; border-radius: 12px;
-  border: 1px solid var(--glass-border); background: rgba(255,255,255,.055);
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--text-light); font-size: 13px; font-weight: 600;
+  padding: 9px 16px; border-radius: 999px;
+  border: 1px solid var(--glass-border); background: var(--glass-bg);
   box-shadow: 0 4px 15px var(--shadow);
   transition: opacity .45s ease, transform .45s ease;
 }
-body.light .site-header-update { background: rgba(255,255,255,.62); }
 .site-header-update.hidden { opacity: 0; transform: translateY(-10px); pointer-events: none; }
-.site-header-update .update-dot { width: 6px; height: 6px; flex: 0 0 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
+.site-header-update .update-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
 
   .theme-toggle {
     position: absolute;
@@ -1159,10 +1155,7 @@ body.light .site-header-update { background: rgba(255,255,255,.62); }
     .qr-modal-content { padding: 22px; }
     .qr-box { min-width: 180px; min-height: 180px; padding: 12px; }
 
-    .site-header { height: 58px; padding: 0 62px; }
-    .site-header-update { max-width: calc(100vw - 124px); min-height: 34px; padding: 6px 11px; font-size: 11.5px; border-radius: 10px; gap: 6px; }
-    .site-header-update .update-dot { width: 5px; height: 5px; flex-basis: 5px; }
-    .theme-toggle { top: 9px; left: 10px; width: 40px; height: 40px; }
+    .theme-toggle { top: 14px; left: 14px; width: 40px; height: 40px; }
 
     .info-chip { font-size: 0.8rem; padding: 7px 11px; }
   }
@@ -1174,7 +1167,7 @@ body.light .site-header-update { background: rgba(255,255,255,.62); }
   }
 
 /* ===== Integrated Admin Panel ===== */
-.admin-menu-btn{position:absolute;top:8px;right:18px;z-index:1200;width:48px;height:48px;border:1px solid rgba(255,255,255,.18);border-radius:14px;background:rgba(20,28,40,.88);backdrop-filter:blur(10px);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;cursor:pointer;box-shadow:0 8px 25px rgba(0,0,0,.25)}
+.admin-menu-btn{position:absolute;top:12px;right:22px;z-index:1200;width:48px;height:48px;border:1px solid rgba(255,255,255,.18);border-radius:14px;background:rgba(20,28,40,.88);backdrop-filter:blur(10px);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;cursor:pointer;box-shadow:0 8px 25px rgba(0,0,0,.25)}
 .admin-menu-btn span{display:block;width:22px;height:2px;border-radius:3px;background:#fff;transition:.2s}
 .admin-drawer-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:1250;display:none}
 .admin-drawer{position:fixed;top:0;right:0;width:min(330px,88vw);height:100vh;background:#111827;color:#fff;z-index:1260;transform:translateX(105%);transition:transform .25s ease;box-shadow:-12px 0 35px rgba(0,0,0,.35);padding:24px}
@@ -1192,7 +1185,7 @@ body.light .site-header-update { background: rgba(255,255,255,.62); }
 .admin-login-actions{display:flex;gap:10px;margin-top:18px}.admin-primary,.admin-secondary{flex:1;height:45px;border:0;border-radius:11px;font-family:inherit;font-weight:700;cursor:pointer}.admin-primary{background:#4f46e5;color:#fff}.admin-secondary{background:#eef2f7;color:#374151}.admin-error{color:#dc2626;font-size:12px;min-height:18px;margin-top:6px}
 .admin-panel{position:fixed;inset:0;z-index:1450;display:none;background:#f3f4f6;color:#111827}.admin-panel.show{display:flex}.admin-panel-sidebar{width:255px;background:#111827;color:#fff;padding:22px 14px;overflow:auto}.admin-panel-brand{font-size:18px;font-weight:800;padding:8px 12px 22px}.admin-panel-nav button{width:100%;border:0;background:transparent;color:#d1d5db;padding:12px;border-radius:10px;font-family:inherit;text-align:right;cursor:pointer;margin:2px 0}.admin-panel-nav button.active,.admin-panel-nav button:hover{background:#1f2937;color:#fff}.admin-panel-main{flex:1;overflow:auto}.admin-panel-top{height:72px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;padding:0 26px;position:sticky;top:0;z-index:2}.admin-panel-top h2{font-size:19px}.admin-logout{border:0;background:#fee2e2;color:#b91c1c;border-radius:9px;padding:9px 14px;font-family:inherit;cursor:pointer}.admin-content{padding:26px}.admin-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:22px}.admin-stat{background:#fff;border-radius:16px;padding:20px;border:1px solid #e5e7eb}.admin-stat small{color:#6b7280}.admin-stat strong{display:block;font-size:27px;margin-top:8px}.admin-placeholder{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:24px}.admin-placeholder h3{margin-bottom:8px}.admin-placeholder p{color:#6b7280;font-size:14px;line-height:1.9}
 @media(max-width:800px){.admin-panel-sidebar{width:205px}.admin-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-content{padding:18px}}
-@media(max-width:600px){.admin-menu-btn{top:7px;right:10px;width:44px;height:44px}.admin-panel{display:none}.admin-panel.show{display:block}.admin-panel-sidebar{display:none}.admin-panel-top{padding:0 16px}.admin-content{padding:14px}.admin-cards{grid-template-columns:1fr 1fr;gap:10px}.admin-stat{padding:15px}.admin-stat strong{font-size:22px}}
+@media(max-width:600px){.admin-menu-btn{top:12px;right:12px;width:44px;height:44px}.admin-panel{display:none}.admin-panel.show{display:block}.admin-panel-sidebar{display:none}.admin-panel-top{padding:0 16px}.admin-content{padding:14px}.admin-cards{grid-template-columns:1fr 1fr;gap:10px}.admin-stat{padding:15px}.admin-stat strong{font-size:22px}}
 
 .admin-rich-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.admin-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.admin-control{width:100%;padding:10px;border:1px solid #dbe3e8;border-radius:10px;background:#fff;font-family:inherit}.admin-list{display:grid;gap:9px}.admin-list-item{display:flex;justify-content:space-between;align-items:center;padding:11px;border:1px solid #e7edf1;border-radius:10px;background:#fbfcfd;font-size:12px}.admin-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.admin-search{flex:1;min-width:180px}.admin-danger{background:#fee2e2;color:#b91c1c}.admin-success{background:#dcfce7;color:#166534}.admin-muted{color:#718096;font-size:11px}@media(max-width:700px){.admin-rich-grid,.admin-form-grid{grid-template-columns:1fr}}
 
@@ -1201,6 +1194,15 @@ body.light .site-header-update { background: rgba(255,255,255,.62); }
 
 
 .admin-panel{background:linear-gradient(135deg,#f4f7fa,#edf2f7)!important}.admin-panel-sidebar{background:linear-gradient(180deg,#0b2035,#153d5f)!important;box-shadow:8px 0 30px rgba(15,40,65,.15)}.admin-panel-brand{font-weight:800;border-bottom:1px solid rgba(255,255,255,.12)}.admin-panel-nav button{border-radius:12px;margin:3px 9px;transition:.2s}.admin-panel-nav button:hover{background:rgba(255,255,255,.09);transform:translateX(-2px)}.admin-panel-nav button.active{background:linear-gradient(90deg,rgba(72,151,209,.28),rgba(255,255,255,.07));box-shadow:inset 3px 0 #62a5d9}.admin-panel-main{padding:0 28px 35px}.admin-panel-top{background:rgba(255,255,255,.9)!important;border:1px solid #e3eaf1!important;border-radius:18px!important;box-shadow:0 8px 28px rgba(20,45,70,.06)!important}.admin-placeholder{background:rgba(255,255,255,.96)!important;border:1px solid #e3eaf1!important;border-radius:18px!important;box-shadow:0 10px 35px rgba(20,45,70,.06)!important}.admin-stat{border:1px solid #e2e9f0!important;border-radius:17px!important;box-shadow:0 7px 24px rgba(20,45,70,.05)!important}.admin-action{border:0!important;border-radius:10px!important;background:linear-gradient(135deg,#173b5f,#2a6b98)!important;color:#fff!important;box-shadow:0 5px 14px rgba(23,59,95,.18);cursor:pointer}.admin-table{border-collapse:separate!important;border-spacing:0!important;overflow:hidden;border:1px solid #e2e8f0;border-radius:12px}.admin-table th{background:#f3f6fa!important;color:#334e68!important}.admin-table td,.admin-table th{padding:12px 10px!important;border-bottom:1px solid #edf1f5}.admin-edit-btn{border:1px solid #cbd8e5;background:#f8fafc;color:#23415e;border-radius:8px;padding:6px 11px;cursor:pointer;font-family:inherit;font-size:11px}.admin-edit-btn:hover{background:#e8f1f8}.admin-list-item{box-shadow:0 3px 12px rgba(15,23,42,.035)}.admin-quick{border:1px solid #e1e8ef!important;border-radius:14px!important;background:#fff!important;box-shadow:0 5px 16px rgba(15,23,42,.04);cursor:pointer}.admin-quick:hover{transform:translateY(-2px)}
+
+.about-modal{position:fixed;inset:0;z-index:1400;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.about-modal.open{display:flex}
+.about-card{position:relative;width:min(720px,94vw);max-height:min(86vh,760px);overflow:auto;border-radius:22px;padding:28px;background:var(--card-bg,#fff);color:var(--text,#17212b);box-shadow:0 25px 70px rgba(0,0,0,.3);font-family:'Vazirmatn',Tahoma,sans-serif}
+body.dark .about-card{background:#111827;color:#f3f4f6}
+.about-close{position:absolute;top:14px;left:16px;color:inherit!important;width:38px;height:38px;border-radius:10px;background:rgba(127,127,127,.1)!important}
+.about-header{display:flex;align-items:center;gap:14px;padding:4px 44px 20px 0;border-bottom:1px solid rgba(127,127,127,.18)}
+.about-icon{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;background:rgba(37,99,235,.12);font-size:25px}.about-header h2{margin:0;font-size:23px}.about-header p{margin:5px 0 0;opacity:.68;font-size:12px}.about-section{padding:20px 0 4px}.about-section h3{margin:0 0 12px;font-size:16px}.about-section p{margin:0 0 10px;line-height:2;font-size:13px;opacity:.9}.about-support{margin-top:16px;padding:14px 16px;border-radius:14px;background:rgba(37,99,235,.08);display:flex;flex-direction:column;gap:6px}.about-support span{font-size:13px;font-weight:600}.about-contact{margin-top:12px;padding:14px 16px;border-radius:14px;border:1px solid rgba(127,127,127,.18)}.about-contact strong{display:block;font-size:13px;margin-bottom:10px}.about-contact div{display:flex;gap:10px;flex-wrap:wrap}.about-contact a{direction:ltr;text-decoration:none;padding:8px 12px;border-radius:9px;background:rgba(37,99,235,.1);color:#2563eb;font-weight:700;font-size:13px}
+@media(max-width:600px){.about-modal{padding:10px}.about-card{max-height:90vh;padding:22px 17px}.about-header{padding-right:38px}.about-header h2{font-size:19px}.about-section p{font-size:12px;line-height:1.9}.about-contact div{flex-direction:column}.about-contact a{text-align:center}}
 </style>
 </head>
 <body class="dark">
@@ -1218,7 +1220,32 @@ body.light .site-header-update { background: rgba(255,255,255,.62); }
 <aside class="admin-drawer" id="adminDrawer" aria-label="منوی سایت">
   <div class="admin-drawer-head"><strong>منوی سایت</strong><button class="admin-close" onclick="closeAdminMenu()" aria-label="بستن">×</button></div>
   <button class="menu-item admin-entry" onclick="closeAdminMenu();openAdminLogin()">⚙️&nbsp; پنل مدیریت</button>
+  <button class="menu-item" onclick="closeAdminMenu();openAboutModal()">ℹ️&nbsp; درباره‌ی ما</button>
 </aside>
+
+<div class="about-modal" id="aboutModal" aria-hidden="true" onclick="if(event.target===this)closeAboutModal()">
+  <div class="about-card" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+    <button class="admin-close about-close" onclick="closeAboutModal()" aria-label="بستن">×</button>
+    <div class="about-header">
+      <div class="about-icon">🏫</div>
+      <div><h2 id="aboutTitle">درباره‌ی ما</h2><p>دبیرستان شهید حسن باقری</p></div>
+    </div>
+    <section class="about-section">
+      <h3>🏫 درباره مدرسه</h3>
+      <p>دبیرستان شهید باقری با هدف فراهم‌کردن محیطی پویا، منظم و مناسب برای رشد علمی و فردی دانش‌آموزان فعالیت می‌کند.</p>
+      <p>این مجموعه تلاش می‌کند با بهره‌گیری از دبیران مجرب، برنامه‌ریزی آموزشی منظم و توجه به نیازهای دانش‌آموزان، مسیر یادگیری و پیشرفت تحصیلی را برای آنان هموارتر کند.</p>
+      <p>این سامانه نیز با هدف دسترسی ساده‌تر دانش‌آموزان، دبیران و خانواده‌ها به اطلاعات آموزشی و برنامه‌های مدرسه طراحی شده است تا بخشی از امور آموزشی با سرعت و نظم بیشتری در دسترس باشد.</p>
+    </section>
+    <section class="about-section">
+      <h3>💻 پشتیبانی و توسعه سامانه</h3>
+      <p>این سامانه با هدف ساده‌تر کردن دسترسی به اطلاعات آموزشی و ایجاد تجربه‌ای سریع و منظم برای کاربران طراحی و توسعه داده شده است.</p>
+      <p>طراحی، توسعه و پشتیبانی فنی سامانه توسط تیم پشتیبان سایت انجام می‌شود و قابلیت‌های آن با توجه به نیازهای مجموعه آموزشی به‌مرور توسعه و به‌روزرسانی خواهد شد.</p>
+      <p>تلاش ما این است که این سامانه علاوه بر نمایش اطلاعات، به ابزاری کاربردی برای ارتباط بهتر با برنامه‌ها و فرآیندهای آموزشی مدرسه تبدیل شود.</p>
+      <div class="about-support"><strong>توسعه و پشتیبانی</strong><span>تیم پشتیبانی دبیرستان شهید حسن باقری</span></div>
+      <div class="about-contact"><strong>با ما در ارتباط باشید با: ۰۹۰۵۴۷۰۷۳۳۶ - ۰۹۱۰۴۵۷۷۴۳۹</strong></div>
+    </section>
+  </div>
+</div>
 
 <div class="admin-modal" id="adminLoginModal">
   <div class="admin-login-card">
@@ -2761,6 +2788,8 @@ if(window.innerWidth > 600){
 </script>
 
 <script>
+function openAboutModal(){var m=document.getElementById('aboutModal');if(m){m.classList.add('open');m.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}}
+function closeAboutModal(){var m=document.getElementById('aboutModal');if(m){m.classList.remove('open');m.setAttribute('aria-hidden','true');document.body.style.overflow=''}}
 function openAdminMenu(){document.getElementById('adminDrawer').classList.add('open');document.getElementById('adminDrawerBackdrop').classList.add('open')}
 function closeAdminMenu(){document.getElementById('adminDrawer').classList.remove('open');document.getElementById('adminDrawerBackdrop').classList.remove('open')}
 function openAdminLogin(){document.getElementById('adminLoginModal').classList.add('show');setTimeout(()=>document.getElementById('adminUsername').focus(),80)}
