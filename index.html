@@ -1191,7 +1191,7 @@
     <div class="admin-field"><label for="adminUsername">نام کاربری</label><input id="adminUsername" type="text" autocomplete="username" placeholder="نام کاربری"></div>
     <div class="admin-field"><label for="adminPassword">رمز عبور</label><input id="adminPassword" type="password" autocomplete="current-password" placeholder="رمز عبور"></div>
     <div class="admin-error" id="adminLoginError"></div>
-    <div class="admin-login-actions"><button class="admin-secondary" onclick="closeAdminLogin()">انصراف</button><button class="admin-primary" onclick="adminLogin()">ورود</button></div>
+    <div class="admin-login-actions"><button class="admin-secondary" onclick="closeAdminLogin()">انصراف</button><button type="button" class="admin-primary" onclick="adminLogin()">ورود</button></div>
   </div>
 </div>
 
@@ -2701,10 +2701,11 @@ function openAdminMenu(){document.getElementById('adminDrawer').classList.add('o
 function closeAdminMenu(){document.getElementById('adminDrawer').classList.remove('open');document.getElementById('adminDrawerBackdrop').classList.remove('open')}
 function openAdminLogin(){document.getElementById('adminLoginModal').classList.add('show');setTimeout(()=>document.getElementById('adminUsername').focus(),80)}
 function closeAdminLogin(){document.getElementById('adminLoginModal').classList.remove('show');document.getElementById('adminLoginError').textContent=''}
-function adminLogin(){const u=document.getElementById('adminUsername').value.trim();const p=document.getElementById('adminPassword').value;const e=document.getElementById('adminLoginError');if(u==='admin'&&p==='123erfanSedighi456'){closeAdminLogin();document.getElementById('adminPanel').classList.add('show')}else{e.textContent='نام کاربری یا رمز عبور نادرست است.'}}
+function adminLogin(){const userEl=document.getElementById('adminUsername');const passEl=document.getElementById('adminPassword');const errorEl=document.getElementById('adminLoginError');if(!userEl||!passEl||!errorEl)return;const u=userEl.value.trim();const p=passEl.value.trim();errorEl.textContent='';if(u==='admin'&&p==='123erfanSedighi456'){closeAdminLogin();const panel=document.getElementById('adminPanel');if(panel)panel.classList.add('show');document.body.classList.add('admin-open');}else{errorEl.textContent='نام کاربری یا رمز عبور نادرست است.';passEl.focus();passEl.select();}}
 function closeAdminPanel(){document.getElementById('adminPanel').classList.remove('show')}
 
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeAdminMenu();closeAdminLogin();closeAdminPanel()}if(e.key==='Enter'&&document.getElementById('adminLoginModal').classList.contains('show'))adminLogin()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeAdminMenu();closeAdminLogin();closeAdminPanel()}if(e.key==='Enter'&&document.getElementById('adminLoginModal').classList.contains('show')){e.preventDefault();adminLogin()}});
+window.addEventListener('DOMContentLoaded',function(){var pass=document.getElementById('adminPassword');if(pass){pass.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();adminLogin()}})}});
 </script>
 </body>
 </html>
