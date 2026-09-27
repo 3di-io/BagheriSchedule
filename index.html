@@ -304,6 +304,149 @@
     transform: scale(1.05);
   }
 
+  /* ==== دراپ‌دان اتوکامپلیت ==== */
+  .autocomplete-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    left: 0;
+    background: var(--modal-bg);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1.5px solid var(--glass-border);
+    border-radius: 14px;
+    box-shadow:
+      0 12px 40px rgba(0,0,0,0.5),
+      0 0 30px rgba(212,175,55,0.15),
+      inset 0 1px 0 rgba(212,175,55,0.1);
+    max-height: 320px;
+    overflow-y: auto;
+    z-index: 50;
+    display: none;
+    animation: dropdownIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .autocomplete-dropdown.visible {
+    display: block;
+  }
+
+  @keyframes dropdownIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .autocomplete-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border-bottom: 1px solid var(--card-border);
+    position: relative;
+  }
+
+  .autocomplete-item:last-child {
+    border-bottom: none;
+  }
+
+  .autocomplete-item:hover,
+  .autocomplete-item.active {
+    background: rgba(212,175,55,0.15);
+  }
+
+  .autocomplete-item.active::before {
+    content: "";
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--gold);
+  }
+
+  .autocomplete-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(212,175,55,0.9), rgba(245,215,110,0.9));
+    border: 1.5px solid rgba(212,175,55,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1a1a1a;
+    font-weight: 800;
+    font-size: 1rem;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(212,175,55,0.25);
+  }
+
+  .autocomplete-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .autocomplete-name {
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--text-light);
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .autocomplete-name mark {
+    background: linear-gradient(135deg, rgba(212,175,55,0.5), rgba(245,215,110,0.4));
+    color: var(--text-light);
+    padding: 1px 3px;
+    border-radius: 3px;
+    font-weight: 800;
+  }
+
+  .autocomplete-subject {
+    font-size: 0.75rem;
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+
+  .autocomplete-count {
+    font-size: 0.72rem;
+    color: var(--text-soft);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 3px 8px;
+    border-radius: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .autocomplete-empty {
+    padding: 20px;
+    text-align: center;
+    color: var(--text-soft);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 600px) {
+    .autocomplete-dropdown {
+      max-height: 260px;
+    }
+    .autocomplete-item {
+      padding: 10px 12px;
+      gap: 10px;
+    }
+    .autocomplete-avatar {
+      width: 34px;
+      height: 34px;
+      font-size: 0.9rem;
+    }
+    .autocomplete-name {
+      font-size: 0.85rem;
+    }
+    .autocomplete-subject {
+      font-size: 0.7rem;
+    }
+  }
+
   .next-class-card { padding: 24px; margin-bottom: 16px; display: none; animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
   .next-class-card.visible { display: block; }
   @keyframes slideDown {
@@ -954,6 +1097,7 @@
       </span>
       <input type="text" id="si" placeholder="مثلاً: داداش پور، قریب، صالحی..." autocomplete="off" spellcheck="false">
       <button class="clear-btn" id="clearBtn" onclick="clearSearch()" title="پاک کردن">✕</button>
+      <div class="autocomplete-dropdown" id="autocompleteDropdown"></div>
     </div>
   </div>
 
@@ -1195,23 +1339,17 @@ function normalize(str){
 
 /* ==========================================================
    استخراج دبیران از یک متن درس
-   پشتیبانی از:
-   - "درس - استاد X"
-   - "درس - استاد X / درس - استاد Y"
-   - "درس - استاد X و درس - استاد Y"
    ========================================================== */
 function extractTeachers(lessonText){
   var result = [];
   if(!lessonText || !lessonText.trim()) return result;
 
-  /* جدا کردن با / و " و " */
   var parts = lessonText.split(/\s*\/\s*|\s+و\s+/);
 
   parts.forEach(function(part){
     part = part.trim();
     if(!part) return;
 
-    /* جدا کردن درس و دبیر */
     var m = part.split(" - ");
     if(m.length < 2) return;
     var subj = m[0].trim();
@@ -1391,6 +1529,110 @@ function startQuoteRotation(){
 }
 
 /* ==========================================================
+   اتوکامپلیت
+   ========================================================== */
+var autocompleteActiveIdx = -1;
+var autocompleteItems = [];
+
+function highlightAutocomplete(text, query){
+  if(!query || !text) return esc(text);
+  var normalizedText = normalize(text);
+  var normalizedQuery = normalize(query);
+  var idx = normalizedText.indexOf(normalizedQuery);
+  if(idx === -1) return esc(text);
+  var before = text.substring(0, idx);
+  var middle = text.substring(idx, idx + query.length);
+  var after = text.substring(idx + query.length);
+  return esc(before) + '<mark>' + esc(middle) + '</mark>' + esc(after);
+}
+
+function showAutocomplete(query){
+  var dropdown = document.getElementById("autocompleteDropdown");
+  if(!dropdown) return;
+
+  if(!query || query.length < 1){
+    hideAutocomplete();
+    return;
+  }
+
+  var normalizedQuery = normalize(query);
+  var matches = [];
+
+  searchIndex.forEach(function(item){
+    if(item.normalized.indexOf(normalizedQuery) > -1){
+      matches.push(item);
+    }
+  });
+
+  matches = matches.slice(0, 8);
+
+  if(matches.length === 0){
+    dropdown.innerHTML = '<div class="autocomplete-empty">دبیری پیدا نشد 🔍</div>';
+    dropdown.classList.add("visible");
+    autocompleteItems = [];
+    autocompleteActiveIdx = -1;
+    return;
+  }
+
+  autocompleteItems = matches;
+  autocompleteActiveIdx = -1;
+
+  var html = "";
+  matches.forEach(function(item, idx){
+    var initial = item.name.charAt(0);
+    html += '<div class="autocomplete-item" data-idx="' + idx + '" onclick="selectAutocomplete(' + idx + ')">';
+    html += '<div class="autocomplete-avatar">' + initial + '</div>';
+    html += '<div class="autocomplete-info">';
+    html += '<div class="autocomplete-name">استاد ' + highlightAutocomplete(item.name, query) + '</div>';
+    html += '<div class="autocomplete-subject">📚 ' + esc(item.mainSubject) + '</div>';
+    html += '</div>';
+    html += '<div class="autocomplete-count">' + toFa(teacherDB[item.name].classes.length) + ' کلاس</div>';
+    html += '</div>';
+  });
+
+  dropdown.innerHTML = html;
+  dropdown.classList.add("visible");
+}
+
+function hideAutocomplete(){
+  var dropdown = document.getElementById("autocompleteDropdown");
+  if(dropdown) dropdown.classList.remove("visible");
+  autocompleteActiveIdx = -1;
+}
+
+function selectAutocomplete(idx){
+  if(idx < 0 || idx >= autocompleteItems.length) return;
+  var name = autocompleteItems[idx].name;
+
+  document.getElementById("si").value = name;
+  hideAutocomplete();
+  doSearch();
+}
+
+function moveAutocompleteSelection(dir){
+  if(autocompleteItems.length === 0) return;
+
+  var items = document.querySelectorAll(".autocomplete-item");
+  if(items.length === 0) return;
+
+  if(autocompleteActiveIdx > -1 && items[autocompleteActiveIdx]){
+    items[autocompleteActiveIdx].classList.remove("active");
+  }
+
+  autocompleteActiveIdx += dir;
+
+  if(autocompleteActiveIdx < 0){
+    autocompleteActiveIdx = items.length - 1;
+  }
+  if(autocompleteActiveIdx >= items.length){
+    autocompleteActiveIdx = 0;
+  }
+
+  items[autocompleteActiveIdx].classList.add("active");
+  items[autocompleteActiveIdx].scrollIntoView({ block: "nearest", behavior: "smooth" });
+}
+
+/* ==========================================================
    جستجو
    ========================================================== */
 var currentTeacher = null;
@@ -1498,12 +1740,14 @@ function findSimilar(normalizedQuery){
 
 function quickSearch(name){
   document.getElementById("si").value = name;
+  hideAutocomplete();
   doSearch();
 }
 
 function clearSearch(){
   document.getElementById("si").value = "";
   document.getElementById("si").focus();
+  hideAutocomplete();
   doSearch();
 }
 
@@ -1850,7 +2094,8 @@ function showQR(){
       width: 220, height: 220,
       colorDark: "#0a0a0a",
       colorLight: "#ffffff",
-      correctLevel: QRCode.CorrectLevel.H    });
+      correctLevel: QRCode.CorrectLevel.H
+    });
     modal.classList.add("visible");
   } catch(e) {
     showToast("❌ خطا در ساخت QR", true);
@@ -1924,16 +2169,49 @@ function checkURLParam(){
 /* ==========================================================
    رویدادها
    ========================================================== */
-var liveSearchTimer = null;
-document.getElementById("si").addEventListener("input", function(){
-  if(liveSearchTimer) clearTimeout(liveSearchTimer);
-  liveSearchTimer = setTimeout(doSearch, 120);
+var si = document.getElementById("si");
+var liveSearchTimer2 = null;
+
+si.addEventListener("input", function(){
+  var q = si.value.trim();
+  showAutocomplete(q);
+  if(liveSearchTimer2) clearTimeout(liveSearchTimer2);
+  liveSearchTimer2 = setTimeout(doSearch, 120);
 });
 
-document.getElementById("si").addEventListener("keypress", function(e){
-  if(e.key === "Enter"){
-    if(liveSearchTimer) clearTimeout(liveSearchTimer);
+si.addEventListener("keydown", function(e){
+  var dropdown = document.getElementById("autocompleteDropdown");
+  var isVisible = dropdown && dropdown.classList.contains("visible");
+
+  if(e.key === "ArrowDown" && isVisible){
+    e.preventDefault();
+    moveAutocompleteSelection(1);
+  } else if(e.key === "ArrowUp" && isVisible){
+    e.preventDefault();
+    moveAutocompleteSelection(-1);
+  } else if(e.key === "Enter" && isVisible && autocompleteActiveIdx > -1){
+    e.preventDefault();
+    selectAutocomplete(autocompleteActiveIdx);
+  } else if(e.key === "Enter"){
+    e.preventDefault();
+    hideAutocomplete();
+    if(liveSearchTimer2) clearTimeout(liveSearchTimer2);
     doSearch();
+  } else if(e.key === "Escape"){
+    hideAutocomplete();
+  }
+});
+
+si.addEventListener("focus", function(){
+  if(si.value.trim().length > 0){
+    showAutocomplete(si.value.trim());
+  }
+});
+
+document.addEventListener("click", function(e){
+  var wrapper = document.querySelector(".search-wrapper");
+  if(wrapper && !wrapper.contains(e.target)){
+    hideAutocomplete();
   }
 });
 
@@ -1941,10 +2219,10 @@ document.addEventListener("keydown", function(e){
   if(e.key === "Escape"){
     document.getElementById("qrModal").classList.remove("visible");
   }
-  if((e.ctrlKey && e.key === "k") || (e.key === "/" && document.activeElement !== document.getElementById("si"))){
+  if((e.ctrlKey && e.key === "k") || (e.key === "/" && document.activeElement !== si)){
     e.preventDefault();
-    document.getElementById("si").focus();
-    document.getElementById("si").select();
+    si.focus();
+    si.select();
   }
 });
 
@@ -1977,7 +2255,7 @@ startQuoteRotation();
 
 if(window.innerWidth > 600){
   setTimeout(function(){
-    document.getElementById("si").focus();
+    si.focus();
   }, 300);
 }
 </script>
