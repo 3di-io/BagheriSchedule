@@ -272,7 +272,6 @@ body.light .site-header { background: rgba(255,255,255,.82); }
       0 0 0 1px rgba(212,175,55,0.08);
   }
 
-  /* ==== تب‌ها ==== */
   .tabs {
     display: flex;
     gap: 8px;
@@ -307,7 +306,6 @@ body.light .site-header { background: rgba(255,255,255,.82); }
     box-shadow: 0 4px 14px rgba(212,175,55,0.35);
   }
 
-  /* ==== بخش‌ها ==== */
   .search-section,
   .classes-section,
   .all-section { display: none; }
@@ -1213,7 +1211,6 @@ body.dark .about-card{background:#111827;color:#f3f4f6}
     </svg>
   </button>
   <div class="site-header-update" id="siteUpdateDate" aria-live="polite"><span class="update-dot"></span><span>آخرین به‌روزرسانی: ۵ مهر ۱۴۰۵</span></div>
-  <!-- Integrated admin menu -->
   <button class="admin-menu-btn" aria-label="باز کردن منو" onclick="openAdminMenu()"><span></span><span></span><span></span></button>
 </div>
 <div class="admin-drawer-backdrop" id="adminDrawerBackdrop" onclick="closeAdminMenu()"></div>
@@ -1334,7 +1331,6 @@ body.dark .about-card{background:#111827;color:#f3f4f6}
     </div>
   </header>
 
-  <!-- تب‌ها -->
   <div class="tabs glass">
     <button class="tab-btn active" id="tabSearch" onclick="switchTab('search')">
       👨‍🏫 دبیران
@@ -1347,7 +1343,6 @@ body.dark .about-card{background:#111827;color:#f3f4f6}
     </button>
   </div>
 
-  <!-- بخش جستجوی دبیر -->
   <div class="search-section visible" id="searchSection">
     <div class="search-box glass">
       <label for="si">جستجوی نام دبیر:</label>
@@ -1369,7 +1364,6 @@ body.dark .about-card{background:#111827;color:#f3f4f6}
     <div class="result glass" id="res" style="display:none"></div>
   </div>
 
-  <!-- بخش کلاس‌ها -->
   <div class="classes-section" id="classesSection">
     <div class="search-box glass">
       <label for="classSearch">جستجوی کلاس:</label>
@@ -1392,7 +1386,6 @@ body.dark .about-card{background:#111827;color:#f3f4f6}
     </div>
   </div>
 
-  <!-- بخش همه‌ی دبیران -->
   <div class="all-section" id="allSection">
     <div class="result glass" id="allRes"></div>
   </div>
@@ -1638,7 +1631,6 @@ function buildDB(){
       lessons.forEach(function(lt, idx){
         if(!lt || !lt.trim()) return;
 
-        /* ==== زنگ آزمون (دبیر مجازی) ==== */
         if(lt === "زنگ آزمون"){
           if(!db["زنگ آزمون"]) db["زنگ آزمون"] = { name: "زنگ آزمون", classes: [], subjects: {}, classNames: {}, isVirtual: true };
           var p = idx + 1;
@@ -1652,7 +1644,6 @@ function buildDB(){
           return;
         }
 
-        /* ==== مهارت نادیده ==== */
         if(lt === "مهارت") return;
 
         var entries = extractTeachers(lt);
@@ -1699,7 +1690,6 @@ Object.keys(teacherDB).forEach(function(name){
   });
 });
 
-/* لیست همه‌ی کلاس‌ها */
 var allClasses = [];
 (function(){
   var seen = {};
@@ -1707,7 +1697,6 @@ var allClasses = [];
     if(!seen[item[0]]){ seen[item[0]] = true; allClasses.push(item[0]); }
   });
   allClasses.sort(function(a, b){
-    /* مرتب‌سازی صعودی بر اساس شماره کلاس؛ پشتیبانی از ارقام فارسی و عربی */
     function classNumber(value){
       var normalized = String(value)
         .replace(/[۰-۹]/g, function(ch){ return String("۰۱۲۳۴۵۶۷۸۹".indexOf(ch)); })
@@ -1748,9 +1737,6 @@ function highlight(text, query){
   return esc(before) + '<mark class="highlight">' + esc(middle) + '</mark>' + esc(after);
 }
 
-/* ==========================================================
-   تب‌ها
-   ========================================================== */
 var currentTab = "search";
 
 function switchTab(tab){
@@ -1780,9 +1766,6 @@ function switchTab(tab){
   }
 }
 
-/* ==========================================================
-   جستجوی کلاس
-   ========================================================== */
 function renderClassesList(){
   var res = document.getElementById("classRes");
   var html = '<div class="selection-header">' +
@@ -1872,7 +1855,6 @@ document.getElementById("classSearch").addEventListener("input", function(){
   res.innerHTML = html;
 });
 
-/* نمایش برنامه‌ی یک کلاس */
 function showClassSchedule(className){
   var res = document.getElementById("classRes");
 
@@ -1945,9 +1927,6 @@ function showClassSchedule(className){
   res.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-/* ==========================================================
-   همه‌ی دبیران
-   ========================================================== */
 function renderAllTeachers(){
   var res = document.getElementById("allRes");
 
@@ -1989,9 +1968,6 @@ function jumpToTeacher(name){
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-/* ==========================================================
-   تم
-   ========================================================== */
 var STORAGE = { theme: "bagheri_theme" };
 
 function loadTheme(){
@@ -2026,9 +2002,6 @@ function toggleTheme(){
   showToast(next === "dark" ? "🌙 حالت تاریک" : "☀️ حالت روشن");
 }
 
-/* ==========================================================
-   نقل‌قول
-   ========================================================== */
 var QUOTES = [
   "معلمی، هنر بیدار کردن کنجکاوی است.",
   "بهترین معلم، کسی است که شاگرد را از خودش بهتر بسازد.",
@@ -2059,7 +2032,6 @@ function startQuoteRotation(){
   var strip = document.getElementById("quoteStrip");
   if(!textEl || !strip) return;
 
-  /* هر بار ورود/بارگذاری صفحه، جمله دوباره نمایش داده شود */
   if(quoteHideTimer) clearTimeout(quoteHideTimer);
   strip.classList.remove("hidden");
   strip.style.display = "flex";
@@ -2073,20 +2045,15 @@ function startQuoteRotation(){
   var idx = Math.floor(Math.random() * QUOTES.length);
   textEl.textContent = QUOTES[idx];
 
-  /* بعد از ۱۵ ثانیه به‌آرامی مخفی شود */
   quoteHideTimer = setTimeout(function(){
     strip.classList.add("hidden");
   }, 15000);
 }
 
-/* اگر صفحه با Back/Forward یا bfcache باز شد نیز جمله از نو نمایش داده شود */
 window.addEventListener("pageshow", function(){
   startQuoteRotation();
 });
 
-/* ==========================================================
-   اتوکامپلیت
-   ========================================================== */
 var autocompleteActiveIdx = -1;
 var autocompleteItems = [];
 
@@ -2191,9 +2158,6 @@ function moveAutocompleteSelection(dir){
   items[autocompleteActiveIdx].scrollIntoView({ block: "nearest", behavior: "smooth" });
 }
 
-/* ==========================================================
-   جستجوی دبیر
-   ========================================================== */
 var currentTeacher = null;
 var timer = null;
 
@@ -2220,8 +2184,7 @@ function doSearch(exactOnly){
   res.style.display = "block";
 
   var normalizedQuery = normalize(q);
-  
-  // بررسی تطبیق دقیق
+
   var exactMatch = null;
   searchIndex.forEach(function(item){
     if(item.normalizedName === normalizedQuery){
@@ -2229,7 +2192,6 @@ function doSearch(exactOnly){
     }
   });
 
-  // اگر تطبیق دقیق وجود دارد، کارت را نمایش بده (حتی در حالت تایپ)
   if(exactMatch){
     currentTeacher = exactMatch;
     res.innerHTML = renderTeacher(teacherDB[exactMatch], true, q);
@@ -2239,7 +2201,6 @@ function doSearch(exactOnly){
     return;
   }
 
-  // تطبیق جزئی
   var matches = [];
   searchIndex.forEach(function(item){
     if(item.normalized.indexOf(normalizedQuery) > -1){
@@ -2265,7 +2226,6 @@ function doSearch(exactOnly){
     return;
   }
 
-  // اگر exactOnly نیست و فقط یک تطبیق جزئی وجود دارد، کارت را نمایش بده
   if(matches.length === 1 && !exactOnly){
     currentTeacher = matches[0];
     res.innerHTML = renderTeacher(teacherDB[matches[0]], true, q);
@@ -2275,7 +2235,6 @@ function doSearch(exactOnly){
     return;
   }
 
-  // در غیر این صورت، لیست انتخاب را نمایش بده
   currentTeacher = null;
   ncc.classList.remove("visible");
 
@@ -2814,13 +2773,43 @@ function openAboutModal(){var m=document.getElementById('aboutModal');if(m){m.cl
 function closeAboutModal(){var m=document.getElementById('aboutModal');if(m){m.classList.remove('open');m.setAttribute('aria-hidden','true');document.body.style.overflow=''}}
 function openAdminMenu(){document.getElementById('adminDrawer').classList.add('open');document.getElementById('adminDrawerBackdrop').classList.add('open')}
 function closeAdminMenu(){document.getElementById('adminDrawer').classList.remove('open');document.getElementById('adminDrawerBackdrop').classList.remove('open')}
-function openAdminLogin(){document.getElementById('adminLoginModal').classList.add('show');setTimeout(()=>document.getElementById('adminUsername').focus(),80)}
-function closeAdminLogin(){document.getElementById('adminLoginModal').classList.remove('show');document.getElementById('adminLoginError').textContent=''}
-function adminLogin(){const userEl=document.getElementById('adminUsername');const passEl=document.getElementById('adminPassword');const errorEl=document.getElementById('adminLoginError');if(!userEl||!passEl||!errorEl)return;const u=userEl.value.trim();const p=passEl.value.trim();errorEl.textContent='';if(u==='admin'&&p==='123erfanSedighi456'){closeAdminLogin();const panel=document.getElementById('adminPanel');if(panel)panel.classList.add('show');document.body.classList.add('admin-open');}else{errorEl.textContent='نام کاربری یا رمز عبور نادرست است.';passEl.focus();passEl.select();}}
-function closeAdminPanel(){document.getElementById('adminPanel').classList.remove('show')}
-
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeAdminMenu();closeAdminLogin();closeAdminPanel()}if(e.key==='Enter'&&document.getElementById('adminLoginModal').classList.contains('show')){e.preventDefault();adminLogin()}});
-window.addEventListener('DOMContentLoaded',function(){var pass=document.getElementById('adminPassword');if(pass){pass.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();adminLogin()}})}});
+function openAdminLogin(){var m=document.getElementById('adminLoginModal');if(m){m.classList.add('show');m.style.display='flex'}setTimeout(function(){var u=document.getElementById('adminUsername');if(u)u.focus()},100)}
+function closeAdminLogin(){var m=document.getElementById('adminLoginModal');if(m){m.classList.remove('show');m.style.display='none'}var e=document.getElementById('adminLoginError');if(e)e.textContent=''}
+function adminLogin(){
+  var userEl=document.getElementById('adminUsername');
+  var passEl=document.getElementById('adminPassword');
+  var errorEl=document.getElementById('adminLoginError');
+  if(!userEl||!passEl||!errorEl)return;
+  var u=userEl.value.trim();
+  var p=passEl.value.trim();
+  errorEl.textContent='';
+  if(u==='admin'&&p==='123erfanSedighi456'){
+    var loginModal=document.getElementById('adminLoginModal');
+    if(loginModal){loginModal.classList.remove('show');loginModal.style.display='none'}
+    var panel=document.getElementById('adminPanel');
+    if(panel){panel.classList.add('show');panel.style.display='flex'}
+    userEl.value='';
+    passEl.value='';
+    document.body.style.overflow='hidden';
+  }else{
+    errorEl.textContent='نام کاربری یا رمز عبور نادرست است.';
+    passEl.focus();
+    passEl.select();
+  }
+}
+function closeAdminPanel(){
+  var panel=document.getElementById('adminPanel');
+  if(panel){panel.classList.remove('show');panel.style.display='none'}
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){closeAdminMenu();closeAdminLogin();closeAdminPanel()}
+  if(e.key==='Enter'&&document.getElementById('adminLoginModal').classList.contains('show')){e.preventDefault();adminLogin()}
+});
+window.addEventListener('DOMContentLoaded',function(){
+  var pass=document.getElementById('adminPassword');
+  if(pass){pass.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();adminLogin()}})}
+});
 </script>
 <script>
 function showAdminToast(msg){var t=document.getElementById('adminToast');if(!t){t=document.createElement('div');t.id='adminToast';t.style.cssText='position:fixed;bottom:24px;right:24px;z-index:99999;background:#111;color:#fff;padding:12px 18px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.25);font:14px Tahoma,Arial,sans-serif;direction:rtl';document.body.appendChild(t)}t.textContent=msg;t.style.display='block';clearTimeout(window.__adminToastTimer);window.__adminToastTimer=setTimeout(function(){t.style.display='none'},3000)}
@@ -2838,7 +2827,6 @@ function escapeExportCell(v){return String(v==null?'':v).replace(/&/g,'&amp;').r
 function exportExcel(){var rows=buildTeacherExportRows(),html='<html><head><meta charset="UTF-8"></head><body><table border="1" dir="rtl"><tr>'+rows[0].map(function(c){return '<th>'+escapeExportCell(c)+'</th>'}).join('')+'</tr>';rows.slice(1).forEach(function(r){html+='<tr>'+r.map(function(c){return '<td>'+escapeExportCell(c)+'</td>'}).join('')+'</tr>'});html+='</table></body></html>';var blob=new Blob(['\ufeff'+html],{type:'application/vnd.ms-excel;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='BagheriSchedule_Teachers_Classes.xls';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},300);showAdminToast('خروجی کامل Excel شامل استاد، درس و کلاس‌ها آماده شد')}
 function exportPDF(){var rows=buildTeacherExportRows(),w=window.open('','_blank');if(!w){showAdminToast('پنجره خروجی PDF توسط مرورگر مسدود شده است');return}var html='<table><thead><tr>'+rows[0].map(function(c){return '<th>'+escapeExportCell(c)+'</th>'}).join('')+'</tr></thead><tbody>';rows.slice(1).forEach(function(r){html+='<tr>'+r.map(function(c){return '<td>'+escapeExportCell(c)+'</td>'}).join('')+'</tr>'});html+='</tbody></table>';w.document.write('<!doctype html><html dir="rtl"><head><meta charset="UTF-8"><title>گزارش اساتید و کلاس‌ها</title><style>@page{size:A4 landscape;margin:12mm}body{font-family:Tahoma,Arial,sans-serif;color:#111}h1{text-align:center;font-size:18px}p{text-align:center;color:#666;font-size:10px}table{width:100%;border-collapse:collapse;font-size:9px}th,td{border:1px solid #999;padding:6px;text-align:center}th{font-weight:700}</style></head><body><h1>گزارش اساتید، دروس و کلاس‌ها</h1><p>دبیرستان شهید حسن باقری — '+new Date().toLocaleDateString('fa-IR')+'</p>'+html+'</body></html>');w.document.close();w.focus();setTimeout(function(){w.print()},400);showAdminToast('گزارش PDF آماده شد؛ گزینه Save as PDF را انتخاب کنید')}
 
-/* ===================== مدیریت کامل داده‌های پنل ===================== */
 function adminState(){try{return JSON.parse(localStorage.getItem('bagheriAdminState')||'{}')}catch(e){return {}}}
 function saveAdminState(st){localStorage.setItem('bagheriAdminState',JSON.stringify(st))}
 function adminDeletedSet(key){var st=adminState();return Array.isArray(st[key])?st[key]:[]}
