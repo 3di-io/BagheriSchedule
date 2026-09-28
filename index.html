@@ -2197,7 +2197,7 @@ function moveAutocompleteSelection(dir){
 var currentTeacher = null;
 var timer = null;
 
-function doSearch(){
+function doSearch(exactOnly){
   var input = document.getElementById("si");
   var q = input.value.trim();
   var res = document.getElementById("res");
@@ -2220,6 +2220,26 @@ function doSearch(){
   res.style.display = "block";
 
   var normalizedQuery = normalize(q);
+  
+  // بررسی تطبیق دقیق
+  var exactMatch = null;
+  searchIndex.forEach(function(item){
+    if(item.normalizedName === normalizedQuery){
+      exactMatch = item.name;
+    }
+  });
+
+  // اگر تطبیق دقیق وجود دارد، کارت را نمایش بده (حتی در حالت تایپ)
+  if(exactMatch){
+    currentTeacher = exactMatch;
+    res.innerHTML = renderTeacher(teacherDB[exactMatch], true, q);
+    ncc.classList.add("visible");
+    updateNCC();
+    timer = setInterval(updateNCC, 1000);
+    return;
+  }
+
+  // تطبیق جزئی
   var matches = [];
   searchIndex.forEach(function(item){
     if(item.normalized.indexOf(normalizedQuery) > -1){
@@ -2245,7 +2265,8 @@ function doSearch(){
     return;
   }
 
-  if(matches.length === 1){
+  // اگر exactOnly نیست و فقط یک تطبیق جزئی وجود دارد، کارت را نمایش بده
+  if(matches.length === 1 && !exactOnly){
     currentTeacher = matches[0];
     res.innerHTML = renderTeacher(teacherDB[matches[0]], true, q);
     ncc.classList.add("visible");
@@ -2254,6 +2275,7 @@ function doSearch(){
     return;
   }
 
+  // در غیر این صورت، لیست انتخاب را نمایش بده
   currentTeacher = null;
   ncc.classList.remove("visible");
 
@@ -2702,7 +2724,7 @@ si.addEventListener("input", function(){
   var q = si.value.trim();
   showAutocomplete(q);
   if(liveSearchTimer2) clearTimeout(liveSearchTimer2);
-  liveSearchTimer2 = setTimeout(doSearch, 120);
+  liveSearchTimer2 = setTimeout(function(){ doSearch(true); }, 120);
 });
 
 si.addEventListener("keydown", function(e){
