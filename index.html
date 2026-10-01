@@ -4,8 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>دبیرستان شهید حسن باقری — سامانه استعلام کلاس‌های اساتید</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js" defer></script>
 <style>
 * {
   box-sizing: border-box;
@@ -20,7 +21,7 @@ body.dark {
   --text-light: #ffffff;
   --text-soft: rgba(245,215,110,0.7);
   --text-dim: rgba(245,215,110,0.45);
-  --glass-bg: rgba(20,20,20,0.55);
+  --glass-bg: rgba(20,20,20,0.84);
   --glass-border: rgba(212,175,55,0.35);
   --glass-hover: rgba(30,30,30,0.65);
   --gold: #d4af37;
@@ -40,7 +41,7 @@ body.light {
   --text-light: #1a1a2e;
   --text-soft: rgba(26,26,46,0.7);
   --text-dim: rgba(26,26,46,0.45);
-  --glass-bg: rgba(255,255,255,0.7);
+  --glass-bg: rgba(255,255,255,0.9);
   --glass-border: rgba(212,175,55,0.35);
   --glass-hover: rgba(212,175,55,0.1);
   --gold: #b8941f;
@@ -69,7 +70,7 @@ body::after {
   content: "";
   position: fixed;
   border-radius: 50%;
-  filter: blur(90px);
+  
   opacity: 0.55;
   z-index: 0;
   pointer-events: none;
@@ -133,7 +134,7 @@ body.light::after {
   height: 400px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(245,215,110,0.1), transparent 70%);
-  filter: blur(100px);
+  
   opacity: 0.6;
   top: 40%;
   left: 45%;
@@ -179,8 +180,8 @@ header {
   padding: 0 82px;
   background: rgba(10,10,10,.78);
   border-bottom: 1px solid rgba(212,175,55,.22);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 5px 24px rgba(0,0,0,.18);
 }
 body.light .site-header {
@@ -220,15 +221,13 @@ body.light .site-header {
   height: 44px;
   border-radius: 50%;
   background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border: 1.5px solid var(--glass-border);
   color: var(--gold-light);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
   z-index: 100;
   box-shadow: 0 4px 16px var(--shadow), 0 0 15px rgba(212,175,55,0.15);
   padding: 0;
@@ -255,9 +254,7 @@ body.light .theme-toggle {
   border-radius: 50%;
   animation: logoFloat 4.5s ease-in-out infinite;
   padding: 6px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
 }
 body.dark .logo {
   background: rgba(20,20,20,0.6);
@@ -325,8 +322,6 @@ header h1 {
 }
 .glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
   border: 1.5px solid var(--glass-border);
   border-radius: 20px;
   box-shadow: 0 8px 32px var(--shadow), inset 0 1px 0 rgba(212,175,55,0.15), 0 0 0 1px rgba(212,175,55,0.05), 0 0 20px rgba(212,175,55,0.08);
@@ -352,7 +347,7 @@ body.light .glass {
   border: 1px solid transparent;
   border-radius: 14px;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease, visibility 0.25s ease;
   box-shadow: none;
   white-space: nowrap;
 }
@@ -421,7 +416,7 @@ input[type="text"] {
   background: var(--input-bg);
   border: 1.5px solid var(--input-border);
   border-radius: 14px;
-  transition: all 0.25s ease;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease, visibility 0.25s ease;
 }
 input[type="text"]::placeholder {
   color: var(--text-dim);
@@ -446,7 +441,7 @@ input[type="text"]:focus {
   display: none;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, visibility 0.2s ease;
   padding: 0;
   box-shadow: none;
   font-family: inherit;
@@ -467,8 +462,6 @@ input[type="text"]:focus {
   right: 0;
   left: 0;
   background: var(--modal-bg);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
   border: 1.5px solid var(--glass-border);
   border-radius: 14px;
   box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 30px rgba(212,175,55,0.2), inset 0 1px 0 rgba(212,175,55,0.1);
@@ -497,7 +490,7 @@ input[type="text"]:focus {
   gap: 12px;
   padding: 12px 16px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease, visibility 0.15s ease;
   border-bottom: 1px solid var(--card-border);
   position: relative;
 }
@@ -869,7 +862,7 @@ body.light .subject-chip {
   border: 1.5px solid var(--card-border);
   border-radius: 16px;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease, visibility 0.25s ease;
   position: relative;
   overflow: hidden;
 }
@@ -930,7 +923,7 @@ body.light .subject-chip {
   font-size: 1.5rem;
   color: var(--gold-light);
   opacity: 0.5;
-  transition: all 0.25s ease;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease, visibility 0.25s ease;
 }
 .selection-card:hover .selection-arrow {
   opacity: 1;
@@ -949,7 +942,7 @@ body.light .subject-chip {
   background: var(--card-bg);
   border: 1.5px solid var(--card-border);
   border-radius: 14px;
-  transition: all 0.25s ease;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease, visibility 0.25s ease;
   position: relative;
   overflow: hidden;
 }
@@ -1016,7 +1009,7 @@ body.light .subject-chip {
   font-size: 0.88rem;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: all 0.25s ease;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease, visibility 0.25s ease;
 }
 .class-item.current .class-number {
   background: rgba(52,211,153,0.25);
@@ -1164,7 +1157,7 @@ body.dark .today-count {
   font-size: 0.82rem;
   color: var(--text-light);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s, opacity 0.2s, visibility 0.2s;
 }
 .suggestion-chip:hover {
   background: rgba(212,175,55,0.2);
@@ -1172,118 +1165,10 @@ body.dark .today-count {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(212,175,55,0.2);
 }
-.teacher-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 26px;
-  padding-top: 22px;
-  border-top: 1px solid var(--card-border);
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.action-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  font-size: 0.9rem;
-  font-family: inherit;
-  font-weight: 700;
-  background: var(--card-bg);
-  border: 1.5px solid rgba(212,175,55,0.4);
-  border-radius: 12px;
-  cursor: pointer;
-  color: var(--gold-light);
-  box-shadow: 0 4px 12px var(--shadow);
-  transition: all 0.25s ease;
-}
-.action-btn:hover {
-  background: rgba(212,175,55,0.15);
-  border-color: var(--gold);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(212,175,55,0.35);
-}
 .footer {
   text-align: center;
   padding: 30px 20px 10px;
   margin-top: 30px;
-}
-.quote-strip {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 14px 22px;
-  margin: 0 auto 22px;
-  max-width: 640px;
-  background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(245,215,110,0.04));
-  border: 1px solid rgba(212,175,55,0.25);
-  border-radius: 14px;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: quoteSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-@keyframes quoteSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px) scale(0.97);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-.quote-strip::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.1), transparent);
-  animation: quoteShimmer 4s ease-in-out infinite;
-  pointer-events: none;
-}
-@keyframes quoteShimmer {
-  0%,
-  100% {
-    transform: translateX(-100%);
-  }
-  50% {
-    transform: translateX(100%);
-  }
-}
-.quote-strip .quote-icon {
-  font-size: 1.05rem;
-  flex-shrink: 0;
-  animation: quoteSparkle 3s ease-in-out infinite;
-}
-@keyframes quoteSparkle {
-  0%,
-  100% {
-    transform: scale(1) rotate(0deg);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.15) rotate(10deg);
-    opacity: 0.85;
-  }
-}
-.quote-strip .quote-text {
-  font-size: 0.85rem;
-  font-style: italic;
-  color: var(--text-soft);
-  line-height: 1.6;
-  text-align: center;
-}
-.quote-strip.hidden {
-  opacity: 0;
-  transform: translateY(20px) scale(0.95);
-  pointer-events: none;
-  margin-bottom: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-  max-height: 0;
-  border-width: 0;
-  overflow: hidden;
 }
 .footer-line {
   width: 80px;
@@ -1380,7 +1265,7 @@ mark.highlight {
   padding: 0;
   box-shadow: none;
   font-family: inherit;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, visibility 0.2s ease;
 }
 .qr-close:hover {
   background: rgba(255,107,107,0.3);
@@ -1436,7 +1321,7 @@ mark.highlight {
   border-radius: 12px;
   cursor: pointer;
   box-shadow: 0 4px 16px rgba(212,175,55,0.4);
-  transition: all 0.25s ease;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease, visibility 0.25s ease;
 }
 .qr-download:hover {
   transform: translateY(-2px);
@@ -1455,7 +1340,7 @@ mark.highlight {
   font-size: 0.92rem;
   box-shadow: 0 8px 32px rgba(52,211,153,0.4);
   opacity: 0;
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1), color 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1100;
   pointer-events: none;
   max-width: 90vw;
@@ -1565,23 +1450,6 @@ mark.highlight {
   .footer-text {
     font-size: 0.78rem;
   }
-  .quote-strip {
-    padding: 12px 16px;
-    margin-bottom: 18px;
-  }
-  .quote-strip .quote-text {
-    font-size: 0.78rem;
-  }
-  .teacher-actions {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-  }
-  .action-btn {
-    justify-content: center;
-    padding: 14px 20px;
-    font-size: 0.92rem;
-  }
   .qr-modal-content {
     padding: 22px;
   }
@@ -1625,8 +1493,7 @@ mark.highlight {
   height: 48px;
   border: 1px solid rgba(255,255,255,.18);
   border-radius: 14px;
-  background: rgba(20,28,40,.88);
-  backdrop-filter: blur(10px);
+  background: rgba(20,28,40,.92);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2477,7 +2344,7 @@ body.dark .about-card {
   position: absolute;
   inset: -20%;
   opacity: 0.55;
-  filter: blur(60px);
+  
   background:
     radial-gradient(40% 35% at 25% 30%, rgba(212,175,55,0.35), transparent 70%),
     radial-gradient(35% 40% at 75% 25%, rgba(255,140,40,0.22), transparent 70%),
@@ -2591,6 +2458,227 @@ body.light .search-wrapper::before { opacity: 0.3; }
 @media (prefers-reduced-motion: reduce) {
   .bg-aurora, .search-wrapper:focus-within::after { animation: none; }
 }
+
+/* ===== UI upgrade layer (CSS-only, no extra render cost) ===== */
+.site-header{background:linear-gradient(180deg,rgba(10,10,10,.88),rgba(10,10,10,.7));border-bottom:1px solid transparent;border-image:linear-gradient(90deg,transparent,rgba(212,175,55,.55),transparent) 1}
+body.light .site-header{background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.74))}
+.site-header-update{border-radius:999px;font-size:12.5px;letter-spacing:.2px}
+.update-dot{animation:pulse 2s infinite}
+.theme-toggle svg{transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.theme-toggle:active svg{transform:rotate(180deg) scale(.85)}
+.tab-ico{width:18px;height:18px;vertical-align:-4px;margin-left:6px}
+.tabs{position:relative}
+.tab-btn{position:relative;z-index:1;display:flex;align-items:center;justify-content:center}
+.tabs.has-ind::before{content:"";position:absolute;top:8px;bottom:8px;right:var(--ind-r,8px);width:var(--ind-w,0);border-radius:14px;background:linear-gradient(135deg,rgba(212,175,55,.95),rgba(245,215,110,.88));box-shadow:0 4px 14px rgba(212,175,55,.35);transition:right .35s cubic-bezier(.4,0,.2,1),width .35s cubic-bezier(.4,0,.2,1)}
+.tabs.has-ind .tab-btn.active{background:transparent;box-shadow:none}
+.autocomplete-dropdown{border-radius:18px;padding:6px}
+.autocomplete-item{border-radius:12px;border-bottom:0;margin:2px 0}
+.autocomplete-item.active,.autocomplete-item:hover{background:rgba(212,175,55,.16)}
+.next-class-card{text-align:center}
+.next-class-card .next-class-header{justify-content:center}
+.next-class-card .countdown{position:relative;width:176px;height:176px;margin:8px auto 14px;padding:26px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:1.55rem;line-height:1.45;border-radius:50%;background:none!important;-webkit-text-fill-color:var(--text-light);color:var(--text-light)}
+.next-class-card .countdown::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--ring,#d4af37) calc(var(--p,0)*1%),rgba(212,175,55,.16) 0);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 11px),#000 calc(100% - 10px));mask:radial-gradient(farthest-side,transparent calc(100% - 11px),#000 calc(100% - 10px))}
+.next-class-card.teaching{--ring:#34d399}
+.next-class-card.teaching.warning{--ring:#fbbf24}
+.next-class-card .next-class-info{justify-content:center}
+#classRes .class-list{position:relative;padding-right:26px}
+#classRes .class-list::before{content:"";position:absolute;right:8px;top:8px;bottom:8px;width:2px;border-radius:2px;background:linear-gradient(180deg,transparent,rgba(212,175,55,.55) 12%,rgba(212,175,55,.55) 88%,transparent)}
+#classRes .class-item::after{content:"";position:absolute;right:-24px;top:50%;width:12px;height:12px;margin-top:-6px;border-radius:50%;background:var(--gold);border:2px solid var(--bg-1);box-shadow:0 0 0 2px rgba(212,175,55,.35)}
+#classRes .class-item{overflow:visible}
+#classRes .class-item.current::after{background:#34d399;box-shadow:0 0 0 3px rgba(52,211,153,.35),0 0 12px rgba(52,211,153,.7)}
+#classRes .class-item.past::after{background:#64748b;box-shadow:none}
+#classRes .class-item .class-number{min-width:52px;text-align:center;font-size:1rem}
+.selection-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.selection-card{padding:16px 18px;border-radius:18px}
+.selection-card:hover{transform:translateY(-3px)}
+.selection-card:hover .selection-arrow{transform:translateX(-4px)}
+.admin-primary:active,.qr-download:active,.tab-btn:active{transform:scale(.97)}
+.qr-modal-content{border:1.5px solid rgba(212,175,55,.5);border-radius:22px}
+.qr-box{background:#fff;border-radius:16px;padding:14px;box-shadow:0 0 0 3px rgba(212,175,55,.45)}
+.qr-download{background:linear-gradient(135deg,#d4af37,#f5d76e)!important;color:#1a1a1a!important;border-radius:12px}
+.admin-drawer{background:rgba(12,12,12,.8)!important;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border-left:1px solid rgba(212,175,55,.35);box-shadow:-12px 0 40px rgba(0,0,0,.45),0 0 30px rgba(212,175,55,.12)}
+.admin-drawer-head{padding-bottom:14px;border-bottom:1px solid rgba(212,175,55,.25)}
+.about-card{border:1.5px solid rgba(212,175,55,.4)}
+.about-header{padding-bottom:14px;border-bottom:1px solid rgba(212,175,55,.3)}
+.about-section{background:var(--glass-bg);border:1px solid var(--card-border);border-radius:16px;padding:18px;margin-top:14px}
+.about-section h3{padding-bottom:10px;margin-bottom:10px;border-bottom:1px dashed rgba(212,175,55,.35)}
+.admin-panel-sidebar{flex:0 0 76px!important;width:76px!important;padding:0!important;position:relative;overflow:visible!important;z-index:5}
+.admin-panel-brand,.admin-panel-nav{width:76px;overflow:hidden;white-space:nowrap;transition:width .25s ease,box-shadow .25s ease;background:linear-gradient(180deg,#0b2035,#123553);position:relative}
+.admin-panel-brand{padding:22px 24px 12px}
+.admin-panel-nav{padding:6px 0 20px;min-height:calc(100vh - 62px)}
+.admin-panel-nav button{margin:3px 8px!important;width:calc(100% - 16px)!important}
+.admin-panel-sidebar:hover .admin-panel-brand,.admin-panel-sidebar:hover .admin-panel-nav,.admin-panel-sidebar:focus-within .admin-panel-brand,.admin-panel-sidebar:focus-within .admin-panel-nav{width:255px;box-shadow:10px 0 30px rgba(10,30,50,.3)}
+.admin-stat strong{font-variant-numeric:tabular-nums}
+.admin-table th{position:sticky;top:0;z-index:1}
+.admin-table tbody tr:nth-child(even) td{background:rgba(98,165,217,.05)}
+.admin-table tbody tr:hover td{background:rgba(98,165,217,.12)}
+.admin-control:focus,.admin-field input:focus{outline:none;border-color:#62a5d9!important;box-shadow:0 0 0 4px rgba(98,165,217,.18)}
+@media (max-width:760px){
+.admin-panel.show{flex-direction:column-reverse}
+.admin-panel-sidebar{flex:0 0 auto!important;width:100%!important}
+.admin-panel-brand{display:none}
+.admin-panel-nav,.admin-panel-sidebar:hover .admin-panel-nav,.admin-panel-sidebar:focus-within .admin-panel-nav{width:100%;min-height:0;display:flex;overflow-x:auto;padding:8px 6px;box-shadow:0 -6px 20px rgba(10,30,50,.25)}
+.admin-panel-nav button{flex:0 0 auto;width:auto!important;font-size:12px;padding:10px 12px!important}
+.admin-panel-main{padding:0 14px 20px!important}
+.admin-cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media (prefers-reduced-motion:reduce){.tabs.has-ind::before,.admin-panel-brand,.admin-panel-nav{transition:none}}
+
+/* ===== round 2: accordion, floating labels, ripple ===== */
+.selection-card .selection-arrow{transition:transform .25s ease,opacity .25s ease}
+.selection-card.open{border-color:var(--gold);background:var(--glass-hover)}
+.selection-card.open .selection-arrow{transform:rotate(-90deg);opacity:1}
+.acc-panel{grid-column:1/-1;padding:14px 16px;border-radius:16px;background:var(--card-bg);border:1.5px solid var(--card-border);animation:fadeIn .25s ease}
+.acc-day{font-size:.8rem;font-weight:700;color:var(--gold-light);margin:8px 0 6px;padding-right:8px;border-right:3px solid var(--gold)}
+.acc-day:first-child{margin-top:0}
+.acc-row{display:flex;align-items:center;gap:10px;padding:7px 4px;font-size:.85rem;border-bottom:1px dashed var(--card-border)}
+.acc-row:last-of-type{border-bottom:0}
+.acc-row b{min-width:54px;color:var(--gold-light)}
+.acc-row span{flex:1}
+.acc-row i{font-style:normal;color:var(--text-soft);font-size:.78rem;white-space:nowrap}
+.acc-open{display:block;width:100%;margin-top:10px;padding:10px;border-radius:12px;border:1.5px solid rgba(212,175,55,.45);background:rgba(212,175,55,.14);color:var(--gold-light);font:inherit;font-weight:700;cursor:pointer}
+.acc-open:hover{background:rgba(212,175,55,.26)}
+.admin-field.fl{position:relative}
+.admin-field.fl label{position:absolute;right:13px;top:13px;margin:0;padding:0 6px;font-size:14px;font-weight:600;color:#6b7280;background:transparent;pointer-events:none;z-index:1;transition:top .18s ease,font-size .18s ease,color .18s ease,background .18s ease}
+.admin-field.fl.filled label,.admin-field.fl:focus-within label{top:-9px;font-size:11px;color:#2f7fbf;background:#fff}
+.admin-field.fl input::placeholder{color:transparent}
+.admin-field.fl input:focus::placeholder{color:#9ca3af}
+.action-btn,.admin-primary,.admin-secondary,.admin-action,.admin-quick,.qr-download,.tab-btn,.admin-edit-btn,.admin-drawer button.menu-item,.acc-open{position:relative;overflow:hidden}
+.rpl{position:absolute;border-radius:50%;background:currentColor;opacity:.28;transform:scale(0);pointer-events:none;animation:rplA .55s ease-out forwards}
+@keyframes rplA{to{transform:scale(1);opacity:0}}
+@media (prefers-reduced-motion:reduce){.rpl{display:none}}
+
+/* ===== round 3 ===== */
+.hdr-date-wrap{display:flex;align-items:center;opacity:calc(1 - var(--sp,0));transform:translateY(calc(var(--sp,0)*-10px));will-change:opacity,transform}
+.hdr-logo{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;object-fit:contain;padding:3px;cursor:pointer;background:rgba(20,20,20,.55);border:1.5px solid rgba(212,175,55,.55);box-shadow:0 4px 16px rgba(0,0,0,.3),0 0 14px rgba(212,175,55,.25);opacity:var(--sp,0);transform:translateY(calc((1 - var(--sp,0))*16px)) scale(calc(.8 + var(--sp,0)*.2));pointer-events:none;will-change:opacity,transform}
+body.light .hdr-logo{background:rgba(255,255,255,.85)}
+.site-header.logo-on .hdr-logo{pointer-events:auto}
+.site-header.logo-on .hdr-date-wrap{pointer-events:none}
+
+/* ===== header brand: logo + school name rise in on scroll ===== */
+.hdr-brand{position:absolute;left:50%;top:50%;display:flex;align-items:center;gap:10px;max-width:calc(100% - 150px);transform:translate(-50%,-50%);pointer-events:none;cursor:pointer}
+.site-header.logo-on .hdr-brand{pointer-events:auto}
+.hdr-brand .hdr-logo{position:static;flex:0 0 auto;width:40px;height:40px;margin:0;transform:none;opacity:var(--sp,0)}
+.hdr-name{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:clamp(12px,3.6vw,16px);font-weight:800;color:var(--gold-light);letter-spacing:.2px;opacity:var(--sp,0);transform:translateY(calc((1 - var(--sp,0))*22px));transition:opacity .25s ease-out,transform .25s ease-out;will-change:opacity,transform}
+body.light .hdr-name{color:var(--gold)}
+.hdr-date-wrap{transition:opacity .25s ease-out,transform .25s ease-out}
+@media (prefers-reduced-motion:reduce){.hdr-name,.hdr-date-wrap{transition:none}}
+
+/* ===== action buttons (copy link / QR / back) ===== */
+.teacher-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:24px;padding-top:20px;border-top:1px solid var(--card-border)}
+.action-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 16px;font:inherit;font-size:.9rem;font-weight:700;line-height:1;color:var(--gold-light);background:rgba(212,175,55,.1);border:1.5px solid rgba(212,175,55,.4);border-radius:14px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;transition:background-color .18s ease,border-color .18s ease,transform .12s ease}
+.teacher-actions .action-btn:only-child{grid-column:1/-1}
+.action-btn svg{width:18px;height:18px;flex:0 0 auto}
+.action-btn.primary{color:#1a1a1a;border-color:transparent;background:linear-gradient(135deg,#d4af37,#f5d76e)}
+body.light .action-btn{color:var(--gold)}
+body.light .action-btn.primary{color:#1a1a1a}
+.action-btn:active{transform:scale(.97)}
+.action-btn:focus-visible{outline:2px solid var(--gold-light);outline-offset:2px}
+@media (hover:hover){.action-btn:hover{background:rgba(212,175,55,.2);border-color:var(--gold)}.action-btn.primary:hover{background:linear-gradient(135deg,#e0bb45,#f8e08a)}}
+@media (max-width:380px){.action-btn{font-size:.82rem;padding:0 10px;gap:6px}}
+
+/* ===== drawer menu cards ===== */
+.admin-drawer button.menu-item{display:flex;align-items:center;gap:12px;width:100%;margin:10px 0 0;padding:12px 14px;text-align:right;font:inherit;color:#fff;background:rgba(255,255,255,.04)!important;border:1px solid rgba(212,175,55,.22)!important;border-radius:16px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:background-color .18s ease,border-color .18s ease,transform .12s ease}
+.admin-drawer button.menu-item:active{transform:scale(.98)}
+.admin-drawer button.menu-item:focus-visible{outline:2px solid var(--gold-light);outline-offset:2px}
+@media (hover:hover){.admin-drawer button.menu-item:hover{background:rgba(212,175,55,.12)!important;border-color:rgba(212,175,55,.55)!important}.admin-drawer button.menu-item:hover .mi-arrow{transform:translateX(-3px);opacity:1}}
+.mi-icon{flex:0 0 auto;display:grid;place-items:center;width:42px;height:42px;border-radius:12px;color:#1a1a1a;background:linear-gradient(135deg,#d4af37,#f5d76e);box-shadow:0 4px 12px rgba(212,175,55,.28)}
+.mi-icon svg{width:22px;height:22px}
+.mi-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.mi-title{font-size:.95rem;font-weight:700;line-height:1.3}
+.mi-sub{font-size:.74rem;font-weight:400;line-height:1.4;color:rgba(245,215,110,.65)}
+.mi-arrow{flex:0 0 auto;width:18px;height:18px;color:var(--gold-light);opacity:.6;transition:transform .18s ease,opacity .18s ease}
+.admin-drawer .admin-entry{background:rgba(255,255,255,.04)!important;font-weight:inherit;margin-top:10px}
+.admin-drawer .admin-entry .mi-icon{color:#e5e7eb;background:linear-gradient(135deg,#334155,#1e293b);box-shadow:none;border:1px solid rgba(255,255,255,.12)}
+
+/* ===== performance helpers ===== */
+body::before,body::after,.bg-blob,.bg-aurora{will-change:transform}
+html.is-scrolling body::before,html.is-scrolling body::after,html.is-scrolling .bg-blob,html.is-scrolling .bg-aurora,html.is-scrolling .logo{animation-play-state:paused}
+@media (max-width:700px),(pointer:coarse){.bg-aurora{animation:none}body::before,body::after,.bg-blob{animation:none}}
+
+/* ===== grade filter (دهم / یازدهم / دوازدهم) ===== */
+.grade-bar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 16px}
+.grade-chip{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:54px;padding:6px 4px;font:inherit;font-size:.88rem;font-weight:700;line-height:1.2;color:var(--text-soft);background:var(--glass-bg);border:1.5px solid var(--card-border);border-radius:14px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:background-color .18s ease,border-color .18s ease,color .18s ease,transform .12s ease}
+.grade-chip small{font-size:.7rem;font-weight:500;opacity:.8}
+.grade-chip.active{color:#1a1a1a;border-color:transparent;background:linear-gradient(135deg,#d4af37,#f5d76e)}
+.grade-chip:active{transform:scale(.97)}
+.grade-chip:focus-visible{outline:2px solid var(--gold-light);outline-offset:2px}
+@media (hover:hover){.grade-chip:not(.active):hover{border-color:var(--gold);color:var(--gold-light)}}
+.grade-title{display:flex;align-items:center;justify-content:space-between;margin:22px 0 12px;padding-right:10px;border-right:3px solid var(--gold);font-size:.95rem;font-weight:700;color:var(--gold-light)}
+.grade-title.first{margin-top:0}
+.grade-title em{font-style:normal;font-size:.76rem;font-weight:500;color:var(--text-dim)}
+@media (max-width:380px){.grade-chip{font-size:.8rem}}
+
+/* ===== About modal (redesigned) ===== */
+.about-card{width:min(560px,94vw);padding:0;border-radius:26px;background:linear-gradient(180deg,#1b1d22,#0f1013);border:1px solid rgba(212,175,55,.35);box-shadow:0 30px 80px rgba(0,0,0,.55);overscroll-behavior:contain}
+.about-close{top:12px;left:12px;z-index:2;color:#fff!important;background:rgba(255,255,255,.08)!important}
+.ab-hero{position:relative;text-align:center;padding:34px 20px 22px;background:radial-gradient(120% 90% at 50% 0%,rgba(212,175,55,.22),transparent 70%)}
+.ab-logo{width:64px;height:64px;margin:0 auto 12px;display:grid;place-items:center;border-radius:20px;color:#1a1a1a;background:linear-gradient(135deg,#d4af37,#f5d76e);box-shadow:0 10px 28px rgba(212,175,55,.35)}
+.ab-logo svg{width:32px;height:32px}
+.ab-hero h2{margin:0;font-size:1.35rem;font-weight:800;color:#fff}
+.ab-hero p{margin:6px 0 0;font-size:.82rem;color:rgba(245,215,110,.8)}
+.ab-card{margin:0 16px 14px;padding:16px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(212,175,55,.18)}
+.ab-card-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ab-card:last-child{margin-bottom:18px}
+.ab-card-head h3{margin:0;font-size:.98rem;font-weight:700;color:#f5d76e}
+.ab-chip{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;color:#f5d76e;background:rgba(212,175,55,.14);border:1px solid rgba(212,175,55,.3)}
+.ab-chip svg{width:18px;height:18px}
+.ab-card p{margin:0 0 8px;font-size:.82rem;line-height:2;color:rgba(243,244,246,.86)}
+.ab-team{display:flex;flex-direction:column;gap:4px;margin-top:12px;padding:12px 14px;border-radius:12px;background:rgba(212,175,55,.08);border-right:3px solid #d4af37}
+.ab-team strong{font-size:.78rem;color:rgba(245,215,110,.8)}
+.ab-team span{font-size:.86rem;font-weight:700;color:#fff}
+.ab-contact{background:linear-gradient(180deg,rgba(212,175,55,.1),rgba(212,175,55,.03));border-color:rgba(212,175,55,.35)}
+.ab-hint{font-size:.78rem!important;line-height:1.8!important;color:rgba(243,244,246,.7)!important}
+.ab-phone{margin-top:10px;padding:10px;border-radius:16px;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.07)}
+.ab-call{display:flex;align-items:center;gap:12px;padding:6px;border-radius:12px;color:#fff;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.ab-call-ico{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;color:#1a1a1a;background:linear-gradient(135deg,#34d399,#10b981)}
+.ab-call-ico svg{width:20px;height:20px}
+.ab-call-txt{display:flex;flex-direction:column;gap:2px}
+.ab-call-txt b{font-size:1.08rem;font-weight:800;letter-spacing:.5px}
+.ab-call-txt small{font-size:.72rem;color:rgba(245,215,110,.75)}
+.ab-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px}
+.ab-act{display:flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:0 6px;border-radius:12px;font-size:.78rem;font-weight:700;color:#f5d76e;text-decoration:none;background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.3);-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:background-color .18s ease,border-color .18s ease,transform .12s ease}
+.ab-act svg{width:16px;height:16px;flex:0 0 auto}
+.ab-act:active{transform:scale(.97)}
+.ab-act:focus-visible,.ab-call:focus-visible{outline:2px solid #f5d76e;outline-offset:2px}
+@media (hover:hover){.ab-act:hover{background:rgba(212,175,55,.22);border-color:#d4af37}}
+@media (max-width:380px){.ab-act span{font-size:.72rem}.ab-call-txt b{font-size:1rem}}
+
+/* ===== Admin login (dark glass, blue glow) ===== */
+#adminLoginModal{background:radial-gradient(90% 60% at 50% 105%,rgba(30,64,150,.55),transparent 70%),rgba(4,6,12,.9);-webkit-backdrop-filter:none;backdrop-filter:none}
+.lg-card{position:relative;width:min(420px,100%);padding:38px 26px 24px;text-align:center;color:#fff;border-radius:30px;overflow:hidden;background:linear-gradient(180deg,rgba(44,47,55,.96) 0%,rgba(18,19,22,.98) 38%,rgba(14,14,16,.99) 100%);border:1px solid rgba(255,255,255,.1);box-shadow:0 30px 90px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.08);animation:lgIn .25s ease-out}
+.lg-card::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(70% 38% at 50% 0%,rgba(255,255,255,.09),transparent 70%),radial-gradient(45% 30% at 0% 52%,rgba(59,130,246,.34),transparent 70%),radial-gradient(45% 30% at 100% 52%,rgba(59,130,246,.22),transparent 70%)}
+.lg-card>*{position:relative}
+@keyframes lgIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.lg-x{position:absolute;top:14px;left:14px;width:36px;height:36px;display:grid;place-items:center;font-size:22px;line-height:1;color:rgba(255,255,255,.7);background:rgba(255,255,255,.07);border:0;border-radius:50%;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background-color .18s ease,color .18s ease}
+.lg-x:hover{background:rgba(255,255,255,.14);color:#fff}
+.lg-badge{width:56px;height:56px;margin:0 auto 16px;display:grid;place-items:center;border-radius:18px;color:#60a5fa;background:rgba(59,130,246,.12);border:1px solid rgba(96,165,250,.3);box-shadow:0 0 28px rgba(59,130,246,.25)}
+.lg-badge svg{width:28px;height:28px}
+.lg-card h2{margin:0 0 8px;font-size:1.75rem;font-weight:700;letter-spacing:-.2px}
+.lg-sub{margin:0 auto 26px;max-width:320px;font-size:.84rem;line-height:1.9;color:rgba(255,255,255,.7)}
+.lg-field{position:relative;display:flex;align-items:center;height:52px;margin-bottom:12px;border-radius:999px;background:rgba(8,8,10,.85);border:1px solid rgba(96,140,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.03);transition:border-color .18s ease,box-shadow .18s ease}
+.lg-field:focus-within{border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.18),inset 0 0 18px rgba(59,130,246,.12)}
+.lg-ico{display:grid;place-items:center;flex:0 0 auto;width:48px;color:rgba(255,255,255,.4);transition:color .18s ease}
+.lg-field:focus-within .lg-ico{color:#60a5fa}
+.lg-ico svg{width:19px;height:19px}
+.lg-field input{flex:1;min-width:0;height:100%;padding:0 0 0 18px;font:inherit;font-size:.95rem;color:#fff;background:transparent;border:0;outline:none;box-shadow:none}
+.lg-field input[type="text"],.lg-field input[type="text"]:focus,.lg-field input[type="password"]:focus{width:auto;height:100%;padding:0 0 0 18px;background:transparent;border:0;border-radius:0;box-shadow:none;outline:none}
+.lg-field input::placeholder{color:rgba(255,255,255,.38)}
+.lg-field input:-webkit-autofill{-webkit-text-fill-color:#fff;transition:background-color 9999s ease-out 0s}
+.lg-eye{flex:0 0 auto;display:grid;place-items:center;width:46px;height:100%;padding:0;color:#3b82f6;background:transparent;border:0;border-radius:999px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.lg-eye svg{width:20px;height:20px}
+.lg-eye .e-hide{display:none}
+.lg-eye.shown .e-hide{display:grid}
+.lg-eye.shown .e-show{display:none}
+.lg-error{min-height:20px;margin:2px 0 6px;font-size:.8rem;color:#fca5a5}
+.lg-submit{display:block;width:100%;height:54px;margin-top:6px;font:inherit;font-size:1.02rem;font-weight:700;color:#fff;background:linear-gradient(135deg,#2563eb,#3b82f6);border:0;border-radius:999px;cursor:pointer;box-shadow:0 10px 26px rgba(37,99,235,.38);-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .12s ease,box-shadow .18s ease,filter .18s ease}
+.lg-submit:active{transform:scale(.98)}
+.lg-submit:focus-visible,.lg-cancel:focus-visible,.lg-eye:focus-visible,.lg-x:focus-visible{outline:2px solid #93c5fd;outline-offset:2px}
+@media (hover:hover){.lg-submit:hover{filter:brightness(1.1);box-shadow:0 12px 30px rgba(37,99,235,.5)}}
+.lg-cancel{display:block;width:100%;height:46px;margin-top:10px;font:inherit;font-size:.88rem;font-weight:600;color:rgba(255,255,255,.65);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:999px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background-color .18s ease,color .18s ease}
+@media (hover:hover){.lg-cancel:hover{background:rgba(255,255,255,.1);color:#fff}}
+@media (max-width:420px){.lg-card{padding:34px 18px 20px;border-radius:26px}.lg-card h2{font-size:1.5rem}}
+@media (prefers-reduced-motion:reduce){.lg-card{animation:none}}
 </style>
 <body class="dark">
 <div class="site-header" id="siteHeader">
@@ -2605,47 +2693,78 @@ body.light .search-wrapper::before { opacity: 0.3; }
 <div class="admin-drawer-backdrop" id="adminDrawerBackdrop" onclick="closeAdminMenu()"></div>
 <aside class="admin-drawer" id="adminDrawer" aria-label="منوی سایت">
   <div class="admin-drawer-head"><strong>منوی سایت</strong><button class="admin-close" onclick="closeAdminMenu()" aria-label="بستن">×</button></div>
-  <button class="menu-item admin-entry" onclick="closeAdminMenu();openAdminLogin()">⚙️&nbsp; پنل مدیریت</button>
-  <button class="menu-item" onclick="closeAdminMenu();openAboutModal()">ℹ️&nbsp; درباره‌ی ما</button>
+  <button type="button" class="menu-item" onclick="closeAdminMenu();openAboutModal()"><span class="mi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7.5v.01"/></svg></span><span class="mi-text"><span class="mi-title">درباره‌ی ما</span><span class="mi-sub">آشنایی با مدرسه و تیم پشتیبان</span></span><svg class="mi-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+  <button type="button" class="menu-item admin-entry" onclick="closeAdminMenu();openAdminLogin()"><span class="mi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></span><span class="mi-text"><span class="mi-title">پنل مدیریت</span><span class="mi-sub">ورود مخصوص مدیر</span></span><svg class="mi-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
 </aside>
 
 <div class="about-modal" id="aboutModal" aria-hidden="true" onclick="if(event.target===this)closeAboutModal()">
   <div class="about-card" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
     <button class="admin-close about-close" onclick="closeAboutModal()" aria-label="بستن">×</button>
-    <div class="about-header">
-      <div class="about-icon">🏫</div>
-      <div><h2 id="aboutTitle">درباره‌ی ما</h2><p>دبیرستان شهید حسن باقری</p></div>
+    <div class="ab-hero">
+      <div class="ab-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-5 9 5-9 5-9-5z"/><path d="M7 11.5V16c0 1.2 2.2 2.5 5 2.5s5-1.300 5-2.5v-4.5"/><path d="M21 9v6"/></svg></div>
+      <h2 id="aboutTitle">درباره‌ی ما</h2>
+      <p>دبیرستان شهید حسن باقری</p>
     </div>
-    <section class="about-section">
-      <h3>🏫 درباره مدرسه</h3>
+    <section class="ab-card">
+      <div class="ab-card-head"><span class="ab-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-5 9 5-9 5-9-5z"/><path d="M7 11.5V16c0 1.2 2.2 2.5 5 2.5s5-1.300 5-2.5v-4.5"/><path d="M21 9v6"/></svg></span><h3>درباره مدرسه</h3></div>
       <p>دبیرستان شهید باقری با هدف فراهم‌کردن محیطی پویا، منظم و مناسب برای رشد علمی و فردی دانش‌آموزان فعالیت می‌کند.</p>
       <p>این مجموعه تلاش می‌کند با بهره‌گیری از دبیران مجرب، برنامه‌ریزی آموزشی منظم و توجه به نیازهای دانش‌آموزان، مسیر یادگیری و پیشرفت تحصیلی را برای آنان هموارتر کند.</p>
       <p>این سامانه نیز با هدف دسترسی ساده‌تر دانش‌آموزان، دبیران و خانواده‌ها به اطلاعات آموزشی و برنامه‌های مدرسه طراحی شده است تا بخشی از امور آموزشی با سرعت و نظم بیشتری در دسترس باشد.</p>
     </section>
-    <section class="about-section">
-      <h3>💻 پشتیبانی و توسعه سامانه</h3>
+    <section class="ab-card">
+      <div class="ab-card-head"><span class="ab-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/></svg></span><h3>پشتیبانی و توسعه سامانه</h3></div>
       <p>این سامانه با هدف ساده‌تر کردن دسترسی به اطلاعات آموزشی و ایجاد تجربه‌ای سریع و منظم برای کاربران طراحی و توسعه داده شده است.</p>
       <p>طراحی، توسعه و پشتیبانی فنی سامانه توسط تیم پشتیبان سایت انجام می‌شود و قابلیت‌های آن با توجه به نیازهای مجموعه آموزشی به‌مرور توسعه و به‌روزرسانی خواهد شد.</p>
       <p>تلاش ما این است که این سامانه علاوه بر نمایش اطلاعات، به ابزاری کاربردی برای ارتباط بهتر با برنامه‌ها و فرآیندهای آموزشی مدرسه تبدیل شود.</p>
-      <div class="about-support"><strong>توسعه و پشتیبانی</strong><span>تیم پشتیبانی دبیرستان شهید حسن باقری</span></div>
-      <div class="about-contact"><strong>با ما در ارتباط باشید با: ۰۹۰۵۴۷۰۷۳۳۶ - ۰۹۱۰۴۵۷۷۴۳۹</strong></div>
+      <div class="ab-team"><strong>توسعه و پشتیبانی</strong><span>تیم پشتیبانی دبیرستان شهید حسن باقری</span></div>
+    </section>
+    <section class="ab-card ab-contact">
+      <div class="ab-card-head"><span class="ab-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><path d="M4 14h3v5H5a1 1 0 0 1-1-1zM20 14h-3v5h2a1 1 0 0 0 1-1z"/></svg></span><h3>ارتباط مستقیم با ما</h3></div>
+      <p class="ab-hint">برای پیشنهاد، گزارش اشکال یا دریافت پشتیبانی، با یکی از شماره‌های زیر در ارتباط باشید.</p>
+      <div class="ab-phone">
+        <a class="ab-call" href="tel:+989054707336" aria-label="تماس با ۰۹۰۵ ۴۷۰ ۷۳۳۶">
+          <span class="ab-call-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></span>
+          <span class="ab-call-txt"><b dir="ltr">۰۹۰۵ ۴۷۰ ۷۳۳۶</b><small>پشتیبانی ۱</small></span>
+        </a>
+        <div class="ab-actions">
+          <a class="ab-act" href="tel:+989054707336"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg><span>تماس</span></a>
+          <a class="ab-act" href="sms:+989054707336"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg><span>پیامک</span></a>
+          <a class="ab-act" href="https://wa.me/989054707336" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z"/><path d="M9 8.8c.2 2.4 2.6 4.8 5.4 5.4l1.1-1.3-1.9-1-.9.6a4 4 0 0 1-1.9-1.9l.6-.9-1-1.9z"/></svg><span>واتساپ</span></a>
+        </div>
+      </div>
+      <div class="ab-phone">
+        <a class="ab-call" href="tel:+989104577439" aria-label="تماس با ۰۹۱۰ ۴۵۷ ۷۴۳۹">
+          <span class="ab-call-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></span>
+          <span class="ab-call-txt"><b dir="ltr">۰۹۱۰ ۴۵۷ ۷۴۳۹</b><small>پشتیبانی ۲</small></span>
+        </a>
+        <div class="ab-actions">
+          <a class="ab-act" href="tel:+989104577439"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg><span>تماس</span></a>
+          <a class="ab-act" href="sms:+989104577439"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg><span>پیامک</span></a>
+          <a class="ab-act" href="https://wa.me/989104577439" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z"/><path d="M9 8.8c.2 2.4 2.6 4.8 5.4 5.4l1.1-1.3-1.9-1-.9.6a4 4 0 0 1-1.9-1.9l.6-.9-1-1.9z"/></svg><span>واتساپ</span></a>
+        </div>
+      </div>
     </section>
   </div>
 </div>
 
-<div class="admin-modal" id="adminLoginModal">
-  <div class="admin-login-card">
-    <button class="admin-close" style="position:absolute;top:14px;left:16px;color:#6b7280" onclick="closeAdminLogin()">×</button>
-    <h2>ورود به پنل مدیریت</h2>
-    <p>برای ورود، نام کاربری و رمز عبور مدیر را وارد کنید.</p>
-    <div class="admin-field"><label for="adminUsername">نام کاربری</label><input id="adminUsername" type="text" autocomplete="username" placeholder="نام کاربری"></div>
-    <div class="admin-field">
-      <label for="adminPassword">رمز عبور</label><input id="adminPassword" type="password" autocomplete="current-password" placeholder="رمز عبور">
-    </div>
-    <div class="admin-error" id="adminLoginError"></div>
-    <div class="admin-login-actions">
-      <button class="admin-secondary" onclick="closeAdminLogin()">انصراف</button><button type="button" class="admin-primary" onclick="adminLogin()">ورود</button>
-    </div>
+<div class="admin-modal" id="adminLoginModal" onclick="if(event.target===this)closeAdminLogin()">
+  <div class="lg-card" role="dialog" aria-modal="true" aria-labelledby="lgTitle">
+    <button type="button" class="lg-x" onclick="closeAdminLogin()" aria-label="بستن">×</button>
+    <div class="lg-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.500-3.200 8.200-8 9-4.800-.8-8-4.500-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+    <h2 id="lgTitle">ورود به پنل مدیریت</h2>
+    <p class="lg-sub">برای مدیریت دبیران، کلاس‌ها و برنامه‌ی هفتگی، وارد حساب مدیر شوید.</p>
+    <label class="lg-field">
+      <span class="lg-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+      <input id="adminUsername" type="text" autocomplete="username" placeholder="نام کاربری" autocapitalize="off" spellcheck="false">
+    </label>
+    <label class="lg-field">
+      <span class="lg-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+      <input id="adminPassword" type="password" autocomplete="current-password" placeholder="رمز عبور">
+      <button type="button" class="lg-eye" id="lgEye" onclick="toggleAdminPw()" aria-label="نمایش رمز عبور"><span class="e-show"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span><span class="e-hide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 5.1A9.7 9.7 0 0 1 12 5c6.400 0 10 7 10 7a17 17 0 0 1-3.200 4.200M6.600 6.600C3.700 8.500 2 12 2 12s3.600 7 10 7c1.600 0 3-.4 4.300-1"/><path d="M9.900 9.900a3 3 0 0 0 4.200 4.200"/></svg></span></button>
+    </label>
+    <div class="admin-error lg-error" id="adminLoginError" role="alert"></div>
+    <button type="button" class="lg-submit" onclick="adminLogin()">ورود</button>
+    <button type="button" class="lg-cancel" onclick="closeAdminLogin()">انصراف</button>
   </div>
 </div>
 
@@ -2908,13 +3027,13 @@ body.light .search-wrapper::before { opacity: 0.3; }
 
   <div class="tabs glass">
     <button class="tab-btn active" id="tabSearch" onclick="switchTab('search')">
-      👨‍🏫 دبیران
+      <svg class="tab-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg> دبیران
     </button>
     <button class="tab-btn" id="tabClasses" onclick="switchTab('classes')">
-      📚 کلاس‌ها
+      <svg class="tab-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> کلاس‌ها
     </button>
     <button class="tab-btn" id="tabAll" onclick="switchTab('all')">
-      📋 همه‌ی دبیران
+      <svg class="tab-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/></svg> همه‌ی دبیران
     </button>
   </div>
 
@@ -2953,6 +3072,12 @@ body.light .search-wrapper::before { opacity: 0.3; }
         <button class="clear-btn" id="classClearBtn" onclick="clearClassSearch()" title="پاک کردن">✕</button>
       </div>
     </div>
+    <div class="grade-bar" id="gradeBar" role="tablist" aria-label="پایه‌ی تحصیلی">
+      <button type="button" class="grade-chip active" data-grade="all" role="tab" aria-selected="true" onclick="setGrade('all')">همه<small></small></button>
+      <button type="button" class="grade-chip" data-grade="10" role="tab" aria-selected="false" onclick="setGrade(10)">دهم<small></small></button>
+      <button type="button" class="grade-chip" data-grade="11" role="tab" aria-selected="false" onclick="setGrade(11)">یازدهم<small></small></button>
+      <button type="button" class="grade-chip" data-grade="12" role="tab" aria-selected="false" onclick="setGrade(12)">دوازدهم<small></small></button>
+    </div>
     <div class="result glass" id="classRes">
       <div class="empty-state">
         <span class="icon">📚</span>
@@ -2966,10 +3091,6 @@ body.light .search-wrapper::before { opacity: 0.3; }
   </div>
 
   <footer class="footer">
-    <div class="quote-strip" id="quoteStrip">
-      <span class="quote-icon">💫</span>
-      <span class="quote-text" id="footerQuoteText"></span>
-    </div>
     <div class="footer-line"></div>
     <p class="footer-text">
       طراحی و توسعه توسط <strong>تیم پشتیبانی دبیرستان شهید باقری</strong>
@@ -3337,40 +3458,80 @@ function switchTab(tab) {
         renderAllTeachers();
     }
 }
+function classGrade(cn) {
+    var n = String(cn).replace(/[۰-۹]/g, function (ch) { return "۰۱۲۳۴۵۶۷۸۹".indexOf(ch); }).match(/\d+/g);
+    if (!n) return 0;
+    return Math.floor(parseInt(n[n.length - 1], 10) / 10);
+}
+var GRADES = [{ id: 10, name: "دهم" }, { id: 11, name: "یازدهم" }, { id: 12, name: "دوازدهم" }];
+var currentGrade = "all";
+var classTeacherCount = null;
+function getClassTeacherCount() {
+    if (classTeacherCount) return classTeacherCount;
+    var sets = {};
+    rawData.forEach(function (item) {
+        var cn = item[0];
+        sets[cn] = sets[cn] || {};
+        item[1].forEach(function (dr) {
+            dr[1].forEach(function (lt) {
+                if (!lt || !lt.trim() || lt === "زنگ آزمون" || lt === "مهارت") return;
+                extractTeachers(lt).forEach(function (e) { sets[cn][e.teacher] = true; });
+            });
+        });
+    });
+    classTeacherCount = {};
+    Object.keys(sets).forEach(function (cn) { classTeacherCount[cn] = Object.keys(sets[cn]).length; });
+    return classTeacherCount;
+}
+function classesOfGrade(g) {
+    return allClasses.filter(function (cn) { return g === "all" || classGrade(cn) === g; });
+}
+function updateGradeBar() {
+    var chips = document.querySelectorAll("#gradeBar .grade-chip");
+    for (var i = 0; i < chips.length; i++) {
+        var c = chips[i], raw = c.getAttribute("data-grade");
+        var g = raw === "all" ? "all" : parseInt(raw, 10);
+        var on = g === currentGrade;
+        c.classList.toggle("active", on);
+        c.setAttribute("aria-selected", on ? "true" : "false");
+        c.querySelector("small").textContent = toFa(classesOfGrade(g).length) + " کلاس";
+    }
+}
+function setGrade(g) {
+    currentGrade = g;
+    updateGradeBar();
+    var input = document.getElementById("classSearch");
+    if (input.value.trim()) input.dispatchEvent(new Event("input"));
+    else renderClassesList();
+}
+function classCardHtml(cn, withCount) {
+    var teacherCount = getClassTeacherCount()[cn] || 0;
+    return '<div class="selection-card" onclick="showClassSchedule(\'' + cn.replace(/'/g, "\\'") + '\')">' +
+        '<div class="selection-avatar">' + cn.charAt(0) + '</div>' +
+        '<div class="selection-info">' +
+        '<div class="selection-name">' + esc(cn) + '</div>' +
+        (withCount ? '<div class="selection-subject">👨‍🏫 ' + toFa(teacherCount) + ' دبیر</div>' : '') +
+        '</div>' +
+        '<div class="selection-arrow">←</div>' +
+        '</div>';
+}
 function renderClassesList() {
     var res = document.getElementById("classRes");
     var html = '<div class="selection-header">' +
         '<span class="selection-icon">📚</span>' +
         '<h2>لیست کلاس‌ها</h2>' +
         '<p>روی هر کلاس کلیک کنید تا برنامه‌ی کاملش رو ببینید</p>' +
-        '</div>' +
-        '<div class="selection-list">';
-    allClasses.forEach(function (cn) {
-        var teachersSet = {};
-        rawData.forEach(function (item) {
-            if (item[0] !== cn)
-                return;
-            item[1].forEach(function (dr) {
-                dr[1].forEach(function (lt) {
-                    if (!lt || !lt.trim() || lt === "زنگ آزمون" || lt === "مهارت")
-                        return;
-                    var entries = extractTeachers(lt);
-                    entries.forEach(function (e) { teachersSet[e.teacher] = true; });
-                });
-            });
-        });
-        var teacherCount = Object.keys(teachersSet).length;
-        var initial = cn.charAt(0);
-        html += '<div class="selection-card" onclick="showClassSchedule(\'' + cn.replace(/'/g, "\\'") + '\')">' +
-            '<div class="selection-avatar">' + initial + '</div>' +
-            '<div class="selection-info">' +
-            '<div class="selection-name">' + esc(cn) + '</div>' +
-            '<div class="selection-subject">👨‍🏫 ' + toFa(teacherCount) + ' دبیر</div>' +
-            '</div>' +
-            '<div class="selection-arrow">←</div>' +
-            '</div>';
+        '</div>';
+    var first = true;
+    GRADES.forEach(function (g) {
+        if (currentGrade !== "all" && currentGrade !== g.id) return;
+        var list = classesOfGrade(g.id);
+        if (!list.length) return;
+        html += '<div class="grade-title' + (first ? ' first' : '') + '"><span>پایه‌ی ' + g.name + '</span><em>' + toFa(list.length) + ' کلاس</em></div>' +
+            '<div class="selection-list">' + list.map(function (cn) { return classCardHtml(cn, true); }).join("") + '</div>';
+        first = false;
     });
-    html += '</div>';
+    if (first) html += '<div class="error-state"><span class="icon">📭</span><p>کلاسی برای این پایه ثبت نشده است</p></div>';
     res.innerHTML = html;
 }
 function clearClassSearch() {
@@ -3386,7 +3547,7 @@ document.getElementById("classSearch").addEventListener("input", function () {
         return;
     }
     var normalizedQuery = normalize(q);
-    var matches = allClasses.filter(function (cn) {
+    var matches = classesOfGrade(currentGrade).filter(function (cn) {
         return normalize(cn).indexOf(normalizedQuery) > -1;
     });
     if (matches.length === 0) {
@@ -3397,23 +3558,13 @@ document.getElementById("classSearch").addEventListener("input", function () {
         showClassSchedule(matches[0]);
         return;
     }
-    var html = '<div class="selection-header">' +
+    res.innerHTML = '<div class="selection-header">' +
         '<span class="selection-icon">📚</span>' +
         '<h2>کلاس‌های پیدا شده</h2>' +
-        '</div><div class="selection-list">';
-    matches.forEach(function (cn) {
-        var initial = cn.charAt(0);
-        html += '<div class="selection-card" onclick="showClassSchedule(\'' + cn.replace(/'/g, "\\'") + '\')">' +
-            '<div class="selection-avatar">' + initial + '</div>' +
-            '<div class="selection-info">' +
-            '<div class="selection-name">' + esc(cn) + '</div>' +
-            '</div>' +
-            '<div class="selection-arrow">←</div>' +
-            '</div>';
-    });
-    html += '</div>';
-    res.innerHTML = html;
+        '</div><div class="selection-list">' + matches.map(function (cn) { return classCardHtml(cn, false); }).join("") + '</div>';
 });
+updateGradeBar();
+
 function showClassSchedule(className) {
     var res = document.getElementById("classRes");
     var classData = null;
@@ -3474,7 +3625,7 @@ function showClassSchedule(className) {
     });
     html += '</div>';
     html += '<div class="teacher-actions">';
-    html += '<button class="action-btn" onclick="renderClassesList()">🔙 بازگشت به لیست کلاس‌ها</button>';
+    html += '<button type="button" class="action-btn" onclick="renderClassesList()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span>بازگشت به لیست کلاس‌ها</span></button>';
     html += '</div>';
     res.innerHTML = html;
     res.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -3557,18 +3708,6 @@ function toggleTheme() {
     applyTheme(next);
     showToast(next === "dark" ? "🌙 حالت تاریک" : "☀️ حالت روشن");
 }
-var QUOTES = [
-    "معلمی، هنر بیدار کردن کنجکاوی است.",
-    "بهترین معلم، کسی است که شاگرد را از خودش بهتر بسازد.",
-    "آموزش، نیرومندترین سلاحی است که می‌توان جهان را تغییر داد.",
-    "هر کودک، یک معلم است که باید دیده شود.",
-    "با دانش، آینده را می‌سازیم.",
-    "معلمی، شغل نیست؛ عشق است.",
-    "کلاس درس، کارگاه ساخت انسان‌های بزرگ است.",
-    "هر روز فرصتی تازه برای یاد دادن و یاد گرفتن است.",
-    "موفقیت دانش‌آموز، موفقیت معلم است.",
-    "صبر و مهربانی، دو بال معلمی هستند."
-];
 var updateDateHideTimer = null;
 function showLastUpdateDate() {
     var el = document.getElementById('siteUpdateDate');
@@ -3580,31 +3719,6 @@ function showLastUpdateDate() {
     updateDateHideTimer = setTimeout(function () { el.classList.add('hidden'); }, 25000);
 }
 window.addEventListener('pageshow', showLastUpdateDate);
-var quoteHideTimer = null;
-function startQuoteRotation() {
-    var textEl = document.getElementById("footerQuoteText");
-    var strip = document.getElementById("quoteStrip");
-    if (!textEl || !strip)
-        return;
-    if (quoteHideTimer)
-        clearTimeout(quoteHideTimer);
-    strip.classList.remove("hidden");
-    strip.style.display = "flex";
-    strip.style.opacity = "";
-    strip.style.transform = "";
-    strip.style.maxHeight = "";
-    strip.style.marginBottom = "";
-    strip.style.paddingTop = "";
-    strip.style.paddingBottom = "";
-    var idx = Math.floor(Math.random() * QUOTES.length);
-    textEl.textContent = QUOTES[idx];
-    quoteHideTimer = setTimeout(function () {
-        strip.classList.add("hidden");
-    }, 15000);
-}
-window.addEventListener("pageshow", function () {
-    startQuoteRotation();
-});
 var autocompleteActiveIdx = -1;
 var autocompleteItems = [];
 function highlightAutocomplete(text, query) {
@@ -3930,8 +4044,8 @@ function renderTeacher(t, active, query) {
     }
     if (active && !isVirtual) {
         html += '<div class="teacher-actions">';
-        html += '<button class="action-btn" onclick="shareLink()">🔗 کپی لینک</button>';
-        html += '<button class="action-btn" onclick="showQR()">📱 QR Code</button>';
+        html += '<button type="button" class="action-btn primary" onclick="shareLink()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>کپی لینک</span></button>';
+        html += '<button type="button" class="action-btn" onclick="showQR()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20v.01M17 20h4v-3"/></svg><span>QR Code</span></button>';
         html += '</div>';
     }
     return html;
@@ -4276,10 +4390,9 @@ if (window.matchMedia) {
         lightMedia.addListener(handleSystemThemeChange);
     }
 }
-renderAdminClassesTable();
+window.addEventListener('DOMContentLoaded', function () { if (typeof renderAdminClassesTable === 'function') renderAdminClassesTable(); });
 applyTheme(loadTheme());
 checkURLParam();
-startQuoteRotation();
 switchTab("search");
 if (window.innerWidth > 600) {
     setTimeout(function () {
@@ -4306,7 +4419,16 @@ function openAdminLogin() { var m = document.getElementById('adminLoginModal'); 
     m.style.display = 'flex';
 } setTimeout(function () { var u = document.getElementById('adminUsername'); if (u)
     u.focus(); }, 100); }
-function closeAdminLogin() { var m = document.getElementById('adminLoginModal'); if (m) {
+function toggleAdminPw() {
+    var i = document.getElementById('adminPassword'), b = document.getElementById('lgEye');
+    if (!i || !b) return;
+    var show = i.type === 'password';
+    i.type = show ? 'text' : 'password';
+    b.classList.toggle('shown', show);
+    b.setAttribute('aria-label', show ? 'پنهان کردن رمز عبور' : 'نمایش رمز عبور');
+    i.focus();
+}
+function closeAdminLogin() { var pw = document.getElementById('adminPassword'), eye = document.getElementById('lgEye'); if (pw) pw.type = 'password'; if (eye) eye.classList.remove('shown'); var m = document.getElementById('adminLoginModal'); if (m) {
     m.classList.remove('show');
     m.style.display = 'none';
 } var e = document.getElementById('adminLoginError'); if (e)
@@ -4629,11 +4751,12 @@ window.addEventListener('DOMContentLoaded', function () {
   var ctx = canvas.getContext('2d');
   var reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var W = 0, H = 0, raf = 0, last = 0, parts = [];
+  var lowEnd = (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 2;
 
   function color() { return document.body.classList.contains('light') ? '150,110,10' : '245,215,110'; }
 
   function seed() {
-    var n = W < 600 ? 34 : 70;
+    var n = (W < 600 || lowEnd) ? 16 : 36;
     parts = [];
     for (var i = 0; i < n; i++) {
       parts.push({
@@ -4681,7 +4804,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
   function frame(t) {
     raf = requestAnimationFrame(frame);
-    if (t - last < 33) return;            // ~30fps cap to save battery
+    if (window.__bgPause || t - last < 45) return;   // ~22fps cap, idle while scrolling
     last = t;
     draw(t, true);
   }
@@ -4699,6 +4822,82 @@ window.addEventListener('DOMContentLoaded', function () {
       .observe(document.body, { attributes: true, attributeFilter: ['class'] });
   }
 })();
+</script>
+<script>
+(function(){try{
+var tabs=document.querySelector('.tabs');
+function pos(){var a=tabs.querySelector('.tab-btn.active');if(!a)return;
+tabs.style.setProperty('--ind-r',(tabs.clientWidth-a.offsetLeft-a.offsetWidth)+'px');
+tabs.style.setProperty('--ind-w',a.offsetWidth+'px');
+if(!tabs.classList.contains('has-ind'))tabs.classList.add('has-ind');}
+pos();window.addEventListener('load',pos);window.addEventListener('resize',pos);
+new MutationObserver(pos).observe(tabs,{attributes:true,subtree:true,attributeFilter:['class']});
+var ncc=document.getElementById('ncc');
+if(ncc)new MutationObserver(function(){var f=ncc.querySelector('.progress-fill');
+ncc.style.setProperty('--p',f?(parseFloat(f.style.width)||0):0);}).observe(ncc,{childList:true});
+}catch(e){}})();
+</script>
+<script>
+(function(){
+/* 7: accordion for "all teachers" */
+try{var all=document.getElementById('allRes');
+if(all)all.addEventListener('click',function(e){
+var card=e.target.closest&&e.target.closest('.selection-card');if(!card||!all.contains(card))return;
+var m=/jumpToTeacher\('(.*)'\)/.exec(card.getAttribute('onclick')||'');if(!m)return;
+var name=m[1].replace(/\\'/g,"'"),t=window.teacherDB&&window.teacherDB[name];if(!t||!t.classes)return;
+e.stopImmediatePropagation();e.preventDefault();
+var nxt=card.nextElementSibling,wasOpen=nxt&&nxt.classList.contains('acc-panel');
+all.querySelectorAll('.acc-panel').forEach(function(p){p.remove()});
+all.querySelectorAll('.selection-card.open').forEach(function(c){c.classList.remove('open')});
+if(wasOpen)return;
+var p=document.createElement('div');p.className='acc-panel';
+var order=window.dayOrder||[],last=null;
+t.classes.slice().sort(function(a,b){return (order.indexOf(a.day)-order.indexOf(b.day))||(a.period-b.period)}).forEach(function(c){
+if(c.day!==last){last=c.day;var d=document.createElement('div');d.className='acc-day';d.textContent=c.day;p.appendChild(d);}
+var r=document.createElement('div');r.className='acc-row';
+var b=document.createElement('b');b.textContent='زنگ '+(window.toFa?toFa(c.period):c.period);
+var sp=document.createElement('span');sp.textContent=c.subject+' — '+c.className;
+var tm=document.createElement('i');tm.textContent=c.start+' تا '+c.end;
+r.appendChild(b);r.appendChild(sp);r.appendChild(tm);p.appendChild(r);});
+var btn=document.createElement('button');btn.type='button';btn.className='acc-open';btn.textContent='مشاهده‌ی کامل برنامه ←';
+btn.onclick=function(ev){ev.stopPropagation();window.jumpToTeacher(name)};
+p.appendChild(btn);card.classList.add('open');card.insertAdjacentElement('afterend',p);
+},true);}catch(e){}
+/* 10: floating labels */
+try{function fl(){document.querySelectorAll('.admin-field').forEach(function(f){var i=f.querySelector('input'),l=f.querySelector('label');
+if(!i||!l)return;f.classList.add('fl');f.classList.toggle('filled',!!i.value);});}
+fl();['input','change','focusin','focusout'].forEach(function(ev){document.addEventListener(ev,fl,true)});
+document.addEventListener('click',function(){setTimeout(fl,0)});}catch(e){}
+/* 8: ripple */
+try{var sel='.action-btn,.admin-primary,.admin-secondary,.admin-action,.admin-quick,.qr-download,.tab-btn,.admin-edit-btn,.admin-drawer button.menu-item,.acc-open';
+document.addEventListener('pointerdown',function(e){var b=e.target.closest&&e.target.closest(sel);if(!b)return;
+var r=b.getBoundingClientRect(),d=Math.max(r.width,r.height)*2,s=document.createElement('span');s.className='rpl';
+s.style.cssText='width:'+d+'px;height:'+d+'px;left:'+(e.clientX-r.left-d/2)+'px;top:'+(e.clientY-r.top-d/2)+'px';
+b.appendChild(s);setTimeout(function(){s.remove()},600);},{passive:true});}catch(e){}
+})();
+</script>
+<script>
+(function(){try{
+var h=document.getElementById('siteHeader'),d=document.getElementById('siteUpdateDate');if(!h||!d)return;
+var w=document.createElement('div');w.className='hdr-date-wrap';d.parentNode.insertBefore(w,d);w.appendChild(d);
+var brand=document.createElement('div');brand.className='hdr-brand';
+var img=document.createElement('img');img.className='hdr-logo';img.src='assets/logo.jpg';img.alt='لوگوی دبیرستان شهید حسن باقری';
+img.onerror=function(){img.style.display='none'};
+var nm=document.createElement('span');nm.className='hdr-name';nm.textContent='دبیرستان شهید حسن باقری';
+brand.onclick=function(){window.scrollTo({top:0,behavior:'smooth'})};
+brand.appendChild(img);brand.appendChild(nm);h.appendChild(brand);
+var tick=false,last=-1;
+function upd(){tick=false;var y=window.pageYOffset||0,p=Math.min(1,Math.max(0,(y-30)/110));
+if(p===last)return;last=p;h.style.setProperty('--sp',p.toFixed(3));h.classList.toggle('logo-on',p>.6);}
+window.addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(upd);}},{passive:true});upd();
+}catch(e){}})();
+</script>
+<script>
+/* pause heavy background work while the page is scrolling */
+(function(){var t,r=document.documentElement;
+window.addEventListener('scroll',function(){
+if(!window.__bgPause){window.__bgPause=true;r.classList.add('is-scrolling');}
+clearTimeout(t);t=setTimeout(function(){window.__bgPause=false;r.classList.remove('is-scrolling');},160);},{passive:true});})();
 </script>
 </body>
 </html>
