@@ -3149,6 +3149,7 @@ body.light .admin-drawer .drawer-foot { border-top-color: rgba(147,170,230,.3); 
       <button onclick="adminPage(this,'ورود / خروج اطلاعات')">📥 ورود / خروج اطلاعات</button>
       <button onclick="adminPage(this,'زمان‌بندی زنگ‌ها')">⏰ زمان‌بندی زنگ‌ها</button>
       <button onclick="adminPage(this,'تاریخچه تغییرات')">🕘 تاریخچه تغییرات</button>
+      <button onclick="adminPage(this,'اطلاع‌رسانی')">📢 اطلاع‌رسانی</button>
       <button onclick="adminPage(this,'تنظیمات')">⚙️ تنظیمات</button>
     </nav>
   </aside>
@@ -3352,6 +3353,30 @@ body.light .admin-drawer .drawer-foot { border-top-color: rgba(147,170,230,.3); 
               <td>admin</td>
             </tr>
           </table>
+        </div>
+      </div>
+
+      <div id="ad-announce" class="ad-page">
+        <div class="admin-placeholder">
+          <div class="admin-card-head">
+            <h3>اطلاع‌رسانی به کاربران</h3>
+          </div>
+          <div id="annCurrent" class="admin-list-item" style="margin-bottom:12px"><span class="admin-muted">در حال بررسی…</span></div>
+          <textarea id="annText" class="admin-control" rows="3" maxlength="300" placeholder="متن اطلاع‌رسانی را بنویسید…" oninput="annCount()"></textarea>
+          <div class="admin-muted" id="annCount" style="margin:-6px 0 12px">۰ / ۳۰۰</div>
+          <div class="admin-form-grid">
+            <input id="annDur" class="admin-control" inputmode="numeric" placeholder="مدت نمایش" value="1">
+            <select id="annUnit" class="admin-control">
+              <option value="60000">دقیقه</option>
+              <option value="3600000" selected>ساعت</option>
+              <option value="86400000">روز</option>
+            </select>
+          </div>
+          <div class="admin-toolbar">
+            <button class="admin-action" style="padding:10px 18px" onclick="annPublish()">📢 انتشار در هدر سایت</button>
+            <button class="admin-edit-btn admin-danger" onclick="annClear(true)">حذف اطلاع‌رسانی فعلی</button>
+          </div>
+          <p class="admin-muted" style="margin-top:12px">متن تا پایان مدت تعیین‌شده در بالای صفحه‌ی اصلی برای همه‌ی کاربران نمایش داده می‌شود و پس از آن خودکار پاک می‌شود.</p>
         </div>
       </div>
 
@@ -5335,7 +5360,7 @@ function adminPage(btn, title) {
     var titleEl = document.getElementById('adminPanelTitle');
     if (titleEl)
         titleEl.textContent = title;
-    var key = { 'داشبورد': 'dashboard', 'مدیریت دبیران': 'teachers', 'مدیریت کلاس‌ها': 'classes', 'برنامه هفتگی': 'schedule', 'دروس': 'subjects', 'ورود / خروج اطلاعات': 'import', 'زمان‌بندی زنگ‌ها': 'bells', 'تاریخچه تغییرات': 'logs', 'تنظیمات': 'settings' }[title];
+    var key = { 'داشبورد': 'dashboard', 'مدیریت دبیران': 'teachers', 'مدیریت کلاس‌ها': 'classes', 'برنامه هفتگی': 'schedule', 'دروس': 'subjects', 'ورود / خروج اطلاعات': 'import', 'زمان‌بندی زنگ‌ها': 'bells', 'تاریخچه تغییرات': 'logs', 'اطلاع‌رسانی': 'announce', 'تنظیمات': 'settings' }[title];
     document.querySelectorAll('.ad-page').forEach(function (x) { x.classList.remove('active'); });
     var page = document.getElementById('ad-' + key);
     if (page)
@@ -5350,6 +5375,8 @@ function adminPage(btn, title) {
     }
     if (key === 'subjects')
         renderAdminSubjects();
+    if (key === 'announce' && window.annRenderAdmin)
+        window.annRenderAdmin();
 }
 window.addEventListener('DOMContentLoaded', function () { renderAdminTeachersTable(); renderAdminClassesTable(); populateAdminScheduleClassSelect(); renderAdminScheduleTable(); renderAdminSubjects(); });
 /* ---- Mobile admin tables: copy header text into data-label so rows can render as cards ---- */
@@ -5798,6 +5825,124 @@ clearTimeout(t);t=setTimeout(function(){window.__bgPause=false;r.classList.remov
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
+<style>
+/* ===== Announcement bar (under the fixed header) ===== */
+.ann-bar{position:fixed;top:72px;left:0;right:0;z-index:1090;display:none;align-items:center;justify-content:center;gap:10px;padding:9px 16px;text-align:center;font-size:13.5px;font-weight:700;line-height:1.8;color:#1a1a1a;background:linear-gradient(135deg,#d4af37,#f5d76e);box-shadow:0 6px 20px rgba(0,0,0,.25);animation:annIn .35s ease}
+.ann-bar.show{display:flex}
+.ann-bar .ann-ico{flex:0 0 auto;font-size:16px}
+.ann-bar .ann-txt{min-width:0;overflow-wrap:anywhere;white-space:pre-line}
+body.light .ann-bar{color:#fff;background:linear-gradient(135deg,#1e3a8a,#3a5bb0)}
+@keyframes annIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+.container > header{padding-top:calc(92px + var(--ann-h,0px)) !important;transition:padding-top .3s ease}
+@media (prefers-reduced-motion:reduce){.ann-bar{animation:none}.container > header{transition:none}}
+</style>
+<script>
+/* ===== Announcements: stored in Supabase site_state (key = announcement), auto-hidden after expiry ===== */
+(function () {
+  'use strict';
+  var ROW = 'announcement', cur = null, bar = null;
+  function $(id) { return document.getElementById(id); }
+  function faDigits(s) {
+    return String(s || '').replace(/[۰-۹]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d); })
+      .replace(/[٠-٩]/g, function (d) { return '٠١٢٣٤٥٦٧٨٩'.indexOf(d); });
+  }
+  function valid(v) { return !!(v && typeof v.text === 'string' && v.text.trim() && +v.expires_at > Date.now()); }
+
+  function fetchRow() {
+    return fetch(SB_URL + '/rest/v1/site_state?select=value&key=eq.' + ROW, { headers: { apikey: SB_KEY }, cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (a) { return (Array.isArray(a) && a[0] && a[0].value) || null; });
+  }
+  function writeRow(value) {
+    return sbToken().then(function (tok) {
+      return fetch(SB_URL + '/rest/v1/site_state?on_conflict=key', {
+        method: 'POST',
+        headers: { apikey: SB_KEY, Authorization: 'Bearer ' + tok, 'Content-Type': 'application/json', Prefer: 'resolution=merge-duplicates,return=minimal' },
+        body: JSON.stringify([{ key: ROW, value: value, updated_at: new Date().toISOString() }])
+      });
+    }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); });
+  }
+
+  /* ---- public banner ---- */
+  function ensureBar() {
+    if (bar) return bar;
+    bar = document.createElement('div');
+    bar.className = 'ann-bar'; bar.setAttribute('role', 'status'); bar.setAttribute('aria-live', 'polite');
+    bar.innerHTML = '<span class="ann-ico" aria-hidden="true">📢</span><span class="ann-txt"></span>';
+    var h = $('siteHeader');
+    if (h && h.parentNode) h.parentNode.insertBefore(bar, h.nextSibling); else document.body.appendChild(bar);
+    return bar;
+  }
+  function render() {
+    var on = valid(cur);
+    if (on) {
+      var b = ensureBar();
+      b.querySelector('.ann-txt').textContent = cur.text;
+      b.classList.add('show');
+      document.documentElement.style.setProperty('--ann-h', b.offsetHeight + 'px');
+    } else {
+      if (bar) bar.classList.remove('show');
+      document.documentElement.style.setProperty('--ann-h', '0px');
+    }
+  }
+  function refresh() {
+    if (!window.fetch) return;
+    fetchRow().then(function (v) { cur = v; render(); }).catch(function () { /* offline: keep what we have */ });
+  }
+  window.addEventListener('resize', function () { if (valid(cur)) render(); });
+  setInterval(function () { if (cur && !valid(cur)) { cur = null; render(); } }, 15000);   // expiry tick
+  setInterval(refresh, 60000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) refresh(); });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', refresh); else refresh();
+
+  /* ---- admin panel ---- */
+  function fmt(ms) { return new Date(ms).toLocaleString('fa-IR', { dateStyle: 'medium', timeStyle: 'short' }); }
+  window.annCount = function () {
+    var t = $('annText'), c = $('annCount');
+    if (t && c) c.textContent = toFa(t.value.length) + ' / ' + toFa(300);
+  };
+  window.annRenderAdmin = function () {
+    var box = $('annCurrent'); if (!box) return;
+    box.innerHTML = '<span class="admin-muted">در حال بررسی…</span>';
+    fetchRow().then(function (v) {
+      cur = v; render();
+      if (valid(v)) {
+        box.innerHTML = '<div><strong>در حال نمایش:</strong> ' + escapeHtmlAdmin(v.text) + '<div class="admin-muted">پایان نمایش: ' + escapeHtmlAdmin(fmt(+v.expires_at)) + '</div></div>';
+      } else {
+        box.innerHTML = '<span class="admin-muted">اطلاع‌رسانی فعالی وجود ندارد.</span>';
+        if (v && v.text) annClear(false);   // expired leftover: clean it from the database
+      }
+    }).catch(function () {
+      box.innerHTML = '<span class="admin-muted">ارتباط با سرور برقرار نشد.</span>';
+    });
+  };
+  window.annPublish = function () {
+    var text = ($('annText').value || '').trim();
+    var n = parseFloat(faDigits($('annDur').value).replace(',', '.'));
+    var unit = parseInt($('annUnit').value, 10);
+    if (!text) { showAdminToast('متن اطلاع‌رسانی را وارد کنید'); return; }
+    if (!(n > 0)) { showAdminToast('مدت نمایش را درست وارد کنید'); return; }
+    var ms = n * unit;
+    if (ms > 365 * 86400000) { showAdminToast('حداکثر مدت نمایش ۳۶۵ روز است'); return; }
+    var now = Date.now(), value = { text: text, created_at: now, expires_at: Math.round(now + ms) };
+    writeRow(value).then(function () {
+      cur = value; render();
+      $('annText').value = ''; annCount();
+      showAdminToast('✅ اطلاع‌رسانی منتشر شد');
+      window.annRenderAdmin();
+    }).catch(function () { showAdminToast('⚠️ انتشار ناموفق بود؛ اتصال اینترنت و ورود را بررسی کنید'); });
+  };
+  window.annClear = function (ask) {
+    function go() {
+      writeRow({}).then(function () {
+        cur = null; render();
+        if (ask) { showAdminToast('اطلاع‌رسانی حذف شد'); window.annRenderAdmin(); }
+      }).catch(function () { if (ask) showAdminToast('⚠️ حذف ناموفق بود'); });
+    }
+    if (ask) adminConfirmDelete('اطلاع‌رسانی فعلی', go); else go();
+  };
 })();
 </script>
 </body>
