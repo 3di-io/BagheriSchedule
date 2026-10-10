@@ -3124,7 +3124,7 @@ body.light .admin-drawer .drawer-foot { border-top-color: rgba(147,170,230,.3); 
     <p class="lg-sub">برای مدیریت دبیران، کلاس‌ها و برنامه‌ی هفتگی، وارد حساب مدیر شوید.</p>
     <label class="lg-field">
       <span class="lg-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
-      <input id="adminUsername" type="text" autocomplete="username" placeholder="نام کاربری" autocapitalize="off" spellcheck="false">
+      <input id="adminUsername" type="text" autocomplete="username" placeholder="ایمیل مدیر" inputmode="email" autocapitalize="off" spellcheck="false">
     </label>
     <label class="lg-field">
       <span class="lg-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
@@ -3659,6 +3659,226 @@ var HOMONYM_MAP = {
     "کریمی|شیمی": "علیرضا کریمی",
     "کریمی|آزمایشگاه": "علیرضا کریمی"
 };
+/* ===== Supabase: منبع داده + ورود مدیر =====
+   - خواندن برای همه آزاد است (کلید publishable + فقط SELECT با RLS)
+   - نوشتن فقط برای مدیرِ واردشده (Supabase Auth + RLS)
+   - اگر سرور در دسترس نباشد، داده‌ی داخل همین فایل یا آخرین کش مرورگر استفاده می‌شود */
+var SB_URL = 'https://kbgjvqyeqjauatlgmral.supabase.co';
+var SB_KEY = 'sb_publishable_Qvb1yl1miXikOPywUT4Jeg_y3B-9HZP';
+var SB_K = { raw: 'bagheri_sb_timetable', state: 'bagheriAdminState', pending: 'bagheri_sb_pending', session: 'bagheri_sb_session', reload: 'bagheri_sb_reload' };
+function __lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+function __lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { } }
+function __sbArr(v) { return Array.isArray(v) ? v : []; }
+function __sbState() {
+    try {
+        var s = JSON.parse(__lsGet(SB_K.state) || '{}');
+        return (s && typeof s === 'object' && !Array.isArray(s)) ? s : {};
+    } catch (e) { return {}; }
+}
+function __sbCanon(v) {
+    if (Array.isArray(v)) return v.map(__sbCanon);
+    if (v && typeof v === 'object') { var o = {}; Object.keys(v).sort().forEach(function (k) { o[k] = __sbCanon(v[k]); }); return o; }
+    return v;
+}
+function __sbKey(r) { return [r.className, r.day, r.period, r.subject, r.teacher].join('|'); }
+
+/* داده‌ی پایه: کش آخرین نسخه‌ی سرور، وگرنه همان rawData داخل فایل */
+function __sbValidRaw(c) {
+    return Array.isArray(c) && c.length > 0 && c.every(function (it) {
+        return Array.isArray(it) && typeof it[0] === 'string' && Array.isArray(it[1]) && it[1].every(function (dr) {
+            return Array.isArray(dr) && typeof dr[0] === 'string' && Array.isArray(dr[1]) && dr[1].length <= 4 &&
+                dr[1].every(function (x) { return typeof x === 'string'; });
+        });
+    });
+}
+var baseRawData = rawData;
+(function () {
+    try {
+        var c = JSON.parse(__lsGet(SB_K.raw) || 'null');
+        if (__sbValidRaw(c)) baseRawData = c;
+    } catch (e) { }
+})();
+
+/* اعمال تغییرات مدیر (حذف/تغییر نام/افزودن) روی داده‌ی پایه؛ خروجی همان ساختار rawData است */
+function applyDeltas(base, st) {
+    var delC = __sbArr(st.deletedClasses).map(String);
+    var delT = __sbArr(st.deletedTeachers).map(String);
+    var delS = __sbArr(st.deletedSchedule).map(String);
+    var ren = (st.classRenames && typeof st.classRenames === 'object') ? st.classRenames : {};
+    var custom = __sbArr(st.customSchedule);
+    var DAYS = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه'];
+    var out = [], byName = {};
+
+    JSON.parse(JSON.stringify(base)).forEach(function (item) {
+        var cn = ren[item[0]] || item[0];
+        if (delC.indexOf(cn) !== -1 || byName[cn]) return;
+        item[0] = cn;
+        item[1].forEach(function (dr) {
+            var day = dr[0];
+            dr[1] = dr[1].map(function (lt, idx) {
+                if (!lt || !lt.trim() || lt === 'زنگ آزمون' || lt === 'مهارت') return lt;
+                var kept = [], changed = false;
+                extractTeachers(lt).forEach(function (e) {
+                    var t = HOMONYM_MAP[e.teacher + '|' + e.subject] || e.teacher;
+                    var k = __sbKey({ className: cn, day: day, period: idx + 1, subject: e.subject, teacher: t });
+                    if (delT.indexOf(t) !== -1 || delS.indexOf(k) !== -1) { changed = true; return; }
+                    kept.push(e.subject + ' - استاد ' + t);
+                });
+                return changed ? kept.join(' / ') : lt;
+            });
+        });
+        byName[cn] = item;
+        out.push(item);
+    });
+
+    custom.forEach(function (r) {
+        if (!r || !r.className) return;
+        var cn = r.className;
+        if (delC.indexOf(cn) !== -1) return;
+        if (!byName[cn]) {
+            byName[cn] = [cn, DAYS.map(function (d) { return [d, ['', '', '', '']]; })];
+            out.push(byName[cn]);
+        }
+        var p = parseInt(r.period, 10);
+        if (!r.teacher || !r.subject || r.teacher === '—' || r.subject === '—') return;   // ردیف نگه‌دارِ کلاس جدید
+        if (!PERIODS[p] || delT.indexOf(r.teacher) !== -1 || delS.indexOf(__sbKey(r)) !== -1) return;
+        var sched = byName[cn][1], dr = null;
+        sched.forEach(function (x) { if (x[0] === r.day) dr = x; });
+        if (!dr) {
+            if (dayOrder.indexOf(r.day) === -1) return;
+            dr = [r.day, ['', '', '', '']];
+            sched.push(dr);
+        }
+        var text = r.subject + ' - استاد ' + r.teacher, cur = dr[1][p - 1];
+        if (!cur || !cur.trim() || cur === 'زنگ آزمون' || cur === 'مهارت') dr[1][p - 1] = text;
+        else if (cur.indexOf(text) === -1) dr[1][p - 1] = cur + ' / ' + text;
+    });
+    return out;
+}
+rawData = applyDeltas(baseRawData, __sbState());
+
+/* تبدیل ردیف‌های جدول timetable به ساختار rawData */
+function __sbRowsToRaw(rows) {
+    var classes = {}, order = [];
+    rows.forEach(function (r) {
+        var p = parseInt(r.period, 10);
+        if (!r.class_name || !r.day || !PERIODS[p]) return;
+        var c = classes[r.class_name];
+        if (!c) { c = classes[r.class_name] = { name: r.class_name, ord: +r.class_ord || 0, days: {}, list: [] }; order.push(c); }
+        var d = c.days[r.day];
+        if (!d) { d = c.days[r.day] = { name: r.day, ord: +r.day_ord || 0, cells: ['', '', '', ''] }; c.list.push(d); }
+        d.cells[p - 1] = String(r.lesson == null ? '' : r.lesson);
+    });
+    order.sort(function (a, b) { return a.ord - b.ord; });
+    return order.map(function (c) {
+        c.list.sort(function (a, b) { return a.ord - b.ord; });
+        return [c.name, c.list.map(function (d) { return [d.name, d.cells]; })];
+    });
+}
+
+/* همگام‌سازی پس‌زمینه: اگر داده‌ی سرور با نسخه‌ی فعلی فرق داشت، کش به‌روز و صفحه یک‌بار بارگذاری مجدد می‌شود */
+(function sbSync() {
+    if (!window.fetch || !window.Promise) return;
+    function get(path) {
+        return fetch(SB_URL + '/rest/v1/' + path, { headers: { apikey: SB_KEY }, cache: 'no-store' })
+            .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
+    }
+    Promise.all([
+        get('timetable?select=class_name,class_ord,day,day_ord,period,lesson&order=class_ord,day_ord,period&limit=1000'),
+        get('site_state?select=value&key=eq.admin_state')
+    ]).then(function (res) {
+        var changed = false;
+        var remoteRaw = __sbRowsToRaw(Array.isArray(res[0]) ? res[0] : []);
+        if (__sbValidRaw(remoteRaw) && JSON.stringify(remoteRaw) !== JSON.stringify(baseRawData)) {
+            __lsSet(SB_K.raw, JSON.stringify(remoteRaw));
+            changed = true;
+        }
+        if (!__lsGet(SB_K.pending)) {   // تغییر محلیِ هنوز ذخیره‌نشده را بازنویسی نکن
+            var remoteState = (Array.isArray(res[1]) && res[1][0] && res[1][0].value) || {};
+            if (JSON.stringify(__sbCanon(remoteState)) !== JSON.stringify(__sbCanon(__sbState()))) {
+                __lsSet(SB_K.state, JSON.stringify(remoteState));
+                changed = true;
+            }
+        }
+        if (changed) {
+            var last = 0;
+            try { last = +sessionStorage.getItem(SB_K.reload) || 0; } catch (e) { }
+            if (Date.now() - last > 15000) {
+                try { sessionStorage.setItem(SB_K.reload, String(Date.now())); } catch (e) { }
+                location.reload();
+            }
+        }
+    }).catch(function () { /* آفلاین یا سرور در دسترس نیست: با داده‌ی فعلی ادامه بده */ });
+})();
+
+/* ---- ورود مدیر (Supabase Auth) ---- */
+function __sbSession() { try { return JSON.parse(sessionStorage.getItem(SB_K.session) || 'null'); } catch (e) { return null; } }
+function __sbSetSession(s) {
+    try { if (s) sessionStorage.setItem(SB_K.session, JSON.stringify(s)); else sessionStorage.removeItem(SB_K.session); } catch (e) { }
+}
+function __sbMakeSession(j) {
+    return { access_token: j.access_token, refresh_token: j.refresh_token, expires_at: Math.floor(Date.now() / 1000) + (j.expires_in || 3600) };
+}
+function sbAuth(path, body) {
+    return fetch(SB_URL + '/auth/v1/' + path, { method: 'POST', headers: { apikey: SB_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+        .then(function (r) {
+            return r.json().then(function (j) {
+                if (!r.ok) { var e = new Error(j.msg || j.error_description || j.error || ('HTTP ' + r.status)); e.code = 'auth'; throw e; }
+                return j;
+            }, function () { var e = new Error('bad response'); e.code = 'auth'; throw e; });
+        });
+}
+function sbLogin(email, pass) {
+    return sbAuth('token?grant_type=password', { email: email, password: pass }).then(function (j) {
+        var s = __sbMakeSession(j);
+        __sbSetSession(s);
+        return fetch(SB_URL + '/rest/v1/rpc/is_admin', { method: 'POST', headers: { apikey: SB_KEY, Authorization: 'Bearer ' + s.access_token, 'Content-Type': 'application/json' }, body: '{}' })
+            .then(function (r) { return r.ok ? r.json() : false; });
+    }).then(function (ok) {
+        if (ok !== true) { sbLogout(); var e = new Error('forbidden'); e.code = 'forbidden'; throw e; }
+        return true;
+    });
+}
+function sbLogout() {
+    var s = __sbSession();
+    __sbSetSession(null);
+    if (s && s.access_token && window.fetch) {
+        fetch(SB_URL + '/auth/v1/logout', { method: 'POST', headers: { apikey: SB_KEY, Authorization: 'Bearer ' + s.access_token } }).catch(function () { });
+    }
+}
+function sbToken() {
+    var s = __sbSession();
+    if (!s) return Promise.reject(new Error('no-session'));
+    if (s.expires_at - 60 > Date.now() / 1000) return Promise.resolve(s.access_token);
+    return sbAuth('token?grant_type=refresh_token', { refresh_token: s.refresh_token }).then(function (j) {
+        var n = __sbMakeSession(j); __sbSetSession(n); return n.access_token;
+    });
+}
+
+/* ---- ذخیره‌ی تغییرات مدیر روی سرور (صف‌بندی‌شده تا ترتیب حفظ شود) ---- */
+var __sbQueue = Promise.resolve();
+function __sbNotify(m) { if (window.showAdminToast) window.showAdminToast(m); else if (window.showToast) window.showToast(m); }
+function sbPushState() {
+    __sbQueue = __sbQueue.then(function () {
+        var st = __sbState();
+        return sbToken().then(function (tok) {
+            return fetch(SB_URL + '/rest/v1/site_state?on_conflict=key', {
+                method: 'POST',
+                headers: { apikey: SB_KEY, Authorization: 'Bearer ' + tok, 'Content-Type': 'application/json', Prefer: 'resolution=merge-duplicates,return=minimal' },
+                body: JSON.stringify([{ key: 'admin_state', value: st, updated_at: new Date().toISOString() }])
+            });
+        }).then(function (r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            try { localStorage.removeItem(SB_K.pending); } catch (e) { }
+            __sbNotify('✅ تغییرات روی سرور ذخیره شد');
+        });
+    }).catch(function () {
+        __lsSet(SB_K.pending, '1');
+        __sbNotify('⚠️ ذخیره روی سرور ناموفق بود؛ اتصال اینترنت و ورود را بررسی کنید');
+    });
+    return __sbQueue;
+}
+
 function normalize(str) {
     if (!str)
         return "";
@@ -4806,16 +5026,26 @@ function closeAdminLogin() { var pw = document.getElementById('adminPassword'), 
     m.style.display = 'none';
 } var e = document.getElementById('adminLoginError'); if (e)
     e.textContent = ''; }
+var __adminLoginBusy = false;
 function adminLogin() {
     var userEl = document.getElementById('adminUsername');
     var passEl = document.getElementById('adminPassword');
     var errorEl = document.getElementById('adminLoginError');
     if (!userEl || !passEl || !errorEl)
         return;
+    if (__adminLoginBusy)
+        return;
     var u = userEl.value.trim();
-    var p = passEl.value.trim();
+    var p = passEl.value;
     errorEl.textContent = '';
-    if (u === 'admin' && p === '123erfanSedighi456') {
+    if (!u || !p) {
+        errorEl.textContent = 'ایمیل و رمز عبور را وارد کنید.';
+        return;
+    }
+    __adminLoginBusy = true;
+    errorEl.textContent = 'در حال ورود…';
+    sbLogin(u, p).then(function () {
+        errorEl.textContent = '';
         var loginModal = document.getElementById('adminLoginModal');
         if (loginModal) {
             loginModal.classList.remove('show');
@@ -4829,20 +5059,35 @@ function adminLogin() {
         userEl.value = '';
         passEl.value = '';
         document.body.style.overflow = 'hidden';
-    }
-    else {
-        errorEl.textContent = 'نام کاربری یا رمز عبور نادرست است.';
+    }).catch(function (e) {
+        var code = e && e.code;
+        if (code === 'forbidden')
+            errorEl.textContent = 'این حساب دسترسی مدیر ندارد.';
+        else if (code === 'auth')
+            errorEl.textContent = 'ایمیل یا رمز عبور نادرست است.';
+        else
+            errorEl.textContent = 'ارتباط با سرور برقرار نشد. اینترنت خود را بررسی کنید.';
         passEl.focus();
         passEl.select();
-    }
+    }).then(function () { __adminLoginBusy = false; });
 }
 function closeAdminPanel() {
     var panel = document.getElementById('adminPanel');
+    var wasOpen = !!(panel && panel.classList.contains('show'));
     if (panel) {
         panel.classList.remove('show');
         panel.style.display = 'none';
     }
     document.body.style.overflow = '';
+    if (wasOpen) {
+        var dirty = !!window.__adminDirty;
+        window.__adminDirty = false;
+        __sbQueue.then(function () {
+            sbLogout();
+            if (dirty)
+                location.reload();   // تغییرات مدیر روی سایت عمومی هم اعمال شود
+        });
+    }
 }
 document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
@@ -4910,7 +5155,7 @@ function adminState() { try {
 catch (e) {
     return {};
 } }
-function saveAdminState(st) { localStorage.setItem('bagheriAdminState', JSON.stringify(st)); }
+function saveAdminState(st) { localStorage.setItem('bagheriAdminState', JSON.stringify(st)); window.__adminDirty = true; sbPushState(); }
 function adminDeletedSet(key) { var st = adminState(); return Array.isArray(st[key]) ? st[key] : []; }
 function isAdminDeleted(key, value) { return adminDeletedSet(key).indexOf(String(value)) !== -1; }
 function markAdminDeleted(key, value) { var st = adminState(); if (!Array.isArray(st[key]))
@@ -4949,7 +5194,7 @@ function getAdminTeacherRecord(name) { var st = getAdminStateData(); if (teacher
 } }); return rec; }
 function getAdminSubjects() {
     var st = getAdminStateData(), map = {};
-    rawData.forEach(function (item) { if (isAdminDeleted('deletedClasses', item[0]))
+    baseRawData.forEach(function (item) { if (isAdminDeleted('deletedClasses', (st.classRenames || {})[item[0]] || item[0]))
         return; item[1].forEach(function (dr) { dr[1].forEach(function (lt) { if (!lt || !lt.trim() || lt === 'زنگ آزمون' || lt === 'مهارت')
         return; extractTeachers(lt).forEach(function (e) { var n = HOMONYM_MAP[e.teacher + '|' + e.subject] || e.teacher; if (!isAdminDeleted('deletedTeachers', n))
         map[e.subject] = map[e.subject] || {}, map[e.subject][n] = true; }); }); }); });
@@ -4987,7 +5232,7 @@ function populateAdminScheduleClassSelect() { var sel = document.getElementById(
     sel.value = old; }
 function getAdminScheduleRows() {
     var st = getAdminStateData(), rows = [];
-    rawData.forEach(function (item) { var className = item[0]; if (isAdminDeleted('deletedClasses', className))
+    baseRawData.forEach(function (item) { var className = (st.classRenames || {})[item[0]] || item[0]; if (isAdminDeleted('deletedClasses', className))
         return; item[1].forEach(function (dr) { var day = dr[0]; dr[1].forEach(function (lt, idx) { if (!lt || !lt.trim() || lt === 'زنگ آزمون' || lt === 'مهارت')
         return; extractTeachers(lt).forEach(function (e) { var teacher = HOMONYM_MAP[e.teacher + '|' + e.subject] || e.teacher; if (isAdminDeleted('deletedTeachers', teacher))
         return; var r = { className: className, day: day, period: idx + 1, subject: e.subject, teacher: teacher, start: PERIODS[idx + 1].start, end: PERIODS[idx + 1].end }; var k = scheduleKey(r); if (st.deletedSchedule.indexOf(k) !== -1)
@@ -5024,9 +5269,33 @@ function editTeacherRow(btn) { var row = btn.closest('tr'), old = row.cells[0].i
     return; var st = getAdminStateData(); st.customTeachers = st.customTeachers.filter(function (t) { return t.name !== old; }); (subject.split(/[،,]/).map(function (x) { return x.trim(); }).filter(Boolean)).forEach(function (sub) { st.customTeachers.push({ name: name, subject: sub }); }); if (name !== old) {
     markAdminDeleted('deletedTeachers', old);
 } saveAdminState(st); renderAdminTeachersTable(); renderAdminScheduleTable(); renderAdminSubjects(); showAdminToast('اطلاعات دبیر ویرایش شد'); }
-function editClassRow(btn) { var row = btn.closest('tr'), old = getAdminClasses().find(function (c) { return c.split(/\s+/).pop() === row.cells[0].innerText.trim(); }), nv = prompt('نام کامل کلاس:', old || row.cells[0].innerText.trim()); if (nv === null || !nv.trim())
-    return; nv = nv.trim(); var st = getAdminStateData(); st.customSchedule = st.customSchedule.map(function (r) { if (r.className === old)
-    r.className = nv; return r; }); st.deletedClasses.push(old); st.deletedClasses = [...new Set(st.deletedClasses)]; saveAdminState(st); renderAdminClassesTable(); populateAdminScheduleClassSelect(); renderAdminScheduleTable(); showAdminToast('کلاس ویرایش شد'); }
+function editClassRow(btn) {
+    var row = btn.closest('tr'), old = getAdminClasses().find(function (c) { return c.split(/\s+/).pop() === row.cells[0].innerText.trim(); }), nv = prompt('نام کامل کلاس:', old || row.cells[0].innerText.trim());
+    if (nv === null || !nv.trim() || !old)
+        return;
+    nv = nv.trim();
+    if (nv === old)
+        return;
+    if (getAdminClasses().indexOf(nv) !== -1) {
+        showAdminToast('کلاسی با این نام وجود دارد');
+        return;
+    }
+    var st = getAdminStateData();
+    if (!st.classRenames || typeof st.classRenames !== 'object')
+        st.classRenames = {};
+    Object.keys(st.classRenames).forEach(function (k) { if (st.classRenames[k] === old)
+        st.classRenames[k] = nv; });
+    if (baseRawData.some(function (it) { return it[0] === old; }))
+        st.classRenames[old] = nv;
+    st.customSchedule = st.customSchedule.map(function (r) { if (r.className === old)
+        r.className = nv; return r; });
+    st.deletedSchedule = st.deletedSchedule.map(function (k) { return k.indexOf(old + '|') === 0 ? nv + k.slice(old.length) : k; });
+    saveAdminState(st);
+    renderAdminClassesTable();
+    populateAdminScheduleClassSelect();
+    renderAdminScheduleTable();
+    showAdminToast('کلاس ویرایش شد');
+}
 function editScheduleRow(btn) { var row = btn.closest('tr'), rows = getAdminScheduleRows(), key = row.dataset.key, r = rows.find(function (x) { return scheduleKey(x) === key; }); if (!r)
     return; var nclass = prompt('کلاس:', r.className); if (nclass === null)
     return; var day = prompt('روز:', r.day); if (day === null)
