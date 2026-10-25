@@ -22,24 +22,24 @@
 }
 :root,
 body.dark {
-  --bg-1: #18242e;
-  --bg-2: #1b2833;
-  --bg-3: #1b2833;
+  --bg-1: #11212D;
+  --bg-2: #0e1b25;
+  --bg-3: #0e1b25;
   --text-light: #ffffff;
   --text-soft: rgba(204,208,207,0.7);
   --text-dim: rgba(204,208,207,0.45);
-  --glass-bg: rgba(33,49,62,0.84);
+  --glass-bg: rgba(17,33,45,0.84);
   --glass-border: rgba(204,208,207,0.35);
-  --glass-hover: rgba(40,58,72,0.65);
+  --glass-hover: rgba(26,46,61,0.65);
   --gold: #CCD0CF;
   --gold-light: #E6E9E8;
   --green: #34d399;
-  --input-bg: rgba(29,43,54,0.6);
+  --input-bg: rgba(17,33,45,0.6);
   --input-border: rgba(204,208,207,0.3);
-  --card-bg: rgba(33,49,62,0.5);
+  --card-bg: rgba(17,33,45,0.5);
   --card-border: rgba(204,208,207,0.25);
-  --shadow: rgba(33,49,62,0.6);
-  --modal-bg: linear-gradient(135deg, rgba(29,43,54,0.98), rgba(22,33,42,0.98));
+  --shadow: rgba(17,33,45,0.6);
+  --modal-bg: linear-gradient(135deg, rgba(17,33,45,0.98), rgba(11,22,31,0.98));
 }
 body {
   font-family: 'Vazirmatn', Tahoma, sans-serif;
@@ -143,11 +143,11 @@ header {
   align-items: center;
   justify-content: center;
   padding: 0 82px;
-  background: rgba(24,36,46,.78);
+  background: rgba(11,22,31,.78);
   border-bottom: 1px solid rgba(204,208,207,.22);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 5px 24px rgba(33,49,62,.18);
+  box-shadow: 0 5px 24px rgba(17,33,45,.18);
 }
 .site-header-update {
   display: inline-flex;
@@ -187,9 +187,9 @@ header {
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
 }
 body.dark .logo {
-  background: rgba(33,49,62,0.6);
+  background: rgba(17,33,45,0.6);
   border: 1.5px solid rgba(204,208,207,0.5);
-  filter: drop-shadow(0 8px 24px rgba(204,208,207,0.4)) drop-shadow(0 3px 10px rgba(33,49,62,0.6));
+  filter: drop-shadow(0 8px 24px rgba(204,208,207,0.4)) drop-shadow(0 3px 10px rgba(17,33,45,0.6));
 }
 @keyframes logoFloat {
   0%,
@@ -279,7 +279,7 @@ header h1 {
 }
 .tab-btn.active {
   background: linear-gradient(135deg, rgba(204,208,207,0.95), rgba(204,208,207,0.85));
-  color: #1b2833;
+  color: #0e1b25;
   box-shadow: 0 4px 14px rgba(204,208,207,0.35);
 }
 .search-section,
@@ -383,7 +383,7 @@ input[type="text"]:focus {
   background: var(--modal-bg);
   border: 1.5px solid var(--glass-border);
   border-radius: 14px;
-  box-shadow: 0 12px 40px rgba(33,49,62,0.6), 0 0 30px rgba(204,208,207,0.2), inset 0 1px 0 rgba(204,208,207,0.1);
+  box-shadow: 0 12px 40px rgba(17,33,45,0.6), 0 0 30px rgba(204,208,207,0.2), inset 0 1px 0 rgba(204,208,207,0.1);
   max-height: 400px;
   overflow-y: auto;
   z-index: 9999;
@@ -438,7 +438,7 @@ input[type="text"]:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1b2833;
+  color: #0e1b25;
   font-weight: 800;
   font-size: 1rem;
   flex-shrink: 0;
@@ -723,7 +723,7 @@ input[type="text"]:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1b2833;
+  color: #0e1b25;
   font-weight: 800;
   font-size: 1.4rem;
   flex-shrink: 0;
@@ -807,7 +807,7 @@ input[type="text"]:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1b2833;
+  color: #0e1b25;
   font-weight: 800;
   font-size: 1.3rem;
   flex-shrink: 0;
@@ -883,7 +883,7 @@ input[type="text"]:focus {
 }
 .period-badge {
   background: linear-gradient(135deg, rgba(204,208,207,0.95), rgba(204,208,207,0.95));
-  color: #1b2833;
+  color: #0e1b25;
   padding: 9px 14px;
   border-radius: 10px;
   font-weight: 700;
@@ -1115,7 +1115,7 @@ mark.highlight {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(33,49,62,0.85);
+  background: rgba(17,33,45,0.85);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   z-index: 1000;
@@ -1145,7 +1145,7 @@ mark.highlight {
   width: 100%;
   text-align: center;
   position: relative;
-  box-shadow: 0 20px 60px rgba(33,49,62,0.7), 0 0 60px rgba(204,208,207,0.2);
+  box-shadow: 0 20px 60px rgba(17,33,45,0.7), 0 0 60px rgba(204,208,207,0.2);
   animation: slideUpModal 0.3s ease;
   margin: auto;
 }
@@ -1201,7 +1201,7 @@ mark.highlight {
   padding: 16px;
   border-radius: 16px;
   margin: 0 auto 16px;
-  box-shadow: 0 8px 24px rgba(33,49,62,0.3), 0 0 30px rgba(204,208,207,0.15);
+  box-shadow: 0 8px 24px rgba(17,33,45,0.3), 0 0 30px rgba(204,208,207,0.15);
   min-width: 220px;
   min-height: 220px;
   width: fit-content;
@@ -1228,7 +1228,7 @@ mark.highlight {
   font-family: inherit;
   font-weight: 700;
   background: linear-gradient(135deg, rgba(204,208,207,0.95), rgba(204,208,207,0.9));
-  color: #1b2833;
+  color: #0e1b25;
   border: none;
   border-radius: 12px;
   cursor: pointer;
@@ -1404,7 +1404,7 @@ mark.highlight {
   align-items: center;
   gap: 5px;
   cursor: pointer;
-  box-shadow: 0 8px 25px rgba(33,49,62,.25);
+  box-shadow: 0 8px 25px rgba(17,33,45,.25);
 }
 .admin-menu-btn span {
   display: block;
@@ -1417,7 +1417,7 @@ mark.highlight {
 .admin-drawer-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(33,49,62,.48);
+  background: rgba(17,33,45,.48);
   z-index: 1250;
   display: none;
 }
@@ -1433,7 +1433,7 @@ mark.highlight {
   right: -110%;
   visibility: hidden;
   transition: right .28s ease, visibility 0s linear .28s;
-  box-shadow: -12px 0 35px rgba(33,49,62,.35);
+  box-shadow: -12px 0 35px rgba(17,33,45,.35);
   padding: 24px;
 }
 .admin-drawer.open {
@@ -1486,7 +1486,7 @@ mark.highlight {
   background: rgba(255,255,255,.08);
 }
 .admin-drawer .admin-entry {
-  background: linear-gradient(135deg,#2563eb,#4f46e5);
+  background: linear-gradient(135deg,#3a566a,#11212D);
   font-weight: 700;
   margin-top: 14px;
 }
@@ -1497,7 +1497,7 @@ mark.highlight {
   display: none;
   align-items: center;
   justify-content: center;
-  background: rgba(33,49,62,.62);
+  background: rgba(17,33,45,.62);
   backdrop-filter: blur(5px);
   padding: 18px;
 }
@@ -1510,7 +1510,7 @@ mark.highlight {
   color: #111827;
   border-radius: 20px;
   padding: 28px;
-  box-shadow: 0 25px 70px rgba(33,49,62,.35);
+  box-shadow: 0 25px 70px rgba(17,33,45,.35);
   position: relative;
 }
 .admin-login-card h2 {
@@ -1541,7 +1541,7 @@ mark.highlight {
   outline: none;
 }
 .admin-field input:focus {
-  border-color: #4f46e5;
+  border-color: #11212D;
   box-shadow: 0 0 0 3px rgba(79,70,229,.12);
 }
 .admin-login-actions {
@@ -1560,7 +1560,7 @@ mark.highlight {
   cursor: pointer;
 }
 .admin-primary {
-  background: #4f46e5;
+  background: #11212D;
   color: #fff;
 }
 .admin-secondary {
@@ -1836,7 +1836,7 @@ mark.highlight {
   background: linear-gradient(135deg,#f4f7fa,#edf2f7) !important;
 }
 .admin-panel-sidebar {
-  background: linear-gradient(180deg,#0b2035,#153d5f) !important;
+  background: linear-gradient(180deg,#11212D,#1d3342) !important;
   box-shadow: 8px 0 30px rgba(15,40,65,.15);
 }
 .admin-panel-brand {
@@ -1937,7 +1937,7 @@ mark.highlight {
     flex: none;
     padding: 8px 8px 6px;
     overflow: visible;
-    background: linear-gradient(90deg,#0b2035,#153d5f) !important;
+    background: linear-gradient(90deg,#11212D,#1d3342) !important;
     box-shadow: 0 4px 14px rgba(15,40,65,.2) !important;
   }
   .admin-panel-brand {
@@ -2092,7 +2092,7 @@ mark.highlight {
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: rgba(33,49,62,.55);
+  background: rgba(17,33,45,.55);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
@@ -2108,7 +2108,7 @@ mark.highlight {
   padding: 28px;
   background: var(--card-bg,#fff);
   color: var(--text,#17212b);
-  box-shadow: 0 25px 70px rgba(33,49,62,.3);
+  box-shadow: 0 25px 70px rgba(17,33,45,.3);
   font-family: 'Vazirmatn',Tahoma,sans-serif;
 }
 body.dark .about-card {
@@ -2138,7 +2138,7 @@ body.dark .about-card {
   border-radius: 15px;
   display: grid;
   place-items: center;
-  background: rgba(37,99,235,.12);
+  background: rgba(204,208,207,.12);
   font-size: 25px;
 }
 .about-header h2 {
@@ -2167,7 +2167,7 @@ body.dark .about-card {
   margin-top: 16px;
   padding: 14px 16px;
   border-radius: 14px;
-  background: rgba(37,99,235,.08);
+  background: rgba(204,208,207,.08);
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -2197,8 +2197,8 @@ body.dark .about-card {
   text-decoration: none;
   padding: 8px 12px;
   border-radius: 9px;
-  background: rgba(37,99,235,.1);
-  color: #2563eb;
+  background: rgba(204,208,207,.1);
+  color: #3a566a;
   font-weight: 700;
   font-size: 13px;
 }
@@ -2263,7 +2263,7 @@ body.dark .about-card {
 .search-wrapper {
   --pill-bg: linear-gradient(180deg, rgba(74,92,105,0.62), rgba(47,66,80,0.62));
   --pill-border: rgba(255,255,255,0.08);
-  --pill-shadow: 0 10px 30px rgba(33,49,62,0.45), inset 0 1px 0 rgba(255,255,255,0.05);
+  --pill-shadow: 0 10px 30px rgba(17,33,45,0.45), inset 0 1px 0 rgba(255,255,255,0.05);
   --pill-text: var(--text-light);
   min-height: 58px;
   border-radius: 999px;
@@ -2295,7 +2295,7 @@ body.dark .about-card {
   right: 8%;
   top: -34px;
   height: 40px;
-  background: radial-gradient(ellipse at 50% 100%, rgba(245,200,90,0.5), rgba(190,110,40,0.22) 45%, transparent 72%);
+  background: radial-gradient(ellipse at 50% 100%, rgba(204,208,207,0.5), rgba(204,208,207,0.16) 45%, transparent 72%);
   filter: blur(12px);
   opacity: 0.5;
   pointer-events: none;
@@ -2352,7 +2352,7 @@ body.dark .about-card {
   .bg-aurora, .search-wrapper:focus-within::after { animation: none; }}
 
 /* ===== UI upgrade layer (CSS-only, no extra render cost) ===== */
-.site-header{background:linear-gradient(180deg,rgba(24,36,46,.88),rgba(24,36,46,.7));border-bottom:1px solid transparent;border-image:linear-gradient(90deg,transparent,rgba(204,208,207,.55),transparent) 1}
+.site-header{background:linear-gradient(180deg,rgba(11,22,31,.88),rgba(11,22,31,.7));border-bottom:1px solid transparent;border-image:linear-gradient(90deg,transparent,rgba(204,208,207,.55),transparent) 1}
 .site-header-update{border-radius:999px;font-size:12.5px;letter-spacing:.2px}
 .update-dot{animation:pulse 2s infinite}
 .tab-ico{width:18px;height:18px;vertical-align:-4px;margin-left:6px}
@@ -2384,15 +2384,15 @@ body.dark .about-card {
 .admin-primary:active,.qr-download:active,.tab-btn:active{transform:scale(.97)}
 .qr-modal-content{border:1.5px solid rgba(204,208,207,.5);border-radius:22px}
 .qr-box{background:#fff;border-radius:16px;padding:14px;box-shadow:0 0 0 3px rgba(204,208,207,.45)}
-.qr-download{background:linear-gradient(135deg,#CCD0CF,#E6E9E8)!important;color:#1b2833!important;border-radius:12px}
-.admin-drawer{background:rgba(24,36,46,.8)!important;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border-left:1px solid rgba(204,208,207,.35);box-shadow:-12px 0 40px rgba(33,49,62,.45),0 0 30px rgba(204,208,207,.12)}
+.qr-download{background:linear-gradient(135deg,#CCD0CF,#E6E9E8)!important;color:#0e1b25!important;border-radius:12px}
+.admin-drawer{background:rgba(11,22,31,.8)!important;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border-left:1px solid rgba(204,208,207,.35);box-shadow:-12px 0 40px rgba(17,33,45,.45),0 0 30px rgba(204,208,207,.12)}
 .admin-drawer-head{padding-bottom:14px;border-bottom:1px solid rgba(204,208,207,.25)}
 .about-card{border:1.5px solid rgba(204,208,207,.4)}
 .about-header{padding-bottom:14px;border-bottom:1px solid rgba(204,208,207,.3)}
 .about-section{background:var(--glass-bg);border:1px solid var(--card-border);border-radius:16px;padding:18px;margin-top:14px}
 .about-section h3{padding-bottom:10px;margin-bottom:10px;border-bottom:1px dashed rgba(204,208,207,.35)}
 .admin-panel-sidebar{flex:0 0 76px!important;width:76px!important;padding:0!important;position:relative;overflow:visible!important;z-index:5}
-.admin-panel-brand,.admin-panel-nav{width:76px;overflow:hidden;white-space:nowrap;transition:width .25s ease,box-shadow .25s ease;background:linear-gradient(180deg,#0b2035,#123553);position:relative}
+.admin-panel-brand,.admin-panel-nav{width:76px;overflow:hidden;white-space:nowrap;transition:width .25s ease,box-shadow .25s ease;background:linear-gradient(180deg,#11212D,#1d3342);position:relative}
 .admin-panel-brand{padding:22px 24px 12px}
 .admin-panel-nav{padding:6px 0 20px;min-height:calc(100vh - 62px)}
 .admin-panel-nav button{margin:3px 8px!important;width:calc(100% - 16px)!important}
@@ -2438,7 +2438,7 @@ body.dark .about-card {
 
 /* ===== round 3 ===== */
 .hdr-date-wrap{display:flex;align-items:center;opacity:calc(1 - var(--sp,0));transform:translateY(calc(var(--sp,0)*-10px));will-change:opacity,transform}
-.hdr-logo{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;object-fit:contain;padding:3px;cursor:pointer;background:rgba(33,49,62,.55);border:1.5px solid rgba(204,208,207,.55);box-shadow:0 4px 16px rgba(33,49,62,.3),0 0 14px rgba(204,208,207,.25);opacity:var(--sp,0);transform:translateY(calc((1 - var(--sp,0))*16px)) scale(calc(.8 + var(--sp,0)*.2));pointer-events:none;will-change:opacity,transform}
+.hdr-logo{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;object-fit:contain;padding:3px;cursor:pointer;background:rgba(17,33,45,.55);border:1.5px solid rgba(204,208,207,.55);box-shadow:0 4px 16px rgba(17,33,45,.3),0 0 14px rgba(204,208,207,.25);opacity:var(--sp,0);transform:translateY(calc((1 - var(--sp,0))*16px)) scale(calc(.8 + var(--sp,0)*.2));pointer-events:none;will-change:opacity,transform}
 .site-header.logo-on .hdr-logo{pointer-events:auto}
 .site-header.logo-on .hdr-date-wrap{pointer-events:none}
 
@@ -2455,10 +2455,10 @@ body.dark .about-card {
 .action-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 16px;font:inherit;font-size:.9rem;font-weight:700;line-height:1;color:var(--gold-light);background:rgba(204,208,207,.1);border:1.5px solid rgba(204,208,207,.4);border-radius:14px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;transition:background-color .18s ease,border-color .18s ease,transform .12s ease}
 .teacher-actions .action-btn:only-child{grid-column:1/-1}
 .action-btn svg{width:18px;height:18px;flex:0 0 auto}
-.action-btn.primary{color:#1b2833;border-color:transparent;background:linear-gradient(135deg,#CCD0CF,#E6E9E8)}
+.action-btn.primary{color:#0e1b25;border-color:transparent;background:linear-gradient(135deg,#CCD0CF,#E6E9E8)}
 .action-btn:active{transform:scale(.97)}
 .action-btn:focus-visible{outline:2px solid var(--gold-light);outline-offset:2px}
-@media (hover:hover){.action-btn:hover{background:rgba(204,208,207,.2);border-color:var(--gold)}.action-btn.primary:hover{background:linear-gradient(135deg,#CCD0CF,#f8e08a)}}
+@media (hover:hover){.action-btn:hover{background:rgba(204,208,207,.2);border-color:var(--gold)}.action-btn.primary:hover{background:linear-gradient(135deg,#CCD0CF,#E6E9E8)}}
 @media (max-width:380px){.action-btn{font-size:.82rem;padding:0 10px;gap:6px}}
 
 /* ===== drawer menu cards ===== */
@@ -2466,7 +2466,7 @@ body.dark .about-card {
 .admin-drawer button.menu-item:active{transform:scale(.98)}
 .admin-drawer button.menu-item:focus-visible{outline:2px solid var(--gold-light);outline-offset:2px}
 @media (hover:hover){.admin-drawer button.menu-item:hover{background:rgba(204,208,207,.12)!important;border-color:rgba(204,208,207,.55)!important}.admin-drawer button.menu-item:hover .mi-arrow{transform:translateX(-3px);opacity:1}}
-.mi-icon{flex:0 0 auto;display:grid;place-items:center;width:42px;height:42px;border-radius:12px;color:#1b2833;background:linear-gradient(135deg,#CCD0CF,#E6E9E8);box-shadow:0 4px 12px rgba(204,208,207,.28)}
+.mi-icon{flex:0 0 auto;display:grid;place-items:center;width:42px;height:42px;border-radius:12px;color:#0e1b25;background:linear-gradient(135deg,#CCD0CF,#E6E9E8);box-shadow:0 4px 12px rgba(204,208,207,.28)}
 .mi-icon svg{width:22px;height:22px}
 .mi-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
 .mi-title{font-size:.95rem;font-weight:700;line-height:1.3}
@@ -2484,7 +2484,7 @@ html.is-scrolling body::before,html.is-scrolling body::after,html.is-scrolling .
 .grade-bar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 16px}
 .grade-chip{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:54px;padding:6px 4px;font:inherit;font-size:.88rem;font-weight:700;line-height:1.2;color:var(--text-soft);background:var(--glass-bg);border:1.5px solid var(--card-border);border-radius:14px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:background-color .18s ease,border-color .18s ease,color .18s ease,transform .12s ease}
 .grade-chip small{font-size:.7rem;font-weight:500;opacity:.8}
-.grade-chip.active{color:#1b2833;border-color:transparent;background:linear-gradient(135deg,#CCD0CF,#E6E9E8)}
+.grade-chip.active{color:#0e1b25;border-color:transparent;background:linear-gradient(135deg,#CCD0CF,#E6E9E8)}
 .grade-chip:active{transform:scale(.97)}
 .grade-chip:focus-visible{outline:2px solid var(--gold-light);outline-offset:2px}
 @media (hover:hover){.grade-chip:not(.active):hover{border-color:var(--gold);color:var(--gold-light)}}
@@ -2494,10 +2494,10 @@ html.is-scrolling body::before,html.is-scrolling body::after,html.is-scrolling .
 @media (max-width:380px){.grade-chip{font-size:.8rem}}
 
 /* ===== About modal (redesigned) ===== */
-.about-card{width:min(560px,94vw);padding:0;border-radius:26px;background:linear-gradient(180deg,#1b1d22,#0f1013);border:1px solid rgba(204,208,207,.35);box-shadow:0 30px 80px rgba(33,49,62,.55);overscroll-behavior:contain}
+.about-card{width:min(560px,94vw);padding:0;border-radius:26px;background:linear-gradient(180deg,#1b1d22,#0f1013);border:1px solid rgba(204,208,207,.35);box-shadow:0 30px 80px rgba(17,33,45,.55);overscroll-behavior:contain}
 .about-close{top:12px;left:12px;z-index:2;color:#fff!important;background:rgba(255,255,255,.08)!important}
 .ab-hero{position:relative;text-align:center;padding:34px 20px 22px;background:radial-gradient(120% 90% at 50% 0%,rgba(204,208,207,.22),transparent 70%)}
-.ab-logo{width:64px;height:64px;margin:0 auto 12px;display:grid;place-items:center;border-radius:20px;color:#1b2833;background:linear-gradient(135deg,#CCD0CF,#E6E9E8);box-shadow:0 10px 28px rgba(204,208,207,.35)}
+.ab-logo{width:64px;height:64px;margin:0 auto 12px;display:grid;place-items:center;border-radius:20px;color:#0e1b25;background:linear-gradient(135deg,#CCD0CF,#E6E9E8);box-shadow:0 10px 28px rgba(204,208,207,.35)}
 .ab-logo svg{width:32px;height:32px}
 .ab-hero h2{margin:0;font-size:1.35rem;font-weight:800;color:#fff}
 .ab-hero p{margin:6px 0 0;font-size:.82rem;color:rgba(204,208,207,.8)}
@@ -2513,9 +2513,9 @@ html.is-scrolling body::before,html.is-scrolling body::after,html.is-scrolling .
 .ab-team span{font-size:.86rem;font-weight:700;color:#fff}
 .ab-contact{background:linear-gradient(180deg,rgba(204,208,207,.1),rgba(204,208,207,.03));border-color:rgba(204,208,207,.35)}
 .ab-hint{font-size:.78rem!important;line-height:1.8!important;color:rgba(243,244,246,.7)!important}
-.ab-phone{margin-top:10px;padding:10px;border-radius:16px;background:rgba(33,49,62,.28);border:1px solid rgba(255,255,255,.07)}
+.ab-phone{margin-top:10px;padding:10px;border-radius:16px;background:rgba(17,33,45,.28);border:1px solid rgba(255,255,255,.07)}
 .ab-call{display:flex;align-items:center;gap:12px;padding:6px;border-radius:12px;color:#fff;text-decoration:none;-webkit-tap-highlight-color:transparent}
-.ab-call-ico{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;color:#1b2833;background:linear-gradient(135deg,#34d399,#10b981)}
+.ab-call-ico{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;color:#0e1b25;background:linear-gradient(135deg,#34d399,#10b981)}
 .ab-call-ico svg{width:20px;height:20px}
 .ab-call-txt{display:flex;flex-direction:column;gap:2px}
 .ab-call-txt b{font-size:1.08rem;font-weight:800;letter-spacing:.5px}
@@ -2529,36 +2529,36 @@ html.is-scrolling body::before,html.is-scrolling body::after,html.is-scrolling .
 @media (max-width:380px){.ab-act span{font-size:.72rem}.ab-call-txt b{font-size:1rem}}
 
 /* ===== Admin login (dark glass, blue glow) ===== */
-#adminLoginModal{background:radial-gradient(90% 60% at 50% 105%,rgba(30,64,150,.55),transparent 70%),rgba(24,36,46,.9);-webkit-backdrop-filter:none;backdrop-filter:none}
-.lg-card{position:relative;width:min(420px,100%);padding:38px 26px 24px;text-align:center;color:#fff;border-radius:30px;overflow:hidden;background:linear-gradient(180deg,rgba(44,47,55,.96) 0%,rgba(29,43,54,.98) 38%,rgba(27,40,51,.99) 100%);border:1px solid rgba(255,255,255,.1);box-shadow:0 30px 90px rgba(33,49,62,.65),inset 0 1px 0 rgba(255,255,255,.08);animation:lgIn .25s ease-out}
-.lg-card::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(70% 38% at 50% 0%,rgba(255,255,255,.09),transparent 70%),radial-gradient(45% 30% at 0% 52%,rgba(59,130,246,.34),transparent 70%),radial-gradient(45% 30% at 100% 52%,rgba(59,130,246,.22),transparent 70%)}
+#adminLoginModal{background:radial-gradient(90% 60% at 50% 105%,rgba(204,208,207,.2),transparent 70%),rgba(11,22,31,.9);-webkit-backdrop-filter:none;backdrop-filter:none}
+.lg-card{position:relative;width:min(420px,100%);padding:38px 26px 24px;text-align:center;color:#fff;border-radius:30px;overflow:hidden;background:linear-gradient(180deg,rgba(44,47,55,.96) 0%,rgba(17,33,45,.98) 38%,rgba(27,40,51,.99) 100%);border:1px solid rgba(255,255,255,.1);box-shadow:0 30px 90px rgba(17,33,45,.65),inset 0 1px 0 rgba(255,255,255,.08);animation:lgIn .25s ease-out}
+.lg-card::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(70% 38% at 50% 0%,rgba(255,255,255,.09),transparent 70%),radial-gradient(45% 30% at 0% 52%,rgba(204,208,207,.34),transparent 70%),radial-gradient(45% 30% at 100% 52%,rgba(204,208,207,.22),transparent 70%)}
 .lg-card>*{position:relative}
 @keyframes lgIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
 .lg-x{position:absolute;top:14px;left:14px;width:36px;height:36px;display:grid;place-items:center;font-size:22px;line-height:1;color:rgba(255,255,255,.7);background:rgba(255,255,255,.07);border:0;border-radius:50%;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background-color .18s ease,color .18s ease}
 .lg-x:hover{background:rgba(255,255,255,.14);color:#fff}
-.lg-badge{width:56px;height:56px;margin:0 auto 16px;display:grid;place-items:center;border-radius:18px;color:#60a5fa;background:rgba(59,130,246,.12);border:1px solid rgba(96,165,250,.3);box-shadow:0 0 28px rgba(59,130,246,.25)}
+.lg-badge{width:56px;height:56px;margin:0 auto 16px;display:grid;place-items:center;border-radius:18px;color:#CCD0CF;background:rgba(204,208,207,.12);border:1px solid rgba(204,208,207,.3);box-shadow:0 0 28px rgba(204,208,207,.25)}
 .lg-badge svg{width:28px;height:28px}
 .lg-card h2{margin:0 0 8px;font-size:1.75rem;font-weight:700;letter-spacing:-.2px}
 .lg-sub{margin:0 auto 26px;max-width:320px;font-size:.84rem;line-height:1.9;color:rgba(255,255,255,.7)}
-.lg-field{position:relative;display:flex;align-items:center;height:52px;margin-bottom:12px;border-radius:999px;background:rgba(24,36,46,.85);border:1px solid rgba(96,140,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.03);transition:border-color .18s ease,box-shadow .18s ease}
-.lg-field:focus-within{border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.18),inset 0 0 18px rgba(59,130,246,.12)}
+.lg-field{position:relative;display:flex;align-items:center;height:52px;margin-bottom:12px;border-radius:999px;background:rgba(11,22,31,.85);border:1px solid rgba(204,208,207,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.03);transition:border-color .18s ease,box-shadow .18s ease}
+.lg-field:focus-within{border-color:#CCD0CF;box-shadow:0 0 0 4px rgba(204,208,207,.18),inset 0 0 18px rgba(204,208,207,.12)}
 .lg-ico{display:grid;place-items:center;flex:0 0 auto;width:48px;color:rgba(255,255,255,.4);transition:color .18s ease}
-.lg-field:focus-within .lg-ico{color:#60a5fa}
+.lg-field:focus-within .lg-ico{color:#CCD0CF}
 .lg-ico svg{width:19px;height:19px}
 .lg-field input{flex:1;min-width:0;height:100%;padding:0 0 0 18px;font:inherit;font-size:.95rem;color:#fff;background:transparent;border:0;outline:none;box-shadow:none}
 .lg-field input[type="text"],.lg-field input[type="text"]:focus,.lg-field input[type="password"]:focus{width:auto;height:100%;padding:0 0 0 18px;background:transparent;border:0;border-radius:0;box-shadow:none;outline:none}
 .lg-field input::placeholder{color:rgba(255,255,255,.38)}
 .lg-field input:-webkit-autofill{-webkit-text-fill-color:#fff;transition:background-color 9999s ease-out 0s}
-.lg-eye{flex:0 0 auto;display:grid;place-items:center;width:46px;height:100%;padding:0;color:#3b82f6;background:transparent;border:0;border-radius:999px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.lg-eye{flex:0 0 auto;display:grid;place-items:center;width:46px;height:100%;padding:0;color:#CCD0CF;background:transparent;border:0;border-radius:999px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .lg-eye svg{width:20px;height:20px}
 .lg-eye .e-hide{display:none}
 .lg-eye.shown .e-hide{display:grid}
 .lg-eye.shown .e-show{display:none}
 .lg-error{min-height:20px;margin:2px 0 6px;font-size:.8rem;color:#fca5a5}
-.lg-submit{display:block;width:100%;height:54px;margin-top:6px;font:inherit;font-size:1.02rem;font-weight:700;color:#fff;background:linear-gradient(135deg,#2563eb,#3b82f6);border:0;border-radius:999px;cursor:pointer;box-shadow:0 10px 26px rgba(37,99,235,.38);-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .12s ease,box-shadow .18s ease,filter .18s ease}
+.lg-submit{display:block;width:100%;height:54px;margin-top:6px;font:inherit;font-size:1.02rem;font-weight:700;color:#fff;background:linear-gradient(135deg,#3a566a,#CCD0CF);border:0;border-radius:999px;cursor:pointer;box-shadow:0 10px 26px rgba(204,208,207,.38);-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .12s ease,box-shadow .18s ease,filter .18s ease}
 .lg-submit:active{transform:scale(.98)}
-.lg-submit:focus-visible,.lg-cancel:focus-visible,.lg-eye:focus-visible,.lg-x:focus-visible{outline:2px solid #93c5fd;outline-offset:2px}
-@media (hover:hover){.lg-submit:hover{filter:brightness(1.1);box-shadow:0 12px 30px rgba(37,99,235,.5)}}
+.lg-submit:focus-visible,.lg-cancel:focus-visible,.lg-eye:focus-visible,.lg-x:focus-visible{outline:2px solid #E6E9E8;outline-offset:2px}
+@media (hover:hover){.lg-submit:hover{filter:brightness(1.1);box-shadow:0 12px 30px rgba(204,208,207,.5)}}
 .lg-cancel{display:block;width:100%;height:46px;margin-top:10px;font:inherit;font-size:.88rem;font-weight:600;color:rgba(255,255,255,.65);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:999px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background-color .18s ease,color .18s ease}
 @media (hover:hover){.lg-cancel:hover{background:rgba(255,255,255,.1);color:#fff}}
 @media (max-width:420px){.lg-card{padding:34px 18px 20px;border-radius:26px}.lg-card h2{font-size:1.5rem}}
@@ -2580,9 +2580,9 @@ html.gs-pending .search-section.visible { opacity: 0; }
 
 /* ===== Site menu panels ===== */
 .admin-drawer { overflow-y: auto; height: 100vh; height: 100dvh; overscroll-behavior: contain; }
-.sp-modal { position: fixed; inset: 0; z-index: 1400; display: flex; align-items: flex-end; justify-content: center; background: rgba(33,49,62,.6); opacity: 0; visibility: hidden; transition: opacity .2s ease, visibility 0s linear .2s; }
+.sp-modal { position: fixed; inset: 0; z-index: 1400; display: flex; align-items: flex-end; justify-content: center; background: rgba(17,33,45,.6); opacity: 0; visibility: hidden; transition: opacity .2s ease, visibility 0s linear .2s; }
 .sp-modal.open { opacity: 1; visibility: visible; transition: opacity .2s ease; }
-.sp-card { position: relative; width: min(560px, 100%); max-height: 88vh; max-height: 88dvh; overflow-y: auto; overscroll-behavior: contain; padding: 26px 18px calc(22px + env(safe-area-inset-bottom, 0px)); border-radius: 26px 26px 0 0; background: var(--modal-bg); color: var(--text-light); border: 1px solid var(--glass-border); border-bottom: 0; box-shadow: 0 -20px 60px rgba(33,49,62,.4); transform: translateY(28px); transition: transform .26s ease; }
+.sp-card { position: relative; width: min(560px, 100%); max-height: 88vh; max-height: 88dvh; overflow-y: auto; overscroll-behavior: contain; padding: 26px 18px calc(22px + env(safe-area-inset-bottom, 0px)); border-radius: 26px 26px 0 0; background: var(--modal-bg); color: var(--text-light); border: 1px solid var(--glass-border); border-bottom: 0; box-shadow: 0 -20px 60px rgba(17,33,45,.4); transform: translateY(28px); transition: transform .26s ease; }
 .sp-modal.open .sp-card { transform: none; }
 @media (min-width: 700px) { .sp-modal { align-items: center; } .sp-card { border-radius: 26px; border-bottom: 1px solid var(--glass-border); }}
 .sp-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
@@ -2592,7 +2592,7 @@ html.gs-pending .search-section.visible { opacity: 0; }
 .sp-item h4 { font-size: .95rem; margin-bottom: 4px; }
 .sp-item p, .sp-item small { font-size: .83rem; line-height: 1.8; color: var(--text-soft); }
 .sp-empty { padding: 24px 12px; text-align: center; color: var(--text-soft); font-size: .88rem; line-height: 1.9; }
-.sp-btn { min-height: 48px; padding: 0 16px; border: 0; border-radius: 14px; font: inherit; font-weight: 700; font-size: .9rem; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; text-decoration: none; text-align: center; color: #1b2833; background: linear-gradient(135deg, #CCD0CF, #E6E9E8); }
+.sp-btn { min-height: 48px; padding: 0 16px; border: 0; border-radius: 14px; font: inherit; font-weight: 700; font-size: .9rem; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; text-decoration: none; text-align: center; color: #0e1b25; background: linear-gradient(135deg, #CCD0CF, #E6E9E8); }
 .sp-btn.alt { color: var(--text-light); background: var(--glass-hover); border: 1px solid var(--glass-border); }
 .sp-input, .sp-select { width: 100%; min-height: 48px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--text-light); font: inherit; font-size: 16px; }
 .sp-list { display: grid; gap: 8px; max-height: 46vh; overflow-y: auto; overscroll-behavior: contain; }
@@ -2628,7 +2628,6 @@ html.gs-pending .search-section.visible { opacity: 0; }
   <button type="button" class="menu-item" id="mi-location" onclick="openSitePanel('location')"><span class="mi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><span class="mi-text"><span class="mi-title">آدرس مدرسه</span><span class="mi-sub">نمایش روی گوگل مپ یا نشان</span></span><svg class="mi-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
   <button type="button" class="menu-item" id="mi-workload" onclick="openSitePanel('workload')"><span class="mi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15v3M12 9v9M17 12v6"/></svg></span><span class="mi-text"><span class="mi-title">خلاصه‌ی بار کاری</span><span class="mi-sub">زنگ‌ها و روزهای هفته‌ی هر دبیر</span></span><svg class="mi-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
   <button type="button" class="menu-item" onclick="closeAdminMenu();openAboutModal()"><span class="mi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7.5v.01"/></svg></span><span class="mi-text"><span class="mi-title">درباره‌ی ما</span><span class="mi-sub">آشنایی با مدرسه و تیم پشتیبان</span></span><svg class="mi-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
-  <button type="button" class="menu-item admin-entry" onclick="closeAdminMenu();openAdminLogin()"><span class="mi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></span><span class="mi-text"><span class="mi-title">پنل مدیریت</span><span class="mi-sub">ورود مخصوص مدیر</span></span><svg class="mi-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
   <div class="drawer-foot">
     <div class="site-header-update" id="siteUpdateDate" aria-live="polite"><span class="update-dot"></span><span>آخرین به‌روزرسانی: ۲۱ مهر ۱۴۰۵</span></div>
   </div>
@@ -2684,224 +2683,7 @@ html.gs-pending .search-section.visible { opacity: 0; }
   </div>
 </div>
 
-<div class="admin-modal" id="adminLoginModal" onclick="if(event.target===this)closeAdminLogin()">
-  <div class="lg-card" role="dialog" aria-modal="true" aria-labelledby="lgTitle">
-    <button type="button" class="lg-x" onclick="closeAdminLogin()" aria-label="بستن">×</button>
-    <div class="lg-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.500-3.200 8.200-8 9-4.800-.8-8-4.500-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
-    <h2 id="lgTitle">ورود به پنل مدیریت</h2>
-    <p class="lg-sub">برای مدیریت دبیران، کلاس‌ها و برنامه‌ی هفتگی، وارد حساب مدیر شوید.</p>
-    <label class="lg-field">
-      <span class="lg-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
-      <input id="adminUsername" type="text" autocomplete="username" placeholder="ایمیل مدیر" inputmode="email" autocapitalize="off" spellcheck="false">
-    </label>
-    <label class="lg-field">
-      <span class="lg-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
-      <input id="adminPassword" type="password" autocomplete="current-password" placeholder="رمز عبور">
-      <button type="button" class="lg-eye" id="lgEye" onclick="toggleAdminPw()" aria-label="نمایش رمز عبور"><span class="e-show"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span><span class="e-hide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 5.1A9.7 9.7 0 0 1 12 5c6.400 0 10 7 10 7a17 17 0 0 1-3.200 4.200M6.600 6.600C3.700 8.500 2 12 2 12s3.600 7 10 7c1.600 0 3-.4 4.300-1"/><path d="M9.900 9.900a3 3 0 0 0 4.200 4.200"/></svg></span></button>
-    </label>
-    <div class="admin-error lg-error" id="adminLoginError" role="alert"></div>
-    <button type="button" class="lg-submit" onclick="adminLogin()">ورود</button>
-    <button type="button" class="lg-cancel" onclick="closeAdminLogin()">انصراف</button>
-  </div>
-</div>
 
-<div class="admin-panel" id="adminPanel">
-  <aside class="admin-panel-sidebar">
-    <div class="admin-panel-brand">⚙️ پنل مدیریت</div>
-    <nav class="admin-panel-nav">
-      <button class="active" onclick="adminPage(this,'داشبورد')">📊 داشبورد</button>
-      <button onclick="adminPage(this,'مدیریت دبیران')">👨‍🏫 مدیریت دبیران</button>
-      <button onclick="adminPage(this,'مدیریت کلاس‌ها')">🏫 مدیریت کلاس‌ها</button>
-      <button onclick="adminPage(this,'برنامه هفتگی')">📅 برنامه هفتگی</button>
-      <button onclick="adminPage(this,'دروس')">📚 دروس</button>
-      <button onclick="adminPage(this,'ورود / خروج اطلاعات')">📥 ورود / خروج اطلاعات</button>
-      <button onclick="adminPage(this,'زمان‌بندی زنگ‌ها')">⏰ زمان‌بندی زنگ‌ها</button>
-      <button onclick="adminPage(this,'تاریخچه تغییرات')">🕘 تاریخچه تغییرات</button>
-      <button onclick="adminPage(this,'اطلاع‌رسانی')">📢 اطلاع‌رسانی</button>
-      <button onclick="adminPage(this,'تنظیمات')">⚙️ تنظیمات</button>
-    </nav>
-  </aside>
-  <main class="admin-panel-main">
-    <header class="admin-panel-top"><h2 id="adminPanelTitle">داشبورد</h2><button class="admin-logout" onclick="closeAdminPanel()">خروج از پنل</button></header>
-    <section class="admin-content">
-      <div id="ad-dashboard" class="ad-page active">
-  <div class="dz-head"><div><h3>داشبورد مدیریت</h3><p>وضعیت زنده‌ی برنامه، دبیران و کلاس‌ها</p></div>
-    <div class="dz-head-btns"><button class="dz-btn solid" onclick="adminBackup()">💾 پشتیبان‌گیری</button><button class="dz-btn" onclick="adminRestorePick()">♻️ بازیابی</button></div></div>
-  <div class="dz-stats" id="dzStats"></div>
-  <div class="dz-grid">
-    <div class="dz-card dz-wk"><h4>بار هفتگی (تعداد زنگ ثبت‌شده)</h4><div class="dz-bars" id="dzBars"></div></div>
-    <div class="dz-card dz-now"><h4>زنگ‌های امروز</h4><div id="dzNow"></div></div>
-    <div class="dz-card dz-quick"><h4>دسترسی سریع</h4>
-      <button onclick="adminGo(3)">📅 ویرایش برنامه هفتگی</button><button onclick="adminGo(1)">👨‍🏫 مدیریت دبیران</button>
-      <button onclick="adminGo(2)">🏫 مدیریت کلاس‌ها</button><button onclick="adminGo(8)">📢 اطلاع‌رسانی</button></div>
-    <div class="dz-card dz-log"><h4>آخرین فعالیت‌ها <a onclick="adminGo(7)">همه</a></h4><div id="dzLog"></div></div>
-    <div class="dz-card dz-gauge"><h4>کلاس‌ها به تفکیک پایه</h4><div id="dzGauge"></div></div>
-    <div class="dz-card dz-bk"><h4>پشتیبان داده‌ها</h4><p id="dzBkInfo"></p>
-      <button class="dz-btn solid light" onclick="adminBackup()">دانلود فایل پشتیبان</button>
-      <button class="dz-btn ghost" onclick="adminRestorePick()">بازیابی از فایل</button></div>
-  </div>
-  <input type="file" id="adRestoreInput" accept=".json,application/json" style="display:none" onchange="adminRestore(this)">
-</div>
-
-      <div id="ad-teachers" class="ad-page">
-        <div class="admin-placeholder">
-          <div class="admin-card-head">
-            <h3>مدیریت دبیران</h3>
-            <button class="admin-action" onclick="addTeacherRow()">＋ افزودن دبیر</button>
-          </div>
-          <input id="adminTeacherSearch" class="admin-control" placeholder="جستجوی دبیر..." oninput="filterAdminTable(this,'adTeachersTable')">
-          <table id="adTeachersTable" class="admin-table">
-            <thead>
-              <tr>
-                <th>نام دبیر</th>
-                <th>درس</th>
-                <th>تعداد کلاس</th>
-                <th>وضعیت</th>
-                <th>عملیات</th>
-              </tr>
-            </thead>
-            <tbody id="adTeachersBody">
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div id="ad-classes" class="ad-page">
-        <div class="admin-placeholder">
-          <div class="admin-card-head">
-            <h3>مدیریت کلاس‌ها</h3>
-            <button class="admin-action" onclick="addClassRow()">＋ افزودن کلاس</button>
-          </div>
-          <input class="admin-control" placeholder="جستجوی شماره کلاس..." oninput="filterAdminTable(this,'adClassesTable')">
-          <table id="adClassesTable" class="admin-table">
-            <thead>
-              <tr>
-                <th>شماره</th>
-                <th>پایه</th>
-                <th>رشته</th>
-                <th>وضعیت</th>
-                <th>عملیات</th>
-              </tr>
-            </thead>
-            <tbody id="adClassesBody">
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div id="ad-schedule" class="ad-page">
-        <div class="admin-placeholder">
-          <div class="admin-card-head">
-            <h3>برنامه هفتگی</h3>
-            <button class="admin-action" onclick="saveScheduleSettings()">💾 ذخیره تغییرات</button>
-          </div>
-          <div class="admin-form-grid">
-            <select id="adminScheduleDay" class="admin-control" onchange="renderAdminScheduleTable()">
-              <option value="all">همه روزها</option>
-              <option>شنبه</option>
-              <option>یکشنبه</option>
-              <option>دوشنبه</option>
-              <option>سه‌شنبه</option>
-              <option>چهارشنبه</option>
-            </select>
-            <select id="adminScheduleClass" class="admin-control" onchange="renderAdminScheduleTable()">
-              <option value="all">همه کلاس‌ها</option>
-            </select>
-          </div>
-          <input id="adminScheduleTeacher" class="admin-control" placeholder="فیلتر نام دبیر (اختیاری)" oninput="renderAdminScheduleTable()">
-          <div class="admin-muted" style="margin-bottom:10px">
-            در این بخش تمام کلاس‌ها، تمام روزها، تمام زنگ‌ها و همه دبیران موجود در برنامه نمایش داده می‌شوند.
-          </div>
-          <div style="overflow:auto">
-            <table id="adScheduleTable" class="admin-table">
-              <thead>
-                <tr>
-                  <th>کلاس</th>
-                  <th>روز</th>
-                  <th>زنگ</th>
-                  <th>ساعت</th>
-                  <th>درس</th>
-                  <th>دبیر</th>
-                  <th>عملیات</th>
-                </tr>
-              </thead>
-              <tbody id="adScheduleBody">
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div id="ad-subjects" class="ad-page">
-        <div class="admin-placeholder">
-          <div class="admin-card-head">
-            <h3>مدیریت دروس</h3>
-            <button class="admin-action" onclick="addSubjectItem()">＋ افزودن درس</button>
-          </div>
-          <input id="adminSubjectSearch" class="admin-control" placeholder="جستجوی درس..." oninput="filterAdminSubjects(this)">
-          <div id="adSubjectsList" class="admin-list">
-          </div>
-        </div>
-      </div>
-
-      <div id="ad-import" class="ad-page">
-        <div class="admin-placeholder">
-          <div class="admin-card-head">
-            <h3>ورود / خروج اطلاعات</h3>
-            <span class="admin-muted">فرمت‌های مجاز: Excel و PDF</span>
-          </div>
-          <div class="admin-quick-grid">
-            <button class="admin-quick" onclick="openExcelImport()">📤 ورود اطلاعات از Excel</button><button class="admin-quick" onclick="openPdfImport()">📄 ورود اطلاعات از PDF</button><button class="admin-quick" onclick="exportExcel()">📥 خروجی Excel</button><button class="admin-quick" onclick="exportPDF()">📄 خروجی PDF</button>
-          </div>
-          <input id="excelImportInput" type="file" accept=".xlsx,.xls" style="display:none" onchange="handleExcelImport(this)"><input id="pdfImportInput" type="file" accept=".pdf,application/pdf" style="display:none" onchange="handlePdfImport(this)">
-          <p class="admin-muted" style="margin-top:14px">فایل‌های CSV و پشتیبان در این بخش پشتیبانی نمی‌شوند.</p>
-        </div>
-      </div>
-
-      <div id="ad-bells" class="ad-page"><div class="admin-placeholder">
-  <div class="admin-card-head"><h3>زمان‌بندی زنگ‌ها</h3><span class="admin-muted">مطابق زمان‌های فعال سامانه (فقط‌خواندنی)</span></div>
-  <table class="admin-table" id="adBellsTable"><tr><th>زنگ</th><th>شروع</th><th>پایان</th><th>مدت (دقیقه)</th></tr></table></div></div>
-
-      <div id="ad-logs" class="ad-page"><div class="admin-placeholder">
-  <div class="admin-card-head"><h3>تاریخچه تغییرات</h3><button class="admin-edit-btn admin-danger" onclick="adminLogClear()">پاک‌کردن تاریخچه</button></div>
-  <table class="admin-table" id="adLogTable"><tr><th>زمان</th><th>عملیات</th><th>کاربر</th></tr></table></div></div>
-
-      <div id="ad-announce" class="ad-page">
-        <div class="admin-placeholder">
-          <div class="admin-card-head">
-            <h3>اطلاع‌رسانی به کاربران</h3>
-          </div>
-          <div id="annCurrent" class="admin-list-item" style="margin-bottom:12px"><span class="admin-muted">در حال بررسی…</span></div>
-          <textarea id="annText" class="admin-control" rows="3" maxlength="300" placeholder="متن اطلاع‌رسانی را بنویسید…" oninput="annCount()"></textarea>
-          <div class="admin-muted" id="annCount" style="margin:-6px 0 12px">۰ / ۳۰۰</div>
-          <div class="admin-form-grid">
-            <input id="annDur" class="admin-control" inputmode="numeric" placeholder="مدت نمایش" value="1">
-            <select id="annUnit" class="admin-control">
-              <option value="60000">دقیقه</option>
-              <option value="3600000" selected>ساعت</option>
-              <option value="86400000">روز</option>
-            </select>
-          </div>
-          <div class="admin-toolbar">
-            <button class="admin-action" style="padding:10px 18px" onclick="annPublish()">📢 انتشار در هدر سایت</button>
-            <button class="admin-edit-btn admin-danger" onclick="annClear(true)">حذف اطلاع‌رسانی فعلی</button>
-          </div>
-          <p class="admin-muted" style="margin-top:12px">مدت نمایش، بازه‌ی کلی انتشار است. در این بازه، با هر ورود یا رفرش صفحه، متن در هدر نمایش داده می‌شود و ۵ دقیقه بعد ناپدید می‌شود. پایان بازه‌ی کلی، متن از دیتابیس هم پاک می‌شود.</p>
-        </div>
-      </div>
-
-      <div id="ad-settings" class="ad-page"><div class="admin-placeholder">
-  <div class="admin-card-head"><h3>تنظیمات و پشتیبان‌گیری</h3></div>
-  <div class="admin-field"><label>نام مدرسه</label><input class="admin-control" value="دبیرستان شهید حسن باقری" readonly></div>
-  <div class="admin-field"><label>حساب مدیر</label><input class="admin-control" id="adSetUser" readonly></div>
-  <div class="admin-field"><label>وضعیت همگام‌سازی با سرور</label><input class="admin-control" id="adSetSync" readonly></div>
-  <div class="admin-quick-grid"><button class="admin-quick" onclick="adminBackup()">💾 دانلود پشتیبان کامل</button>
-  <button class="admin-quick" onclick="adminRestorePick()">♻️ بازیابی از فایل پشتیبان</button>
-  <button class="admin-quick" onclick="saveAdminSettings()">☁️ ارسال دوباره به سرور</button></div>
-  <p class="admin-muted" style="margin-top:12px">فایل پشتیبان شامل همه‌ی تغییرات مدیر (حذف، ویرایش و افزودن) است.</p></div></div>
-    </section>
-  </main>
-</div>
 
 <div class="bg-blob"></div>
 <div class="bg-fx" id="bgFx" aria-hidden="true">
@@ -4324,7 +4106,7 @@ function showQR() {
         qrInstance = new QRCode(box, {
             text: url,
             width: 220, height: 220,
-            colorDark: "#18242e",
+            colorDark: "#11212D",
             colorLight: "#ffffff",
             correctLevel: QRCode.CorrectLevel.H
         });
@@ -4453,7 +4235,7 @@ if (window.innerWidth > 600) {
 }
 </script>
 <script>
-/* ===== Site menu, About modal, Admin login / logout ===== */
+/* ===== Site menu and About modal ===== */
 function openAboutModal() { var m = document.getElementById('aboutModal'); if (m) {
     m.classList.add('open');
     m.setAttribute('aria-hidden', 'false');
@@ -4466,382 +4248,9 @@ function closeAboutModal() { var m = document.getElementById('aboutModal'); if (
 } }
 function openAdminMenu() { document.getElementById('adminDrawer').classList.add('open'); document.getElementById('adminDrawerBackdrop').classList.add('open'); }
 function closeAdminMenu() { document.getElementById('adminDrawer').classList.remove('open'); document.getElementById('adminDrawerBackdrop').classList.remove('open'); }
-function openAdminLogin() { var m = document.getElementById('adminLoginModal'); if (m) {
-    m.classList.add('show');
-    m.style.display = 'flex';
-} setTimeout(function () { var u = document.getElementById('adminUsername'); if (u)
-    u.focus(); }, 100); }
-function toggleAdminPw() {
-    var i = document.getElementById('adminPassword'), b = document.getElementById('lgEye');
-    if (!i || !b) return;
-    var show = i.type === 'password';
-    i.type = show ? 'text' : 'password';
-    b.classList.toggle('shown', show);
-    b.setAttribute('aria-label', show ? 'پنهان کردن رمز عبور' : 'نمایش رمز عبور');
-    i.focus();
-}
-function closeAdminLogin() { var pw = document.getElementById('adminPassword'), eye = document.getElementById('lgEye'); if (pw) pw.type = 'password'; if (eye) eye.classList.remove('shown'); var m = document.getElementById('adminLoginModal'); if (m) {
-    m.classList.remove('show');
-    m.style.display = 'none';
-} var e = document.getElementById('adminLoginError'); if (e)
-    e.textContent = ''; }
-var __adminLoginBusy = false;
-function adminLogin() {
-    var userEl = document.getElementById('adminUsername');
-    var passEl = document.getElementById('adminPassword');
-    var errorEl = document.getElementById('adminLoginError');
-    if (!userEl || !passEl || !errorEl)
-        return;
-    if (__adminLoginBusy)
-        return;
-    var u = userEl.value.trim();
-    var p = passEl.value;
-    errorEl.textContent = '';
-    if (!u || !p) {
-        errorEl.textContent = 'ایمیل و رمز عبور را وارد کنید.';
-        return;
-    }
-    __adminLoginBusy = true;
-    errorEl.textContent = 'در حال ورود…';
-    sbLogin(u, p).then(function () {
-        errorEl.textContent = '';
-        var loginModal = document.getElementById('adminLoginModal');
-        if (loginModal) {
-            loginModal.classList.remove('show');
-            loginModal.style.display = 'none';
-        }
-        var panel = document.getElementById('adminPanel');
-        if (panel) {
-            panel.classList.add('show');
-            panel.style.display = 'flex';
-        }
-        userEl.value = '';
-        passEl.value = '';
-        document.body.style.overflow = 'hidden';
-    }).catch(function (e) {
-        var code = e && e.code;
-        if (code === 'forbidden')
-            errorEl.textContent = 'این حساب دسترسی مدیر ندارد.';
-        else if (code === 'auth')
-            errorEl.textContent = 'ایمیل یا رمز عبور نادرست است.';
-        else
-            errorEl.textContent = 'ارتباط با سرور برقرار نشد. اینترنت خود را بررسی کنید.';
-        passEl.focus();
-        passEl.select();
-    }).then(function () { __adminLoginBusy = false; });
-}
-function closeAdminPanel() {
-    var panel = document.getElementById('adminPanel');
-    var wasOpen = !!(panel && panel.classList.contains('show'));
-    if (panel) {
-        panel.classList.remove('show');
-        panel.style.display = 'none';
-    }
-    document.body.style.overflow = '';
-    if (wasOpen) {
-        var dirty = !!window.__adminDirty;
-        window.__adminDirty = false;
-        __sbQueue.then(function () {
-            sbLogout();
-            if (dirty)
-                location.reload();   // تغییرات مدیر روی سایت عمومی هم اعمال شود
-        });
-    }
-}
 document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
         closeAdminMenu();
-        closeAdminLogin();
-        closeAdminPanel();
-    }
-    if (e.key === 'Enter' && document.getElementById('adminLoginModal').classList.contains('show')) {
-        e.preventDefault();
-        adminLogin();
-    }
-});
-window.addEventListener('DOMContentLoaded', function () {
-    var pass = document.getElementById('adminPassword');
-    if (pass) {
-        pass.addEventListener('keydown', function (e) { if (e.key === 'Enter') {
-            e.preventDefault();
-            adminLogin();
-        } });
-    }
-});
-</script>
-<script>
-/* ===== Admin panel: tables, schedule, subjects, import / export ===== */
-function showAdminToast(msg) { var t = document.getElementById('adminToast'); if (!t) {
-    t = document.createElement('div');
-    t.id = 'adminToast';
-    t.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:99999;background:#111;color:#fff;padding:12px 18px;border-radius:12px;box-shadow:0 8px 30px rgba(33,49,62,.25);font:14px Tahoma,Arial,sans-serif;direction:rtl';
-    document.body.appendChild(t);
-} t.textContent = msg; t.style.display = 'block'; clearTimeout(window.__adminToastTimer); window.__adminToastTimer = setTimeout(function () { t.style.display = 'none'; }, 3000); }
-function openExcelImport() { var el = document.getElementById('excelImportInput'); if (el) {
-    el.value = '';
-    el.click();
-} }
-function openPdfImport() { var el = document.getElementById('pdfImportInput'); if (el) {
-    el.value = '';
-    el.click();
-} }
-function handleExcelImport(input) { var file = input && input.files && input.files[0]; if (!file)
-    return; var ext = (file.name.split('.').pop() || '').toLowerCase(); if (ext !== 'xlsx' && ext !== 'xls') {
-    showAdminToast('فقط فایل Excel با فرمت XLS یا XLSX مجاز است');
-    return;
-} showAdminToast('فایل Excel انتخاب شد: ' + file.name); }
-function handlePdfImport(input) { var file = input && input.files && input.files[0]; if (!file)
-    return; if (file.type !== 'application/pdf' && !/\.pdf$/i.test(file.name)) {
-    showAdminToast('فقط فایل PDF مجاز است');
-    return;
-} showAdminToast('فایل PDF انتخاب شد: ' + file.name); }
-function buildTeacherExportRows() {
-    var rows = [['نام استاد', 'درس', 'کلاس', 'روز', 'زنگ', 'ساعت شروع', 'ساعت پایان']];
-    Object.keys(teacherDB).sort(function (a, b) { return a.localeCompare(b, 'fa'); }).forEach(function (name) {
-        teacherDB[name].classes.slice().sort(function (a, b) { return String(a.className).localeCompare(String(b.className), 'fa', { numeric: true }); }).forEach(function (c) { rows.push([name, c.subject, c.className, c.day, toFa(c.period), c.start, c.end]); });
-    });
-    return rows;
-}
-function escapeExportCell(v) { return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-function exportExcel() { var rows = buildTeacherExportRows(), html = '<html><head><meta charset="UTF-8"></head><body><table border="1" dir="rtl"><tr>' + rows[0].map(function (c) { return '<th>' + escapeExportCell(c) + '</th>'; }).join('') + '</tr>'; rows.slice(1).forEach(function (r) { html += '<tr>' + r.map(function (c) { return '<td>' + escapeExportCell(c) + '</td>'; }).join('') + '</tr>'; }); html += '</table></body></html>'; var blob = new Blob(['\ufeff' + html], { type: 'application/vnd.ms-excel;charset=utf-8' }), a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'BagheriSchedule_Teachers_Classes.xls'; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 300); showAdminToast('خروجی کامل Excel شامل استاد، درس و کلاس‌ها آماده شد'); }
-function exportPDF() { var rows = buildTeacherExportRows(), w = window.open('', '_blank'); if (!w) {
-    showAdminToast('پنجره خروجی PDF توسط مرورگر مسدود شده است');
-    return;
-} var html = '<table><thead><tr>' + rows[0].map(function (c) { return '<th>' + escapeExportCell(c) + '</th>'; }).join('') + '</tr></thead><tbody>'; rows.slice(1).forEach(function (r) { html += '<tr>' + r.map(function (c) { return '<td>' + escapeExportCell(c) + '</td>'; }).join('') + '</tr>'; }); html += '</tbody></table>'; w.document.write('<!doctype html><html dir="rtl"><head><meta charset="UTF-8"><title>گزارش اساتید و کلاس‌ها</title><style>@page{size:A4 landscape;margin:12mm}body{font-family:Tahoma,Arial,sans-serif;color:#111}h1{text-align:center;font-size:18px}p{text-align:center;color:#666;font-size:10px}table{width:100%;border-collapse:collapse;font-size:9px}th,td{border:1px solid #999;padding:6px;text-align:center}th{font-weight:700}</style></head><body><h1>گزارش اساتید، دروس و کلاس‌ها</h1><p>دبیرستان شهید حسن باقری — ' + new Date().toLocaleDateString('fa-IR') + '</p>' + html + '</body></html>'); w.document.close(); w.focus(); setTimeout(function () { w.print(); }, 400); showAdminToast('گزارش PDF آماده شد؛ گزینه Save as PDF را انتخاب کنید'); }
-function adminState() { try {
-    return JSON.parse(localStorage.getItem('bagheriAdminState') || '{}');
-}
-catch (e) {
-    return {};
-} }
-function saveAdminState(st) { localStorage.setItem('bagheriAdminState', JSON.stringify(st)); window.__adminDirty = true; sbPushState(); }
-function adminDeletedSet(key) { var st = adminState(); return Array.isArray(st[key]) ? st[key] : []; }
-function isAdminDeleted(key, value) { return adminDeletedSet(key).indexOf(String(value)) !== -1; }
-function markAdminDeleted(key, value) { var st = adminState(); if (!Array.isArray(st[key]))
-    st[key] = []; if (st[key].indexOf(String(value)) === -1)
-    st[key].push(String(value)); saveAdminState(st); }
-function adminConfirmDelete(label, cb) { if (window.confirm('آیا از حذف «' + label + '» مطمئن هستید؟'))
-    cb(); }
-function adminClassNumber(value) { var normalized = String(value).replace(/[۰-۹]/g, function (ch) { return String('۰۱۲۳۴۵۶۷۸۹'.indexOf(ch)); }).replace(/[٠-٩]/g, function (ch) { return String('٠١٢٣٤٥٦٧٨٩'.indexOf(ch)); }); var m = normalized.match(/\d+/g); return m && m.length ? parseInt(m[m.length - 1], 10) : 999999; }
-function getAdminStateData() {
-    var st = adminState();
-    if (!Array.isArray(st.customTeachers))
-        st.customTeachers = [];
-    if (!Array.isArray(st.customSubjects))
-        st.customSubjects = [];
-    if (!Array.isArray(st.customSchedule))
-        st.customSchedule = [];
-    if (!Array.isArray(st.deletedSchedule))
-        st.deletedSchedule = [];
-    if (!st.scheduleEdits)
-        st.scheduleEdits = {};
-    return st;
-}
-function scheduleKey(r) { return [r.className, r.day, r.period, r.subject, r.teacher].join('|'); }
-function getAdminClasses() { var st = getAdminStateData(), set = {}; allClasses.forEach(function (c) { if (!isAdminDeleted('deletedClasses', c))
-    set[c] = 1; }); st.customSchedule.forEach(function (r) { if (r.className && !isAdminDeleted('deletedClasses', r.className))
-    set[r.className] = 1; }); return Object.keys(set).sort(function (a, b) { var na = adminClassNumber(a), nb = adminClassNumber(b); return na !== nb ? na - nb : String(a).localeCompare(String(b), 'fa'); }); }
-function getAdminTeachers() { var st = getAdminStateData(), set = {}; teacherNames.forEach(function (n) { if (n !== 'زنگ آزمون' && !isAdminDeleted('deletedTeachers', n))
-    set[n] = 1; }); st.customTeachers.forEach(function (t) { if (t.name && !isAdminDeleted('deletedTeachers', t.name))
-    set[t.name] = 1; }); st.customSchedule.forEach(function (r) { if (r.teacher && !isAdminDeleted('deletedTeachers', r.teacher))
-    set[r.teacher] = 1; }); return Object.keys(set).sort(function (a, b) { return a.localeCompare(b, 'fa'); }); }
-function getAdminTeacherRecord(name) { var st = getAdminStateData(); if (teacherDB[name])
-    return teacherDB[name]; var rec = { name: name, classes: [], subjects: {} }; st.customTeachers.forEach(function (t) { if (t.name === name && t.subject)
-    rec.subjects[t.subject] = true; }); st.customSchedule.forEach(function (r) { if (r.teacher === name) {
-    rec.classes.push(r);
-    rec.subjects[r.subject] = true;
-} }); return rec; }
-function getAdminSubjects() {
-    var st = getAdminStateData(), map = {};
-    baseRawData.forEach(function (item) { if (isAdminDeleted('deletedClasses', (st.classRenames || {})[item[0]] || item[0]))
-        return; item[1].forEach(function (dr) { dr[1].forEach(function (lt) { if (!lt || !lt.trim() || lt === 'زنگ آزمون' || lt === 'مهارت')
-        return; extractTeachers(lt).forEach(function (e) { var n = HOMONYM_MAP[e.teacher + '|' + e.subject] || e.teacher; if (!isAdminDeleted('deletedTeachers', n))
-        map[e.subject] = map[e.subject] || {}, map[e.subject][n] = true; }); }); }); });
-    st.customTeachers.forEach(function (t) { if (t.subject && !isAdminDeleted('deletedTeachers', t.name)) {
-        map[t.subject] = map[t.subject] || {};
-        map[t.subject][t.name] = true;
-    } });
-    st.customSchedule.forEach(function (r) { if (r.subject && !isAdminDeleted('deletedClasses', r.className) && !isAdminDeleted('deletedTeachers', r.teacher)) {
-        map[r.subject] = map[r.subject] || {};
-        map[r.subject][r.teacher] = true;
-    } });
-    st.customSubjects.forEach(function (x) { if (x.name && !isAdminDeleted('deletedSubjects', x.name)) {
-        map[x.name] = map[x.name] || {};
-        x.teachers.forEach(function (t) { if (t && !isAdminDeleted('deletedTeachers', t))
-            map[x.name][t] = true; });
-    } });
-    return Object.keys(map).filter(function (subject) { return !isAdminDeleted('deletedSubjects', subject); }).sort(function (a, b) { return a.localeCompare(b, 'fa'); }).map(function (subject) { return { subject: subject, teachers: Object.keys(map[subject]).sort(function (a, b) { return a.localeCompare(b, 'fa'); }) }; });
-}
-function renderAdminTeachersTable() {
-    var body = document.getElementById('adTeachersBody');
-    if (!body)
-        return;
-    body.innerHTML = '';
-    getAdminTeachers().forEach(function (name) { var t = getAdminTeacherRecord(name), tr = document.createElement('tr'); var subjects = Object.keys(t.subjects || {}).sort(function (a, b) { return a.localeCompare(b, 'fa'); }); tr.innerHTML = '<td>' + escapeHtmlAdmin(name) + '</td><td>' + escapeHtmlAdmin(subjects.join('، ') || '—') + '</td><td>' + toFa((t.classes || []).length) + '</td><td><span class="admin-badge">فعال</span></td><td><button class="admin-edit-btn" onclick="editTeacherRow(this)">ویرایش</button> <button class="admin-edit-btn admin-danger" onclick="deleteTeacherRow(this)">حذف</button></td>'; body.appendChild(tr); });
-}
-function renderAdminClassesTable() {
-    var body = document.getElementById('adClassesBody');
-    if (!body)
-        return;
-    body.innerHTML = '';
-    getAdminClasses().forEach(function (className) { var tr = document.createElement('tr'), parts = String(className).trim().split(/\s+/), number = parts[parts.length - 1], num = adminClassNumber(number), grade = (num >= 100 && num < 110) ? 'دهم' : (num >= 110 && num < 120) ? 'یازدهم' : (num >= 120 && num < 130) ? 'دوازدهم' : '—', field = parts.slice(0, -1).join(' ') || '—'; tr.innerHTML = '<td>' + escapeHtmlAdmin(number) + '</td><td>' + escapeHtmlAdmin(grade) + '</td><td>' + escapeHtmlAdmin(field) + '</td><td><span class="admin-badge">فعال</span></td><td><button class="admin-edit-btn" onclick="editClassRow(this)">ویرایش</button> <button class="admin-edit-btn admin-danger" onclick="deleteClassRow(this)">حذف</button></td>'; body.appendChild(tr); });
-}
-function populateAdminScheduleClassSelect() { var sel = document.getElementById('adminScheduleClass'); if (!sel)
-    return; var old = sel.value; sel.innerHTML = '<option value="all">همه کلاس‌ها</option>'; getAdminClasses().forEach(function (c) { var o = document.createElement('option'); o.value = c; o.textContent = c; sel.appendChild(o); }); if (getAdminClasses().indexOf(old) !== -1)
-    sel.value = old; }
-function getAdminScheduleRows() {
-    var st = getAdminStateData(), rows = [];
-    baseRawData.forEach(function (item) { var className = (st.classRenames || {})[item[0]] || item[0]; if (isAdminDeleted('deletedClasses', className))
-        return; item[1].forEach(function (dr) { var day = dr[0]; dr[1].forEach(function (lt, idx) { if (!lt || !lt.trim() || lt === 'زنگ آزمون' || lt === 'مهارت')
-        return; extractTeachers(lt).forEach(function (e) { var teacher = HOMONYM_MAP[e.teacher + '|' + e.subject] || e.teacher; if (isAdminDeleted('deletedTeachers', teacher))
-        return; var r = { className: className, day: day, period: idx + 1, subject: e.subject, teacher: teacher, start: PERIODS[idx + 1].start, end: PERIODS[idx + 1].end }; var k = scheduleKey(r); if (st.deletedSchedule.indexOf(k) !== -1)
-        return; if (st.scheduleEdits[k])
-        r = Object.assign(r, st.scheduleEdits[k]); rows.push(r); }); }); }); });
-    st.customSchedule.forEach(function (r) { if (isAdminDeleted('deletedClasses', r.className) || isAdminDeleted('deletedTeachers', r.teacher) || st.deletedSchedule.indexOf(scheduleKey(r)) !== -1)
-        return; rows.push(r); });
-    return rows;
-}
-function renderAdminScheduleTable() {
-    var body = document.getElementById('adScheduleBody');
-    if (!body)
-        return;
-    populateAdminScheduleClassSelect();
-    body.innerHTML = '';
-    var daySel = (document.getElementById('adminScheduleDay') || {}).value || 'all', classSel = (document.getElementById('adminScheduleClass') || {}).value || 'all', teacherQ = normalize((document.getElementById('adminScheduleTeacher') || {}).value || '');
-    var rows = getAdminScheduleRows().filter(function (r) { return (daySel === 'all' || r.day === daySel) && (classSel === 'all' || r.className === classSel) && (!teacherQ || normalize(r.teacher).indexOf(teacherQ) !== -1); });
-    rows.sort(function (a, b) { var cc = adminClassNumber(a.className) - adminClassNumber(b.className); if (cc)
-        return cc; var dd = dayOrder.indexOf(a.day) - dayOrder.indexOf(b.day); if (dd)
-        return dd; return a.period - b.period; });
-    rows.forEach(function (r) { var tr = document.createElement('tr'); tr.dataset.key = scheduleKey(r); tr.innerHTML = '<td>' + escapeHtmlAdmin(r.className) + '</td><td>' + escapeHtmlAdmin(r.day) + '</td><td>' + toFa(r.period) + '</td><td>' + escapeHtmlAdmin(r.start) + ' تا ' + escapeHtmlAdmin(r.end) + '</td><td>' + escapeHtmlAdmin(r.subject) + '</td><td>استاد ' + escapeHtmlAdmin(r.teacher) + '</td><td><button class="admin-edit-btn" onclick="editScheduleRow(this)">ویرایش</button> <button class="admin-edit-btn admin-danger" onclick="deleteScheduleRow(this)">حذف</button></td>'; body.appendChild(tr); });
-    if (!rows.length) {
-        var tr = document.createElement('tr');
-        tr.innerHTML = '<td colspan="7" style="text-align:center;padding:20px;color:#7b8b96">موردی برای نمایش پیدا نشد.</td>';
-        body.appendChild(tr);
-    }
-}
-function renderAdminSubjects() { var box = document.getElementById('adSubjectsList'); if (!box)
-    return; box.innerHTML = ''; getAdminSubjects().forEach(function (item) { var x = document.createElement('div'); x.className = 'admin-list-item'; x.dataset.subject = item.subject; x.innerHTML = '<div><strong>' + escapeHtmlAdmin(item.subject) + '</strong><div class="admin-muted">' + escapeHtmlAdmin(item.teachers.length ? item.teachers.map(function (t) { return 'استاد ' + t; }).join('، ') : 'بدون دبیر ثبت‌شده') + '</div></div><div><button class="admin-edit-btn" onclick="editSubjectItem(this)">ویرایش</button> <button class="admin-edit-btn admin-danger" onclick="deleteSubjectItem(this)">حذف</button></div>'; box.appendChild(x); }); }
-function filterAdminSubjects(input) { var q = normalize(input.value || ''); document.querySelectorAll('#adSubjectsList .admin-list-item').forEach(function (x) { x.style.display = !q || normalize(x.innerText).indexOf(q) !== -1 ? 'flex' : 'none'; }); }
-function escapeHtmlAdmin(v) { var d = document.createElement('div'); d.textContent = String(v == null ? '' : v); return d.innerHTML; }
-function editTeacherRow(btn) { var row = btn.closest('tr'), old = row.cells[0].innerText.trim(), name = prompt('نام دبیر:', old); if (name === null || !name.trim())
-    return; name = name.trim(); var subject = prompt('درس/دروس ارائه‌شده (با ، جدا کنید):', row.cells[1].innerText.trim()); if (subject === null)
-    return; var st = getAdminStateData(); st.customTeachers = st.customTeachers.filter(function (t) { return t.name !== old; }); (subject.split(/[،,]/).map(function (x) { return x.trim(); }).filter(Boolean)).forEach(function (sub) { st.customTeachers.push({ name: name, subject: sub }); }); if (name !== old) {
-    markAdminDeleted('deletedTeachers', old);
-} saveAdminState(st); renderAdminTeachersTable(); renderAdminScheduleTable(); renderAdminSubjects(); showAdminToast('اطلاعات دبیر ویرایش شد'); }
-function editClassRow(btn) {
-    var row = btn.closest('tr'), old = getAdminClasses().find(function (c) { return c.split(/\s+/).pop() === row.cells[0].innerText.trim(); }), nv = prompt('نام کامل کلاس:', old || row.cells[0].innerText.trim());
-    if (nv === null || !nv.trim() || !old)
-        return;
-    nv = nv.trim();
-    if (nv === old)
-        return;
-    if (getAdminClasses().indexOf(nv) !== -1) {
-        showAdminToast('کلاسی با این نام وجود دارد');
-        return;
-    }
-    var st = getAdminStateData();
-    if (!st.classRenames || typeof st.classRenames !== 'object')
-        st.classRenames = {};
-    Object.keys(st.classRenames).forEach(function (k) { if (st.classRenames[k] === old)
-        st.classRenames[k] = nv; });
-    if (baseRawData.some(function (it) { return it[0] === old; }))
-        st.classRenames[old] = nv;
-    st.customSchedule = st.customSchedule.map(function (r) { if (r.className === old)
-        r.className = nv; return r; });
-    st.deletedSchedule = st.deletedSchedule.map(function (k) { return k.indexOf(old + '|') === 0 ? nv + k.slice(old.length) : k; });
-    saveAdminState(st);
-    renderAdminClassesTable();
-    populateAdminScheduleClassSelect();
-    renderAdminScheduleTable();
-    showAdminToast('کلاس ویرایش شد');
-}
-function editScheduleRow(btn) { var row = btn.closest('tr'), rows = getAdminScheduleRows(), key = row.dataset.key, r = rows.find(function (x) { return scheduleKey(x) === key; }); if (!r)
-    return; var nclass = prompt('کلاس:', r.className); if (nclass === null)
-    return; var day = prompt('روز:', r.day); if (day === null)
-    return; var period = prompt('شماره زنگ:', r.period); if (period === null)
-    return; var subject = prompt('درس:', r.subject); if (subject === null)
-    return; var teacher = prompt('دبیر:', r.teacher); if (teacher === null)
-    return; var st = getAdminStateData(), updated = { className: nclass.trim(), day: day.trim(), period: parseInt(period, 10) || r.period, subject: subject.trim(), teacher: teacher.trim(), start: (PERIODS[parseInt(period, 10)] || {}).start || r.start, end: (PERIODS[parseInt(period, 10)] || {}).end || r.end }; st.deletedSchedule.push(key); st.deletedSchedule = [...new Set(st.deletedSchedule)]; st.customSchedule.push(updated); saveAdminState(st); renderAdminScheduleTable(); renderAdminTeachersTable(); renderAdminSubjects(); showAdminToast('برنامه هفتگی ویرایش شد'); }
-function deleteScheduleRow(btn) { var row = btn.closest('tr'), key = row.dataset.key; adminConfirmDelete('این برنامه هفتگی', function () { var st = getAdminStateData(); st.deletedSchedule.push(key); st.deletedSchedule = [...new Set(st.deletedSchedule)]; saveAdminState(st); renderAdminScheduleTable(); renderAdminTeachersTable(); renderAdminSubjects(); showAdminToast('برنامه هفتگی حذف شد'); }); }
-function deleteTeacherRow(btn) { var row = btn.closest('tr'), name = row ? row.cells[0].innerText.trim() : ''; if (!name)
-    return; adminConfirmDelete(name, function () { markAdminDeleted('deletedTeachers', name); renderAdminTeachersTable(); renderAdminScheduleTable(); renderAdminSubjects(); showAdminToast('دبیر حذف شد'); }); }
-function deleteClassRow(btn) { var row = btn.closest('tr'), number = row ? row.cells[0].innerText.trim() : ''; if (!number)
-    return; var full = getAdminClasses().find(function (c) { return c.split(/\s+/).pop() === number; }) || number; adminConfirmDelete(full, function () { markAdminDeleted('deletedClasses', full); renderAdminClassesTable(); renderAdminScheduleTable(); renderAdminSubjects(); showAdminToast('کلاس حذف شد'); }); }
-function editSubjectItem(btn) { var item = btn.closest('.admin-list-item'), old = item ? item.dataset.subject : ''; if (!old)
-    return; var nv = prompt('نام درس:', old); if (nv === null || !nv.trim())
-    return; nv = nv.trim(); var st = getAdminStateData(); st.customSubjects.push({ name: nv, teachers: getAdminSubjects().find(function (x) { return x.subject === old; })?.teachers || [] }); st.deletedSubjects = Array.isArray(st.deletedSubjects) ? st.deletedSubjects : []; st.deletedSubjects.push(old); st.deletedSubjects = [...new Set(st.deletedSubjects)]; saveAdminState(st); renderAdminSubjects(); showAdminToast('درس ویرایش شد'); }
-function deleteSubjectItem(btn) { var item = btn.closest('.admin-list-item'), subject = item ? item.dataset.subject : ''; if (!subject)
-    return; adminConfirmDelete(subject, function () { markAdminDeleted('deletedSubjects', subject); item.remove(); showAdminToast('درس حذف شد'); }); }
-function addTeacherRow() { var name = prompt('نام دبیر جدید:'); if (name === null || !name.trim())
-    return; var subject = prompt('درس/دروس ارائه‌شده (با ، جدا کنید):'); if (subject === null)
-    return; var st = getAdminStateData(); subject.split(/[،,]/).map(function (x) { return x.trim(); }).filter(Boolean).forEach(function (sub) { st.customTeachers.push({ name: name.trim(), subject: sub }); }); saveAdminState(st); renderAdminTeachersTable(); renderAdminSubjects(); showAdminToast('دبیر جدید اضافه شد'); }
-function addClassRow() { var name = prompt('نام کامل کلاس جدید، مثال: تجربی ۱۲۵:'); if (name === null || !name.trim())
-    return; var st = getAdminStateData(); var exists = getAdminClasses().indexOf(name.trim()) !== -1; if (exists) {
-    showAdminToast('این کلاس از قبل وجود دارد');
-    return;
-} st.customSchedule.push({ className: name.trim(), day: 'شنبه', period: 1, subject: '—', teacher: '—', start: PERIODS[1].start, end: PERIODS[1].end }); saveAdminState(st); renderAdminClassesTable(); populateAdminScheduleClassSelect(); renderAdminScheduleTable(); showAdminToast('کلاس جدید اضافه شد'); }
-function addSubjectItem() { var name = prompt('نام درس جدید:'); if (name === null || !name.trim())
-    return; var teachers = prompt('نام اساتید ارائه‌دهنده (با ، جدا کنید):') || ''; var st = getAdminStateData(); st.customSubjects.push({ name: name.trim(), teachers: teachers.split(/[،,]/).map(function (x) { return x.trim(); }).filter(Boolean) }); saveAdminState(st); renderAdminSubjects(); showAdminToast('درس جدید اضافه شد'); }
-function addBellRow() { var t = document.querySelector('#ad-bells .admin-table'), r = t.insertRow(-1); r.innerHTML = '<td>' + toFa(t.rows.length - 1) + '</td><td>—</td><td>—</td><td><button class="admin-edit-btn" onclick="editAdminRow(this)">ویرایش</button> <button class="admin-edit-btn admin-danger" onclick="this.closest(\'tr\').remove();showAdminToast(\'زنگ حذف شد\')">حذف</button></td>'; showAdminToast('زنگ جدید اضافه شد'); }
-function saveScheduleSettings() { showAdminToast('برنامه هفتگی ذخیره شد'); }
-function saveAdminSettings() { showAdminToast('تنظیمات ذخیره شد'); }
-function adminPage(btn, title) {
-    document.querySelectorAll('.admin-panel-nav button').forEach(function (x) { x.classList.remove('active'); });
-    if (btn)
-        btn.classList.add('active');
-        if (btn.scrollIntoView)
-            btn.scrollIntoView({ inline: 'center', block: 'nearest' });
-    var titleEl = document.getElementById('adminPanelTitle');
-    if (titleEl)
-        titleEl.textContent = title;
-    var key = { 'داشبورد': 'dashboard', 'مدیریت دبیران': 'teachers', 'مدیریت کلاس‌ها': 'classes', 'برنامه هفتگی': 'schedule', 'دروس': 'subjects', 'ورود / خروج اطلاعات': 'import', 'زمان‌بندی زنگ‌ها': 'bells', 'تاریخچه تغییرات': 'logs', 'اطلاع‌رسانی': 'announce', 'تنظیمات': 'settings' }[title];
-    document.querySelectorAll('.ad-page').forEach(function (x) { x.classList.remove('active'); });
-    var page = document.getElementById('ad-' + key);
-    if (page)
-        page.classList.add('active');
-    if (key === 'teachers')
-        renderAdminTeachersTable();
-    if (key === 'classes')
-        renderAdminClassesTable();
-    if (key === 'schedule') {
-        populateAdminScheduleClassSelect();
-        renderAdminScheduleTable();
-    }
-    if (key === 'subjects')
-        renderAdminSubjects();
-    if (key === 'announce' && window.annRenderAdmin)
-        window.annRenderAdmin();
-}
-window.addEventListener('DOMContentLoaded', function () { renderAdminTeachersTable(); renderAdminClassesTable(); populateAdminScheduleClassSelect(); renderAdminScheduleTable(); renderAdminSubjects(); });
-/* ---- Mobile admin tables: copy header text into data-label so rows can render as cards ---- */
-function labelAdminTables() {
-    document.querySelectorAll('.admin-table').forEach(function (table) {
-        var first = table.querySelector('tr');
-        if (!first)
-            return;
-        var heads = Array.prototype.map.call(first.querySelectorAll('th'), function (th) { return th.textContent.trim(); });
-        table.querySelectorAll('tr').forEach(function (tr) {
-            if (tr.querySelector('th')) {
-                tr.classList.add('is-head');
-                return;
-            }
-            Array.prototype.forEach.call(tr.children, function (td, i) {
-                if (heads[i] && td.getAttribute('data-label') !== heads[i])
-                    td.setAttribute('data-label', heads[i]);
-            });
-        });
-    });
-}
-window.addEventListener('DOMContentLoaded', function () {
-    labelAdminTables();
-    var content = document.querySelector('.admin-content'), queued = false;
-    if (content && window.MutationObserver) {
-        new MutationObserver(function () {
-            if (queued)
-                return;
-            queued = true;
-            requestAnimationFrame(function () { queued = false; labelAdminTables(); });
-        }).observe(content, { childList: true, subtree: true });
     }
 });
 </script>
@@ -4856,7 +4265,7 @@ window.addEventListener('DOMContentLoaded', function () {
   var W = 0, H = 0, raf = 0, last = 0, parts = [];
   var lowEnd = (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 2;
 
-  function color() { return '245,215,110'; }
+  function color() { return '204,208,207'; }
 
   function seed() {
     var n = (W < 600 || lowEnd) ? 16 : 36;
@@ -5268,7 +4677,7 @@ clearTimeout(t);t=setTimeout(function(){window.__bgPause=false;r.classList.remov
 .site-header.logo-on .ann-slot{pointer-events:none}
 .ann-pill{display:flex;align-items:center;gap:8px;min-width:0;max-width:min(100%,520px);margin:0;padding:7px 14px;border-radius:999px;cursor:pointer;font:inherit;font-size:12.5px;font-weight:700;line-height:1.55;text-align:center;color:rgba(255,255,255,.95);
   background:linear-gradient(135deg,rgba(255,255,255,.17),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.24);
-  box-shadow:0 8px 26px rgba(33,49,62,.32),inset 0 1px 0 rgba(255,255,255,.38),inset 0 -1px 0 rgba(255,255,255,.06);
+  box-shadow:0 8px 26px rgba(17,33,45,.32),inset 0 1px 0 rgba(255,255,255,.38),inset 0 -1px 0 rgba(255,255,255,.06);
   -webkit-backdrop-filter:blur(16px) saturate(170%);backdrop-filter:blur(16px) saturate(170%);
   -webkit-tap-highlight-color:transparent;animation:annIn .45s cubic-bezier(.2,.8,.2,1)}
 .ann-pill.out{animation:annOut .45s ease forwards;pointer-events:none}
@@ -5277,11 +4686,11 @@ clearTimeout(t);t=setTimeout(function(){window.__bgPause=false;r.classList.remov
 .ann-pill .ann-txt{min-width:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;white-space:pre-line}
 .ann-panel{position:fixed;top:80px;left:50%;z-index:1095;width:min(92vw,480px);display:none;padding:14px 18px;border-radius:20px;font-size:13.5px;font-weight:600;line-height:2;text-align:center;color:rgba(255,255,255,.96);white-space:pre-line;overflow-wrap:anywhere;
   background:linear-gradient(135deg,rgba(255,255,255,.18),rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.24);
-  box-shadow:0 18px 50px rgba(33,49,62,.4),inset 0 1px 0 rgba(255,255,255,.38);
+  box-shadow:0 18px 50px rgba(17,33,45,.4),inset 0 1px 0 rgba(255,255,255,.38);
   -webkit-backdrop-filter:blur(20px) saturate(170%);backdrop-filter:blur(20px) saturate(170%);transform:translateX(-50%)}
 .ann-panel.open{display:block;animation:annPanel .3s cubic-bezier(.2,.8,.2,1)}
 .site-header.logo-on ~ .ann-panel{display:none}
-@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.ann-pill,.ann-panel{background:rgba(40,58,72,.92)}}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.ann-pill,.ann-panel{background:rgba(26,46,61,.92)}}
 @keyframes annIn{from{opacity:0;transform:translateY(-8px) scale(.94)}}
 @keyframes annOut{to{opacity:0;transform:translateY(-8px) scale(.94)}}
 @keyframes annPanel{from{opacity:0;transform:translateX(-50%) translateY(-8px)}}
@@ -5291,25 +4700,24 @@ clearTimeout(t);t=setTimeout(function(){window.__bgPause=false;r.classList.remov
 
 /* ===== Glass UI v3: teal gradient backdrop + translucent pill controls ===== */
 :root,body.dark{
-  --bg-1:#253745; --bg-2:#2f4556; --bg-3:#1b2933;
+  --bg-1:#11212D; --bg-2:#1d3342; --bg-3:#0d1a24;
   --text-light:#f4f6f6;
   --text-soft:rgba(230,234,233,.86);
   --text-dim:rgba(230,234,233,.64);
-  --glass-bg:rgba(37,55,69,.60);
+  --glass-bg:rgba(17,33,45,.66);
   --glass-border:rgba(204,208,207,.26);
   --glass-hover:rgba(204,208,207,.16);
-  --card-bg:rgba(37,55,69,.52);
+  --card-bg:rgba(17,33,45,.58);
   --card-border:rgba(204,208,207,.20);
-  --input-bg:rgba(24,36,46,.55);
+  --input-bg:rgba(11,22,31,.55);
   --input-border:rgba(204,208,207,.30);
-  --shadow:rgba(10,18,24,.45);
+  --shadow:rgba(6,12,17,.45);
   --gold:#CCD0CF; --gold-light:#E6E9E8;
-  --modal-bg:linear-gradient(135deg,rgba(37,55,69,.98),rgba(24,36,46,.98));
-  --pill-fill:rgba(204,208,207,.22);
+  --modal-bg:linear-gradient(135deg,rgba(17,33,45,.98),rgba(11,22,31,.98));
+  --pill-fill:linear-gradient(135deg,rgba(204,208,207,.34),rgba(204,208,207,.14));
   --pill-ico:rgba(244,246,246,.78);
   --pill-ico-on:#ffffff;
-  --page-bg:
-    linear-gradient(160deg,#253745 0%,#2c4150 28%,#566a77 58%,#98a5ab 84%,#CCD0CF 100%);
+  --page-bg:linear-gradient(165deg,#11212D 0%,#142835 30%,#33495a 58%,#7f9098 82%,#CCD0CF 100%);
 }
 
 /* page backdrop: one static gradient layer, no floating blobs */
@@ -5332,11 +4740,11 @@ body::after,body.dark::after,.bg-blob,.bg-aurora{display:none!important}
 .site-header{
   background:rgba(255,255,255,.07);
   border-bottom:1px solid rgba(255,255,255,.14);border-image:none;
-  box-shadow:0 6px 28px rgba(33,49,62,.22);
+  box-shadow:0 6px 28px rgba(17,33,45,.22);
   -webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);
 }
 .autocomplete-dropdown{
-  background:rgba(30,45,57,.92);border:1px solid rgba(255,255,255,.16);
+  background:rgba(14,29,40,.92);border:1px solid rgba(255,255,255,.16);
   -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)
 }
 .selection-card{background:var(--card-bg);border:1px solid var(--card-border)}
@@ -5376,10 +4784,10 @@ body::after,body.dark::after,.bg-blob,.bg-aurora{display:none!important}
 .grade-chip:focus-visible,.tab-btn:focus-visible{outline:2px solid var(--pill-ico-on);outline-offset:2px}
 
 /* primary actions: soft frosted fill instead of solid colour */
-body.dark .action-btn.primary,body.dark .qr-download{color:#2f4556!important}
+body.dark .action-btn.primary,body.dark .qr-download{color:#11212D!important}
 @media (prefers-reduced-transparency:reduce){
   .glass,.grade-bar,.site-header,.autocomplete-dropdown{-webkit-backdrop-filter:none;backdrop-filter:none}
-  body.dark .glass,body.dark .grade-bar,body.dark .site-header{background:rgba(34,50,63,.92)}}
+  body.dark .glass,body.dark .grade-bar,body.dark .site-header{background:rgba(17,33,45,.92)}}
 
 .admin-menu-btn{
   background:var(--glass-bg)!important;border:1px solid var(--glass-border)!important;
@@ -5514,155 +4922,7 @@ body.dark .action-btn.primary,body.dark .qr-download{color:#2f4556!important}
   };
 })();
 </script>
-<style id="dz-theme">
-.admin-panel{background:#eef1ee!important;color:#0f2a1c}
-.admin-panel-sidebar{background:#f7f8f7!important;box-shadow:0 0 0 1px #e1e6e1!important}
-.admin-panel-brand,.admin-panel-nav{background:#f7f8f7!important;color:#0f2a1c!important}
-.admin-panel-brand{border-bottom:1px solid #e1e6e1!important}
-.admin-panel-nav button{color:#5d6f64!important;border-radius:999px!important}
-.admin-panel-nav button:hover{background:#e8efe9!important;color:#0f5c3a!important;transform:none!important}
-.admin-panel-nav button.active{background:linear-gradient(135deg,#0f5c3a,#1f8a55)!important;color:#fff!important;box-shadow:0 6px 16px rgba(15,92,58,.28)!important}
-.admin-panel-top{border-radius:999px!important;background:#fff!important;border:1px solid #e1e6e1!important;padding:0 26px!important}
-.admin-placeholder,.dz-card,.admin-stat{background:#fff!important;border:1px solid #e6ebe6!important;border-radius:22px!important;box-shadow:0 6px 22px rgba(15,60,35,.05)!important}
-.admin-action,.admin-quick:hover{background:linear-gradient(135deg,#0f5c3a,#1f8a55)!important;color:#fff!important;border-radius:999px!important;border:0!important}
-.admin-quick{border-radius:16px!important}
-.admin-table th{background:#f1f5f1!important;color:#33503f!important}
-.dz-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:18px}
-.dz-head h3{font-size:24px}.dz-head p{color:#7a8a80;font-size:13px}
-.dz-head-btns{display:flex;gap:8px;flex-wrap:wrap}
-.dz-btn{font:inherit;font-size:13px;font-weight:600;padding:10px 18px;border-radius:999px;border:1.5px solid #0f5c3a;background:transparent;color:#0f5c3a;cursor:pointer}
-.dz-btn.solid{background:linear-gradient(135deg,#0f5c3a,#1f8a55);color:#fff;border-color:transparent}
-.dz-btn.solid.light{background:#fff;color:#0f5c3a}.dz-btn.ghost{border-color:rgba(255,255,255,.5);color:#fff}
-.dz-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:14px}
-.dz-stat{background:#fff;border:1px solid #e6ebe6;border-radius:22px;padding:18px 20px}
-.dz-stat small{color:#6b7c72}.dz-stat strong{display:block;font-size:34px;margin-top:6px;font-variant-numeric:tabular-nums}
-.dz-stat.hero{background:linear-gradient(145deg,#0f5c3a,#25a066);color:#fff;border:0}.dz-stat.hero small{color:#c9f0da}
-.dz-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.dz-card{padding:20px}.dz-card h4{font-size:15px;margin-bottom:14px;display:flex;justify-content:space-between}
-.dz-card h4 a{font-size:12px;color:#1f8a55;cursor:pointer;font-weight:500}
-.dz-wk{grid-column:span 2}
-.dz-bars{display:flex;gap:14px;align-items:flex-end;height:170px}
-.dz-bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end;font-size:12px;color:#5d6f64}
-.dz-bar i{width:100%;max-width:64px;border-radius:999px;background:#2f8f5f;display:block;min-height:26px}
-.dz-bar.max i{background:#0b3d28}.dz-bar.min i{background:repeating-linear-gradient(135deg,#9fb5a8 0 3px,#e9efea 3px 7px)}
-.dz-now .row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed #e1e8e2;font-size:13px}
-.dz-now .row.on{color:#0f5c3a;font-weight:700}.dz-now .big{font-size:18px;font-weight:700;color:#0f5c3a;margin-bottom:8px}
-.dz-quick{display:flex;flex-direction:column;gap:8px}.dz-quick h4{margin-bottom:6px}
-.dz-quick button{font:inherit;text-align:right;padding:11px 14px;border-radius:14px;border:1px solid #e1e8e2;background:#f7faf7;cursor:pointer}
-.dz-quick button:hover{background:#e8f3ec}
-.dz-log{grid-column:span 2}.dz-log .li{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #eef2ee;font-size:13px}
-.dz-bk{background:linear-gradient(150deg,#0b3d28,#157a4b)!important;color:#fff;display:flex;flex-direction:column;gap:10px}
-.dz-bk p{font-size:13px;line-height:1.9;color:#d3f0df}
-.dz-gauge .leg{display:flex;gap:12px;justify-content:center;font-size:12px;margin-top:6px;flex-wrap:wrap}
-.dz-gauge .leg b{display:inline-block;width:10px;height:10px;border-radius:50%;margin-left:5px}
-@media(max-width:900px){.dz-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.dz-grid{grid-template-columns:1fr}.dz-wk,.dz-log{grid-column:auto}}</style>
-<script id="dz-js">
-(function(){
-var LOGK='bagheri_admin_log',BKK='bagheri_last_backup',$=function(i){return document.getElementById(i)};
-var DAYS=['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه'],JD={6:'شنبه',0:'یکشنبه',1:'دوشنبه',2:'سه‌شنبه',3:'چهارشنبه'};
-function fa(n){return toFa(String(n))}
-function when(ms){try{return new Date(ms).toLocaleString('fa-IR',{dateStyle:'medium',timeStyle:'short'})}catch(e){return ''}}
-function getLog(){try{var a=JSON.parse(localStorage.getItem(LOGK)||'[]');return Array.isArray(a)?a:[]}catch(e){return[]}}
-function addLog(a){var l=getLog();l.unshift({t:Date.now(),a:a});try{localStorage.setItem(LOGK,JSON.stringify(l.slice(0,200)))}catch(e){}}
-var LBL={deletedClasses:'کلاس',deletedTeachers:'دبیر',deletedSubjects:'درس',deletedSchedule:'زنگ برنامه',customTeachers:'دبیر',customSubjects:'درس',customSchedule:'زنگ برنامه',scheduleEdits:'ویرایش برنامه',classRenames:'تغییر نام کلاس',teacherRenames:'تغییر نام دبیر'};
-function size(v){return Array.isArray(v)?v.length:(v&&typeof v==='object'?Object.keys(v).length:0)}
-/* log every real save, derived from what changed in the state */
-var _save=window.saveAdminState;
-window.saveAdminState=function(st){
-  var old=adminState(),ch=[];
-  Object.keys(st).forEach(function(k){
-    if(JSON.stringify(st[k])===JSON.stringify(old[k]))return;
-    var d=size(st[k])-size(old[k]),l=LBL[k]||k,del=/^deleted/.test(k);
-    ch.push(d>0?((del?'حذف ':'افزودن ')+l+' ('+fa(d)+')'):d<0?('بازگردانی '+l):('ویرایش '+l));
-  });
-  var r=_save.apply(this,arguments);
-  if(ch.length)addLog(ch.join('، '));
-  return r;
-};
-function rows(){try{return getAdminScheduleRows()}catch(e){return[]}}
-function grade(c){var p=String(c).trim().split(/\s+/),n=adminClassNumber(p[p.length-1]);return n>=100&&n<110?0:n>=110&&n<120?1:n>=120&&n<130?2:-1}
-function renderDash(){
-  var R=rows(),T=getAdminTeachers(),C=getAdminClasses(),S=getAdminSubjects();
-  $('dzStats').innerHTML=[['دبیران',T.length,1],['کلاس‌ها',C.length],['دروس',S.length],['زنگ‌های ثبت‌شده',R.length]].map(function(s){return'<div class="dz-stat'+(s[2]?' hero':'')+'"><small>'+s[0]+'</small><strong>'+fa(s[1])+'</strong></div>'}).join('');
-  var cnt=DAYS.map(function(d){return R.filter(function(r){return r.day===d}).length}),mx=Math.max.apply(null,cnt.concat(1)),mn=Math.min.apply(null,cnt);
-  $('dzBars').innerHTML=DAYS.map(function(d,i){var c=cnt[i];return'<div class="dz-bar'+(c===mx?' max':c===mn?' min':'')+'"><span>'+fa(c)+'</span><i style="height:'+Math.max(16,Math.round(c/mx*100))+'%"></i>'+d+'</div>'}).join('');
-  var n=new Date(),m=n.getHours()*60+n.getMinutes(),day=JD[n.getDay()],cur=0,nxt=0;
-  [1,2,3,4].forEach(function(p){var a=t2m(PERIODS[p].start),b=t2m(PERIODS[p].end);if(m>=a&&m<b)cur=p;else if(m<a&&!nxt)nxt=p});
-  var h=!day?'امروز روز برنامه‌ی مدرسه نیست':cur?'زنگ '+fa(cur)+' در جریان است':nxt?'زنگ بعدی: '+fa(nxt):'زنگ‌های امروز تمام شد';
-  $('dzNow').innerHTML='<div class="big">'+h+'</div>'+[1,2,3,4].map(function(p){var k=day?R.filter(function(r){return r.day===day&&r.period===p}).length:0;return'<div class="row'+(p===cur?' on':'')+'"><span>زنگ '+fa(p)+' · '+fa(PERIODS[p].start)+' تا '+fa(PERIODS[p].end)+'</span><span>'+fa(k)+' کلاس</span></div>'}).join('');
-  var l=getLog().slice(0,5);
-  $('dzLog').innerHTML=l.length?l.map(function(x){return'<div class="li"><span>'+escapeHtmlAdmin(x.a)+'</span><span class="admin-muted">'+when(x.t)+'</span></div>'}).join(''):'<span class="admin-muted">هنوز تغییری ثبت نشده است.</span>';
-  var g=[0,0,0];C.forEach(function(c){var i=grade(c);if(i>=0)g[i]++});var tot=g[0]+g[1]+g[2]||1,off=0,col=['#0b3d28','#2f8f5f','url(#dzH)'],nm=['دهم','یازدهم','دوازدهم'],seg='';
-  g.forEach(function(v,i){var w=v/tot*100;seg+='<path d="M20 110A80 80 0 0 1 180 110" fill="none" stroke="'+col[i]+'" stroke-width="26" pathLength="100" stroke-dasharray="'+Math.max(w-1,0)+' 200" stroke-dashoffset="'+(-off)+'"/>';off+=w});
-  $('dzGauge').innerHTML='<svg viewBox="0 0 200 125" width="100%" style="max-width:260px;display:block;margin:auto"><defs><pattern id="dzH" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#e9efea"/><rect width="3" height="6" fill="#9fb5a8"/></pattern></defs>'+seg+'<text x="100" y="100" text-anchor="middle" font-size="30" font-weight="700" fill="#0f2a1c">'+fa(C.length)+'</text><text x="100" y="118" text-anchor="middle" font-size="10" fill="#7a8a80">کلاس</text></svg><div class="leg">'+nm.map(function(x,i){return'<span><b style="background:'+['#0b3d28','#2f8f5f','#9fb5a8'][i]+'"></b>'+x+' '+fa(g[i])+'</span>'}).join('')+'</div>';
-  var lb=+localStorage.getItem(BKK);
-  $('dzBkInfo').textContent=lb?'آخرین پشتیبان‌گیری: '+when(lb):'هنوز از این مرورگر پشتیبان‌گیری نشده است. پیشنهاد می‌شود پیش از تغییرات بزرگ یک نسخه بگیرید.';
-}
-function renderBells(){var t=$('adBellsTable');if(!t)return;while(t.rows.length>1)t.deleteRow(1);[1,2,3,4].forEach(function(p){var r=t.insertRow(-1);r.innerHTML='<td>'+fa(p)+'</td><td>'+fa(PERIODS[p].start)+'</td><td>'+fa(PERIODS[p].end)+'</td><td>'+fa(t2m(PERIODS[p].end)-t2m(PERIODS[p].start))+'</td>'})}
-function renderLogs(){var t=$('adLogTable');if(!t)return;while(t.rows.length>1)t.deleteRow(1);var l=getLog();if(!l.length){t.insertRow(-1).innerHTML='<td colspan="3" class="admin-muted">تاریخچه‌ای ثبت نشده است.</td>';return}l.forEach(function(x){var r=t.insertRow(-1);r.innerHTML='<td>'+when(x.t)+'</td><td>'+escapeHtmlAdmin(x.a)+'</td><td>مدیر</td>'})}
-function renderSettings(){var u=$('adSetUser'),s=$('adSetSync');if(u)u.value=(function(){try{var x=JSON.parse(localStorage.getItem(SB_K.session)||'null');return x&&x.user&&x.user.email||'مدیر واردشده'}catch(e){return'مدیر واردشده'}})();if(s)s.value=localStorage.getItem(SB_K.pending)?'تغییرات ارسال‌نشده وجود دارد':'همگام با سرور'}
-function renderAll(){renderDash();renderBells();renderLogs();renderSettings();renderAdminTeachersTable();renderAdminClassesTable();populateAdminScheduleClassSelect();renderAdminScheduleTable();renderAdminSubjects()}
-window.adminLogClear=function(){if(confirm('تاریخچه‌ی تغییرات پاک شود؟')){localStorage.removeItem(LOGK);renderLogs();renderDash()}};
-window.adminGo=function(i){var b=document.querySelectorAll('.admin-panel-nav button')[i];if(b)b.click()};
-/* backup: real JSON file of all admin changes + base data */
-window.adminBackup=function(){
-  var data={app:'bagheri-timetable',version:1,created_at:new Date().toISOString(),adminState:adminState(),baseRawData:baseRawData,log:getLog()};
-  var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a'),d=new Date().toISOString().slice(0,16).replace(/[:T]/g,'-');
-  a.href=URL.createObjectURL(blob);a.download='bagheri-backup-'+d+'.json';document.body.appendChild(a);a.click();
-  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},400);
-  localStorage.setItem(BKK,String(Date.now()));addLog('پشتیبان‌گیری از داده‌ها');renderDash();showAdminToast('✅ فایل پشتیبان دانلود شد');
-};
-window.adminRestorePick=function(){var i=$('adRestoreInput');i.value='';i.click()};
-window.adminRestore=function(inp){
-  var f=inp.files&&inp.files[0];if(!f)return;
-  if(f.size>5*1024*1024){showAdminToast('⚠️ فایل بیش از حد بزرگ است');return}
-  var fr=new FileReader();
-  fr.onload=function(){
-    var d;try{d=JSON.parse(fr.result)}catch(e){showAdminToast('⚠️ فایل پشتیبان معتبر نیست');return}
-    if(!d||d.app!=='bagheri-timetable'||!d.adminState||typeof d.adminState!=='object'||Array.isArray(d.adminState)){showAdminToast('⚠️ این فایل، پشتیبان این سامانه نیست');return}
-    if(!confirm('داده‌های فعلی با فایل پشتیبان ('+when(Date.parse(d.created_at))+') جایگزین شوند؟'))return;
-    adminBackup();
-    localStorage.setItem('bagheriAdminState',JSON.stringify(d.adminState));window.__adminDirty=true;addLog('بازیابی از فایل پشتیبان');
-    sbPushState().then(function(){showAdminToast('✅ بازیابی انجام شد؛ صفحه دوباره بارگذاری می‌شود');setTimeout(function(){location.reload()},1500)});
-  };
-  fr.readAsText(f);
-};
-window.saveAdminSettings=function(){showAdminToast('در حال ارسال به سرور…');sbPushState().then(renderSettings)};
-window.saveScheduleSettings=window.saveAdminSettings;
-/* adminPage: fix null-button crash, refresh live pages */
-var _ap=window.adminPage;
-window.adminPage=function(btn,title){
-  if(!btn){var bs=document.querySelectorAll('.admin-panel-nav button');for(var i=0;i<bs.length;i++)if(bs[i].textContent.indexOf(title)>-1){btn=bs[i];break}}
-  if(!btn)return;_ap.call(this,btn,title);
-  if(title==='داشبورد')renderDash();if(title==='زمان‌بندی زنگ‌ها')renderBells();if(title==='تاریخچه تغییرات')renderLogs();if(title==='تنظیمات')renderSettings();
-};
-window.editAdminRow=window.editAdminRow||function(){showAdminToast('این بخش قابل ویرایش نیست')};
-var _o=window.openAdminPanel;
-window.addEventListener('DOMContentLoaded',function(){renderAll();setInterval(function(){if($('ad-dashboard').classList.contains('active'))renderDash()},60000)});
-})();
-</script>
 <style id="dz-fix">
-/* one layout for phone, tablet and laptop: top bar + pill nav that never hides an option */
-.admin-panel.show{flex-direction:column!important}
-.admin-panel .admin-panel-sidebar{flex:0 0 auto!important;width:100%!important;position:relative!important;z-index:6;display:flex!important;align-items:center;gap:10px;padding:10px 18px!important;overflow:visible!important;background:#fff!important;border-bottom:1px solid #e1e6e1;box-shadow:0 4px 18px rgba(15,60,35,.06)!important}
-.admin-panel .admin-panel-brand{display:block!important;flex:0 0 auto;width:auto!important;padding:0 6px 0 14px!important;border:0!important;background:transparent!important;white-space:nowrap}
-.admin-panel .admin-panel-nav,.admin-panel .admin-panel-sidebar:hover .admin-panel-nav,.admin-panel .admin-panel-sidebar:focus-within .admin-panel-nav{flex:1;width:auto!important;min-height:0!important;display:flex!important;flex-wrap:wrap;gap:6px;padding:0!important;overflow:visible!important;white-space:normal;box-shadow:none!important;background:transparent!important}
-.admin-panel .admin-panel-nav button{flex:0 0 auto;width:auto!important;margin:0!important;padding:9px 15px!important;font-size:13px!important;white-space:nowrap}
-.admin-panel .admin-panel-main{flex:1 1 0;min-height:0;overflow:auto;padding:0 20px 28px!important}
-.admin-panel .admin-panel-top{margin-top:14px}
-.dz-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-@media(max-width:1100px){.dz-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.dz-wk,.dz-log{grid-column:span 2}}
-@media(max-width:700px){
- .admin-panel .admin-panel-brand{display:none!important}
- .admin-panel .admin-panel-sidebar{padding:8px 10px!important}
- .admin-panel .admin-panel-nav,.admin-panel .admin-panel-sidebar:hover .admin-panel-nav,.admin-panel .admin-panel-sidebar:focus-within .admin-panel-nav{flex-wrap:nowrap;overflow-x:auto!important;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:2px 2px!important}
- .admin-panel .admin-panel-nav::-webkit-scrollbar{display:none}
- .admin-panel .admin-panel-nav button{scroll-snap-align:center}
- .admin-panel .admin-panel-main{padding:0 12px 24px!important}
- .admin-panel .admin-panel-top{height:60px!important;padding:0 16px!important}
- .dz-grid{grid-template-columns:1fr}.dz-wk,.dz-log{grid-column:auto}
- .dz-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.dz-stat strong{font-size:28px}
- .dz-bars{gap:8px}}
 /* search box: blinking "type here" cue */
 .search-wrapper .type-cue{position:absolute;right:60px;top:50%;width:2px;height:24px;margin-top:-12px;border-radius:2px;background:var(--gold-light);opacity:0;pointer-events:none;z-index:2;box-shadow:0 0 8px var(--gold-light)}
 .search-wrapper input:placeholder-shown:not(:focus)~.type-cue{animation:cueBlink 1.1s steps(1) infinite}
