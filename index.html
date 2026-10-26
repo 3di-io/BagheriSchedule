@@ -2618,6 +2618,36 @@ html.gs-pending .search-section.visible { opacity: 0; }
 .drawer-foot .site-header-update, .drawer-foot .site-header-update.hidden { position: static; opacity: 1; transform: none; pointer-events: auto; margin: 0 auto; font-size: 11.5px; padding: 7px 14px; color: #fff; background: rgba(255,255,255,.06); border: 1px solid rgba(204,208,207,.3); }
 .admin-drawer { display: flex; flex-direction: column; }
 .admin-drawer > * { flex: none; }</style>
+<style id="cls-matrix">
+.wk-title{font-size:.95rem;font-weight:800;color:var(--gold-light);margin:4px 2px 12px}
+.wk-wrap{overflow-x:auto;border-radius:18px;border:1px solid var(--card-border);background:var(--card-bg);-webkit-overflow-scrolling:touch}
+.wk-table{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed;min-width:300px}
+.wk-table th,.wk-table td{padding:9px 4px;text-align:center;vertical-align:middle;border-bottom:1px solid rgba(204,208,207,.12);border-left:1px solid rgba(204,208,207,.1)}
+.wk-table tr>*:last-child{border-left:0}
+.wk-table tbody tr:last-child>*{border-bottom:0}
+.wk-table thead th{font-size:.76rem;font-weight:800;color:var(--gold-light);background:rgba(204,208,207,.09);line-height:1.4}
+.wk-table thead th small{display:block;margin-top:3px;font-size:.64rem;font-weight:500;color:var(--text-soft);line-height:1.45;font-variant-numeric:tabular-nums}
+.wk-table .wk-corner{width:62px}
+.wk-table tbody th{width:62px;font-size:.78rem;font-weight:800;color:#fff;background:rgba(204,208,207,.06)}
+.wk-cell{height:76px;font-size:.8rem}
+.wk-sub{font-size:.8rem;font-weight:700;color:#fff;line-height:1.55;overflow-wrap:anywhere}
+.wk-tch{margin-top:2px;font-size:.66rem;font-weight:500;color:var(--text-soft);line-height:1.5;overflow-wrap:anywhere}
+.wk-multi .wk-ent+.wk-ent{margin-top:6px;padding-top:6px;border-top:1px dashed rgba(204,208,207,.28)}
+.wk-multi .wk-sub{font-size:.74rem}
+.wk-special{background:rgba(204,208,207,.07)}
+.wk-special .wk-sub{color:var(--gold-light)}
+.wk-empty .wk-dash{color:var(--text-dim)}
+.wk-table tr.wk-today>*{background:linear-gradient(135deg,rgba(204,208,207,.16),rgba(204,208,207,.06))}
+.wk-table tr.wk-today>th{color:#fff;box-shadow:inset -3px 0 0 var(--gold)}
+@media(min-width:640px){.wk-cell{height:84px}.wk-sub{font-size:.9rem}.wk-tch{font-size:.74rem}.wk-table thead th small{font-size:.7rem}.wk-table tbody th,.wk-table .wk-corner{width:84px}}
+.roster{margin-top:18px;padding:18px 16px;border-radius:18px;border:1px solid var(--card-border);background:var(--card-bg)}
+.roster[hidden]{display:none}
+.roster-title{font-size:.95rem;font-weight:800;color:var(--gold-light);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(204,208,207,.16)}
+.roster-msg{font-size:.85rem;color:var(--text-soft)}
+.roster-msg:empty{display:none}
+.roster-list{list-style:none;margin:0;padding:0;column-width:160px;column-gap:18px}
+.roster-list li{break-inside:avoid;padding:7px 10px;margin-bottom:6px;border-radius:10px;background:rgba(204,208,207,.06);font-size:.86rem;line-height:1.6;color:#fff}
+</style>
 <body class="dark">
 <div class="site-header" id="siteHeader">
   <button class="admin-menu-btn" aria-label="باز کردن منو" onclick="openAdminMenu()"><span></span><span></span><span></span></button>
@@ -2695,7 +2725,7 @@ html.gs-pending .search-section.visible { opacity: 0; }
 <div id="smooth-content">
 <div class="container">
   <header>
-    <img src="assets/logo.jpg" alt="لوگوی دبیرستان شهید حسن باقری" class="logo">
+    <img src="assets/logo.png" alt="لوگوی دبیرستان شهید حسن باقری" class="logo">
     <h1>دبیرستان شهید حسن باقری</h1>
     <div class="subtitle-wrap">
       <span class="subtitle-line"></span>
@@ -3481,6 +3511,70 @@ document.getElementById("classSearch").addEventListener("input", function () {
 });
 updateGradeBar();
 
+/* ---- class page: weekly matrix, class list (names only) ---- */
+var WK_DAY_NUM = { "شنبه": 6, "یکشنبه": 0, "دوشنبه": 1, "سه‌شنبه": 2, "چهارشنبه": 3 };
+function classKey(cn) {
+    var m = String(cn).replace(/[۰-۹]/g, function (d) { return "۰۱۲۳۴۵۶۷۸۹".indexOf(d); }).match(/\d+/);
+    return m ? m[0] : null;
+}
+var ROSTER_CACHE = {};
+function loadRoster(cn) {
+    var k = classKey(cn);
+    if (!k) return Promise.resolve([]);
+    if (ROSTER_CACHE[k]) return Promise.resolve(ROSTER_CACHE[k]);
+    return fetch(SB_URL + '/rest/v1/class_students?select=full_name&class_no=eq.' + k + '&order=ord.asc', { headers: { apikey: SB_KEY } })
+        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .then(function (rows) { var a = rows.map(function (x) { return x.full_name; }); if (a.length) ROSTER_CACHE[k] = a; return a; });
+}
+function classCellHtml(lt) {
+    if (!lt || !lt.trim()) return '<td class="wk-cell wk-empty"><span class="wk-dash">—</span></td>';
+    if (lt === "زنگ آزمون") return '<td class="wk-cell wk-special"><div class="wk-sub">📝 آزمون</div></td>';
+    if (lt === "مهارت") return '<td class="wk-cell wk-special"><div class="wk-sub">🎯 مهارت</div></td>';
+    var entries = extractTeachers(lt);
+    if (!entries.length) return '<td class="wk-cell"><div class="wk-sub">' + esc(lt) + '</div></td>';
+    return '<td class="wk-cell' + (entries.length > 1 ? ' wk-multi' : '') + '">' + entries.map(function (e) {
+        return '<div class="wk-ent"><div class="wk-sub">' + esc(e.subject) + '</div><div class="wk-tch">استاد ' + esc(e.teacher) + '</div></div>';
+    }).join('') + '</td>';
+}
+function classMatrixHtml(classData) {
+    var n = 0;
+    classData.forEach(function (dr) { n = Math.max(n, dr[1].length); });
+    var today = new Date().getDay();
+    var h = '<div class="wk-title">📅 برنامه‌ی هفتگی کلاس</div><div class="wk-wrap"><table class="wk-table"><thead><tr><th class="wk-corner">روز</th>';
+    for (var p = 1; p <= n; p++) {
+        var pi = PERIODS[p] || { start: "", end: "" };
+        h += '<th>زنگ ' + toFa(p) + '<small>' + esc(pi.start) + '<br>' + esc(pi.end) + '</small></th>';
+    }
+    h += '</tr></thead><tbody>';
+    classData.forEach(function (dr) {
+        var day = dr[0], lessons = dr[1];
+        h += '<tr' + (WK_DAY_NUM[day] === today ? ' class="wk-today"' : '') + '><th scope="row">' + esc(day) + '</th>';
+        for (var i = 0; i < n; i++) h += classCellHtml(lessons[i]);
+        h += '</tr>';
+    });
+    return h + '</tbody></table></div>';
+}
+function classRosterHtml(cn) {
+    return '<div class="roster" id="rosterBox" data-class="' + esc(cn) + '" hidden><div class="roster-title">👥 لیست کلاسی ' + esc(cn) + '</div><div class="roster-msg" id="rosterMsg"></div><ul class="roster-list" id="rosterList"></ul></div>';
+}
+function toggleRoster() {
+    var box = document.getElementById("rosterBox"), btn = document.getElementById("rosterBtn"), txt = document.getElementById("rosterBtnTxt");
+    if (!box || !btn) return;
+    var open = box.hasAttribute("hidden");
+    if (open) box.removeAttribute("hidden"); else box.setAttribute("hidden", "");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    if (txt) txt.textContent = open ? "بستن لیست کلاسی" : "لیست کلاسی";
+    if (!open) return;
+    var list = document.getElementById("rosterList"), msg = document.getElementById("rosterMsg");
+    box.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (list.children.length) return;
+    msg.textContent = "در حال دریافت لیست…";
+    loadRoster(box.getAttribute("data-class")).then(function (names) {
+        if (!names.length) { msg.textContent = "لیست این کلاس هنوز ثبت نشده است."; return; }
+        msg.textContent = "";
+        list.innerHTML = names.map(function (nm) { return '<li>' + esc(nm) + '</li>'; }).join('');
+    }).catch(function () { msg.textContent = "دریافت لیست ناموفق بود؛ اتصال اینترنت را بررسی کنید و دوباره امتحان کنید."; });
+}
 function showClassSchedule(className) {
     var res = document.getElementById("classRes");
     var classData = null;
@@ -3499,50 +3593,12 @@ function showClassSchedule(className) {
     html += '<small>📚 برنامه‌ی هفتگی کلاس</small>';
     html += '</div>';
     html += '</div>';
-    html += '<div class="class-list">';
-    classData.forEach(function (dr) {
-        var day = dr[0], lessons = dr[1];
-        html += '<div class="day-group-title">' + esc(day) + '</div>';
-        lessons.forEach(function (lt, idx) {
-            var period = idx + 1;
-            var periodInfo = PERIODS[period];
-            var subjectText, teacherText;
-            if (!lt || !lt.trim()) {
-                subjectText = "—";
-                teacherText = "خالی";
-            }
-            else if (lt === "زنگ آزمون") {
-                subjectText = "📝 زنگ آزمون";
-                teacherText = "کل کلاس";
-            }
-            else if (lt === "مهارت") {
-                subjectText = "🎯 مهارت";
-                teacherText = "—";
-            }
-            else {
-                var entries = extractTeachers(lt);
-                if (entries.length === 0) {
-                    subjectText = lt;
-                    teacherText = "—";
-                }
-                else {
-                    subjectText = entries.map(function (e) { return e.subject; }).join(" / ");
-                    teacherText = entries.map(function (e) { return "استاد " + e.teacher; }).join(" / ");
-                }
-            }
-            html += '<div class="class-item">';
-            html += '<div class="period-badge">زنگ ' + toFa(period) + '</div>';
-            html += '<div class="class-info">';
-            html += '<div class="name">' + esc(subjectText) + '</div>';
-            html += '<div class="details">👨‍🏫 ' + esc(teacherText) + ' &nbsp;|&nbsp; 🕐 ' + esc(periodInfo.start) + ' تا ' + esc(periodInfo.end) + '</div>';
-            html += '</div>';
-            html += '</div>';
-        });
-    });
-    html += '</div>';
+    html += classMatrixHtml(classData);
     html += '<div class="teacher-actions">';
+    html += '<button type="button" class="action-btn primary" id="rosterBtn" aria-expanded="false" aria-controls="rosterBox" onclick="toggleRoster()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span id="rosterBtnTxt">لیست کلاسی</span></button>';
     html += '<button type="button" class="action-btn" onclick="renderClassesList()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span>بازگشت به لیست کلاس‌ها</span></button>';
     html += '</div>';
+    html += classRosterHtml(className);
     res.innerHTML = html;
     res.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
