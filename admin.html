@@ -5677,5 +5677,188 @@ tr.st-flash td{background:rgba(204,208,207,.3)!important;transition:background .
 })();
 </script>
 
+<style id="adsb-layout">
+/* ===== Admin: right-side vertical menu (scrollable list) + hide/show toggle — desktop & mobile ===== */
+#adminPanel{overflow:hidden}
+#adminPanel.show{flex-direction:row!important;align-items:stretch}
+
+/* sidebar = RTL start edge → sits on the right */
+#adminPanel .admin-panel-sidebar{
+  flex:0 0 280px!important;width:280px!important;height:100%;
+  display:flex!important;flex-direction:column;align-items:stretch;gap:0;
+  padding:0!important;overflow:hidden!important;position:relative!important;z-index:30;
+  background:linear-gradient(180deg,#040e13,#081922)!important;
+  border-bottom:0!important;border-left:1px solid rgba(204,208,207,.14)!important;
+  box-shadow:none!important}
+#adminPanel .admin-panel-brand{
+  display:flex!important;align-items:center;gap:10px;flex:0 0 auto;width:auto!important;
+  padding:20px 20px 16px!important;font-size:17px;white-space:nowrap;
+  border-bottom:1px solid rgba(204,208,207,.14)!important;background:transparent!important}
+#adminPanel .admin-panel-nav,
+#adminPanel .admin-panel-sidebar:hover .admin-panel-nav,
+#adminPanel .admin-panel-sidebar:focus-within .admin-panel-nav{
+  flex:1 1 0!important;width:100%!important;min-height:0!important;
+  display:flex!important;flex-direction:column;flex-wrap:nowrap!important;gap:4px;
+  padding:12px 10px 18px!important;
+  overflow-y:auto!important;overflow-x:hidden!important;
+  scroll-snap-type:none!important;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  white-space:normal;box-shadow:none!important;background:transparent!important;
+  scrollbar-width:thin;scrollbar-color:rgba(204,208,207,.3) transparent}
+#adminPanel .admin-panel-nav::-webkit-scrollbar{display:block;width:6px}
+#adminPanel .admin-panel-nav::-webkit-scrollbar-thumb{background:rgba(204,208,207,.28);border-radius:6px}
+#adminPanel .admin-panel-nav button{
+  flex:0 0 auto;width:100%!important;margin:0!important;
+  display:flex;align-items:center;gap:10px;text-align:right;
+  padding:12px 14px!important;font-size:14px!important;line-height:1.6;
+  white-space:normal;border-radius:14px!important;scroll-snap-align:none}
+#adminPanel .admin-panel-nav button:hover{transform:none!important}
+#adminPanel .admin-panel-main{flex:1 1 0!important;min-width:0;height:100%;overflow:auto!important}
+
+/* hidden state on desktop: the content takes the full width */
+@media (min-width:901px){
+  #adminPanel.sb-collapsed .admin-panel-sidebar{display:none!important}
+}
+
+/* header: toggle button + title */
+.adsb-title{display:flex;align-items:center;gap:12px;min-width:0}
+.adsb-title h2{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#adSbToggle{display:inline-flex;align-items:center;gap:8px;flex:0 0 auto;height:40px;padding:0 14px;
+  border-radius:999px;border:1.5px solid rgba(204,208,207,.4);background:rgba(204,208,207,.1);
+  color:#E6E9E8;font:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:background .2s,border-color .2s}
+#adSbToggle:hover{background:rgba(204,208,207,.2);border-color:rgba(204,208,207,.6)}
+#adSbToggle:focus-visible,.adsb-close:focus-visible{outline:2px solid #E6E9E8;outline-offset:2px}
+#adSbToggle svg{width:20px;height:20px;flex:0 0 auto}
+#adSbToggle .adsb-fill{opacity:0;transition:opacity .2s}
+#adSbToggle.is-open .adsb-fill{opacity:.4}
+
+/* close button inside drawer (mobile only) + footer actions */
+.adsb-close{display:none;margin-inline-start:auto;width:36px;height:36px;border-radius:50%;
+  border:1.5px solid rgba(204,208,207,.35);background:transparent;color:#E6E9E8;font:inherit;font-size:16px;cursor:pointer}
+.adsb-foot{display:none;flex:0 0 auto;gap:8px;padding:12px 12px calc(12px + env(safe-area-inset-bottom,0px));
+  border-top:1px solid rgba(204,208,207,.14)}
+.adsb-foot a,.adsb-foot button{flex:1;text-align:center;font:inherit;font-size:13px;font-weight:600;padding:10px;
+  border-radius:12px;color:#E6E9E8;text-decoration:none;border:1.5px solid rgba(204,208,207,.35);background:transparent;cursor:pointer}
+.adsb-foot .out{color:#fca5a5;border-color:rgba(252,165,165,.4)}
+#adSbBackdrop{display:none}
+
+/* tablet + phone: the menu becomes a drawer that slides in from the right */
+@media (max-width:900px){
+  #adSbBackdrop{display:block;position:fixed;inset:0;z-index:25;background:rgba(2,8,12,.6);
+    -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);opacity:0;visibility:hidden;
+    transition:opacity .28s ease,visibility 0s .28s}
+  #adminPanel.sb-open #adSbBackdrop{opacity:1;visibility:visible;transition:opacity .28s ease}
+  #adminPanel .admin-panel-sidebar{
+    position:fixed!important;top:0;right:0;bottom:0;height:auto;flex:none!important;
+    width:min(86vw,320px)!important;border-left:0!important;
+    box-shadow:-14px 0 40px rgba(0,0,0,.45)!important;
+    transform:translateX(105%);visibility:hidden;transition:transform .28s ease,visibility 0s .28s}
+  #adminPanel.sb-open .admin-panel-sidebar{transform:none;visibility:visible;transition:transform .28s ease}
+  #adminPanel .admin-panel-nav{padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))!important}
+  .adsb-close{display:inline-flex;align-items:center;justify-content:center}
+  #adSbToggle{width:42px;height:42px;padding:0;justify-content:center}
+  #adSbToggle .adsb-lbl{display:none}
+}
+@media (max-width:600px){
+  .adsb-foot{display:flex}
+  #adminPanel .admin-top-actions{display:none!important}
+}
+@media (prefers-reduced-motion:reduce){
+  #adminPanel .admin-panel-sidebar,#adSbBackdrop,#adSbToggle .adsb-fill{transition:none!important}
+}
+</style>
+
+<script id="adsb-script">
+/* ===== Admin sidebar: toggle, drawer on small screens, remembered state on desktop ===== */
+(function () {
+  var panel = document.getElementById('adminPanel');
+  if (!panel) return;
+  var side = panel.querySelector('.admin-panel-sidebar');
+  var nav = panel.querySelector('.admin-panel-nav');
+  var brand = panel.querySelector('.admin-panel-brand');
+  var top = panel.querySelector('.admin-panel-top');
+  var title = document.getElementById('adminPanelTitle');
+  var main = panel.querySelector('.admin-panel-main');
+  if (!side || !nav || !top || !title) return;
+  var KEY = 'adminSidebarHidden';
+  var mq = window.matchMedia('(max-width: 900px)');
+
+  /* toggle button (placed before the page title) */
+  var wrap = document.createElement('div');
+  wrap.className = 'adsb-title';
+  top.insertBefore(wrap, title);
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.id = 'adSbToggle';
+  btn.setAttribute('aria-controls', 'adminSidebarNav');
+  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect class="adsb-fill" x="15" y="3" width="6" height="18" fill="currentColor" stroke="none"/><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M15 3v18"/></svg><span class="adsb-lbl"></span>';
+  wrap.appendChild(btn);
+  wrap.appendChild(title);
+  var lbl = btn.querySelector('.adsb-lbl');
+  nav.id = 'adminSidebarNav';
+
+  /* backdrop, close button, footer actions (used by the mobile drawer) */
+  var back = document.createElement('div');
+  back.id = 'adSbBackdrop';
+  panel.appendChild(back);
+  if (brand) {
+    var x = document.createElement('button');
+    x.type = 'button'; x.className = 'adsb-close'; x.setAttribute('aria-label', 'بستن منو'); x.textContent = '✕';
+    x.addEventListener('click', function () { setOpen(false); });
+    brand.appendChild(x);
+  }
+  var foot = document.createElement('div');
+  foot.className = 'adsb-foot';
+  foot.innerHTML = '<a href="index.html" target="_blank" rel="noopener">مشاهده سایت</a><button type="button" class="out">خروج از پنل</button>';
+  foot.querySelector('button').addEventListener('click', function () { if (window.closeAdminPanel) window.closeAdminPanel(); });
+  side.appendChild(foot);
+
+  function isOpen() {
+    return mq.matches ? panel.classList.contains('sb-open') : !panel.classList.contains('sb-collapsed');
+  }
+  function render() {
+    var open = isOpen();
+    btn.classList.toggle('is-open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    var t = open ? 'مخفی‌سازی منو' : 'نمایش منو';
+    lbl.textContent = t;
+    btn.setAttribute('aria-label', t);
+    btn.title = t;
+  }
+  function setOpen(open) {
+    if (mq.matches) {
+      panel.classList.toggle('sb-open', open);
+    } else {
+      panel.classList.toggle('sb-collapsed', !open);
+      try { localStorage.setItem(KEY, open ? '0' : '1'); } catch (e) {}
+    }
+    render();
+  }
+
+  /* initial state: desktop remembers the last choice; mobile always starts closed */
+  try { if (localStorage.getItem(KEY) === '1') panel.classList.add('sb-collapsed'); } catch (e) {}
+  render();
+
+  btn.addEventListener('click', function () { setOpen(!isOpen()); });
+  back.addEventListener('click', function () { setOpen(false); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && mq.matches && panel.classList.contains('sb-open')) setOpen(false);
+  });
+  /* choosing a section closes the drawer on small screens */
+  nav.addEventListener('click', function (e) {
+    if (mq.matches && e.target.closest('button')) setTimeout(function () { setOpen(false); }, 120);
+  });
+  var onMq = function () { panel.classList.remove('sb-open'); render(); };
+  if (mq.addEventListener) mq.addEventListener('change', onMq); else if (mq.addListener) mq.addListener(onMq);
+
+  /* every section starts at the top; keep the hidden sidebar from being scrolled sideways by scrollIntoView */
+  var prev = window.adminPage;
+  window.adminPage = function () {
+    var r = prev ? prev.apply(this, arguments) : undefined;
+    try { panel.scrollLeft = 0; side.scrollLeft = 0; nav.scrollLeft = 0; if (main) main.scrollTop = 0; } catch (e) {}
+    return r;
+  };
+})();
+</script>
+
 </body>
 </html>
