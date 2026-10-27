@@ -2711,6 +2711,7 @@ html.gs-pending .search-section.visible { opacity: 0; }
       <button onclick="adminPage(this,'زمان‌بندی زنگ‌ها')">⏰ زمان‌بندی زنگ‌ها</button>
       <button onclick="adminPage(this,'تاریخچه تغییرات')">🕘 تاریخچه تغییرات</button>
       <button onclick="adminPage(this,'اطلاع‌رسانی')">📢 اطلاع‌رسانی</button>
+      <button onclick="adminPage(this,'دانش‌آموزان')">👥 دانش‌آموزان</button>
       <button onclick="adminPage(this,'آمار بازدید')">📈 آمار بازدید</button>
       <button onclick="adminPage(this,'تنظیمات')">⚙️ تنظیمات</button>
     </nav>
@@ -2845,7 +2846,7 @@ html.gs-pending .search-section.visible { opacity: 0; }
             <span class="admin-muted">فرمت‌های مجاز: Excel و PDF</span>
           </div>
           <div class="admin-quick-grid">
-            <button class="admin-quick" onclick="openExcelImport()">📤 ورود اطلاعات از Excel</button><button class="admin-quick" onclick="openPdfImport()">📄 ورود اطلاعات از PDF</button><button class="admin-quick" onclick="exportExcel()">📥 خروجی Excel</button><button class="admin-quick" onclick="exportPDF()">📄 خروجی PDF</button>
+            <button class="admin-quick" onclick="openExcelImport()">📤 ورود اطلاعات از Excel</button><button class="admin-quick" onclick="openPdfImport()">📄 ورود اطلاعات از PDF</button><button class="admin-quick" onclick="exportExcel()">📥 خروجی Excel</button><button class="admin-quick" onclick="exportPDF()">📄 خروجی PDF</button><button class="admin-quick" onclick="exportTeachersXlsx()">📥 اکسل دبیران و دروس (راست‌چین)</button><button class="admin-quick" onclick="exportStudentsXlsx()">📥 اکسل دانش‌آموزان (هر کلاس یک شیت)</button>
           </div>
           <input id="excelImportInput" type="file" accept=".xlsx,.xls" style="display:none" onchange="handleExcelImport(this)"><input id="pdfImportInput" type="file" accept=".pdf,application/pdf" style="display:none" onchange="handlePdfImport(this)">
           <p class="admin-muted" style="margin-top:14px">فایل‌های CSV و پشتیبان در این بخش پشتیبانی نمی‌شوند.</p>
@@ -2859,6 +2860,22 @@ html.gs-pending .search-section.visible { opacity: 0; }
       <div id="ad-logs" class="ad-page"><div class="admin-placeholder">
   <div class="admin-card-head"><h3>تاریخچه تغییرات</h3><button class="admin-edit-btn admin-danger" onclick="adminLogClear()">پاک‌کردن تاریخچه</button></div>
   <table class="admin-table" id="adLogTable"><tr><th>زمان</th><th>عملیات</th><th>کاربر</th></tr></table></div></div>
+
+      <div id="ad-students" class="ad-page">
+  <div class="dz-head"><div><h3>دانش‌آموزان</h3><p>مدیریت لیست کلاسی؛ ترتیب همیشه بر اساس نام خانوادگی است</p></div>
+    <div class="dz-head-btns"><button class="dz-btn solid" onclick="exportStudentsXlsx()">📥 اکسل دانش‌آموزان</button></div></div>
+  <div class="dz-card st-card">
+    <h4>جست‌وجوی دانش‌آموز در همه‌ی کلاس‌ها</h4>
+    <input id="stSearch" class="admin-control" placeholder="بخشی از نام یا نام خانوادگی…" oninput="STU.search()" autocomplete="off">
+    <div id="stSearchRes" class="st-res"></div>
+  </div>
+  <div class="dz-card st-card">
+    <div class="st-top"><select id="stClass" class="admin-control" onchange="STU.pick()"></select><span id="stCount" class="admin-muted"></span></div>
+    <div id="stStatus" class="admin-muted st-status"></div>
+    <div class="st-add"><input id="stFirst" class="admin-control" placeholder="نام" autocomplete="off"><input id="stLast" class="admin-control" placeholder="نام خانوادگی" autocomplete="off" onkeydown="if(event.key==='Enter')STU.add()"><button class="dz-btn solid" onclick="STU.add()">+ افزودن</button></div>
+    <div class="st-wrap2"><table class="admin-table st-tbl"><thead><tr><th style="width:56px">ردیف</th><th>نام</th><th>نام خانوادگی</th><th style="width:240px">عملیات</th></tr></thead><tbody id="stBody"></tbody></table></div>
+  </div>
+</div>
 
       <div id="ad-stats" class="ad-page">
   <div class="dz-head"><div><h3>آمار بازدید کاربران</h3><p>تعداد کاربران یکتایی که سایت را باز کرده‌اند (بر اساس ساعت و روز، به وقت تهران)</p></div>
@@ -5251,6 +5268,7 @@ window.addEventListener('DOMContentLoaded',function(){renderAll();setInterval(fu
  .dz-bars{gap:8px}}
 
 /* ---- admin page only ---- */
+@media (max-width: 700px) { .admin-table tr{background:rgba(204,208,207,.07)!important;border:1px solid rgba(204,208,207,.16)!important;box-shadow:none!important}.admin-table td::before{color:#9fb0b8!important}.admin-table td{border-color:rgba(204,208,207,.1)!important}.admin-table td input,.admin-table td select{color:#fff!important}}
 .lg-submit{background:linear-gradient(135deg,#CCD0CF,#E6E9E8)!important;color:#11212D!important;box-shadow:0 10px 26px rgba(0,0,0,.35)!important}
 .lg-card::before{background:radial-gradient(70% 38% at 50% 0%,rgba(204,208,207,.16),transparent 70%)!important}
 #siteHeader,#adminDrawerBackdrop,#adminDrawer,#aboutModal,.bg-blob,#bgFx,#smooth-wrapper,#qrModal,#spModal,#toast{display:none!important}
@@ -5274,6 +5292,24 @@ body{padding:0!important;overflow:hidden}
 .st-matrix tr.today th.day::after{content:" • امروز";color:#CCD0CF;font-weight:400}
 .st-legend{display:flex;gap:6px;align-items:center;justify-content:flex-end;margin-top:10px;font-size:11px;color:#9fb0b8}
 .st-legend i{width:18px;height:12px;border-radius:4px;background:#CCD0CF;display:inline-block}
+.st-card{margin-bottom:14px}
+.st-card h4{margin-bottom:10px}
+.st-res{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.st-hit{font:inherit;display:flex;justify-content:space-between;gap:12px;align-items:center;text-align:right;padding:9px 14px;border-radius:12px;border:1px solid rgba(204,208,207,.16);background:rgba(204,208,207,.06);color:#E6E9E8;cursor:pointer}
+.st-hit:hover{background:rgba(204,208,207,.16)}
+.st-hit span{font-size:12px;color:#9fb0b8}
+.st-top{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.st-top select{width:auto;min-width:220px;margin:0}
+.st-status{min-height:20px;margin-bottom:6px}
+.st-add{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}
+.st-add .admin-control{flex:1;min-width:140px;margin:0}
+.st-wrap2{overflow-x:auto;border-radius:14px}
+.st-tbl td,.st-tbl th{text-align:right}
+.st-tbl td:first-child,.st-tbl th:first-child{text-align:center}
+.st-tbl .admin-control{margin:0;padding:6px 10px;min-width:110px}
+.st-acts{white-space:nowrap}
+.st-acts .admin-edit-btn{margin-left:4px}
+tr.st-flash td{background:rgba(204,208,207,.3)!important;transition:background .6s}
 </style>
 <script>
 /* ===== Admin: visit statistics matrix (rpc visit_stats) ===== */
@@ -5345,5 +5381,301 @@ body{padding:0!important;overflow:hidden}
   setInterval(function () { var p = $('ad-stats'); if (p && p.classList.contains('active') && !document.hidden) window.statsLoad(); }, 60000);
 })();
 </script>
+<script>
+/* ===== Admin: students tab (class_students in Supabase) + RTL xlsx exports ===== */
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var fa = function (n) { return String(n).replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; }); };
+  var esc = function (v) { return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); };
+  var ST = { rows: {}, loaded: false, cls: '', edit: -1, move: -1, q: Promise.resolve() };
+
+  /* ---------- names: normalisation + Persian alphabetical order (آ first) ---------- */
+  var ALPHA = 'آ ا ء ؤ ئ ب پ ت ث ج چ ح خ د ذ ر ز ژ س ش ص ض ط ظ ع غ ف ق ک گ ل م ن و ه ی'.split(' ');
+  function norm(s) {
+    s = String(s == null ? '' : s).replace(/ي/g, 'ی').replace(/ك/g, 'ک').replace(/ى/g, 'ی').replace(/[\u200e\u200f\u00a0]/g, ' ').replace(/\s+/g, ' ').trim();
+    return s.replace(/^\u200c+|\u200c+$/g, '').replace(/ \u200c|\u200c /g, ' ');
+  }
+  function pkey(t) {
+    t = t.replace(/أ|إ/g, 'ا').replace(/ة/g, 'ه').replace(/\u200c/g, ' ');
+    var k = [];
+    for (var i = 0; i < t.length; i++) { var ch = t.charAt(i); if (ch === ' ') k.push(0); else { var ix = ALPHA.indexOf(ch); k.push(ix >= 0 ? ix + 1 : 99); } }
+    return k;
+  }
+  function cmpKey(a, b) { var n = Math.min(a.length, b.length); for (var i = 0; i < n; i++) if (a[i] !== b[i]) return a[i] - b[i]; return a.length - b.length; }
+  function cmpP(a, b) { return cmpKey(pkey(a.last), pkey(b.last)) || cmpKey(pkey(a.first), pkey(b.first)); }
+  function full(p) { return (p.first + ' ' + p.last).trim(); }
+  function toP(r) {
+    if (r.last_name != null && r.last_name !== '') return { first: norm(r.first_name), last: norm(r.last_name) };
+    var w = norm(r.full_name).split(' '), last = w.length > 1 ? w.pop() : '';
+    return { first: w.join(' '), last: last };
+  }
+
+  /* ---------- classes (labels come from the site's own class names) ---------- */
+  function ckey(name) { var m = String(name).replace(/[۰-۹]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d); }).match(/\d+/); return m ? m[0] : null; }
+  function gradeOf(k) { return k.slice(0, 2) === '10' ? 'دهم' : k.slice(0, 2) === '11' ? 'یازدهم' : k.slice(0, 2) === '12' ? 'دوازدهم' : 'سایر'; }
+  var GRADES = ['دهم', 'یازدهم', 'دوازدهم', 'سایر'];
+  function classMap() {
+    var m = {}, src = (typeof rawData !== 'undefined' && rawData) ? rawData : ((typeof baseRawData !== 'undefined' && baseRawData) ? baseRawData : []);
+    src.forEach(function (it) { var k = ckey(it[0]); if (k) m[k] = it[0]; });
+    Object.keys(ST.rows).forEach(function (k) { if (!m[k]) m[k] = k; });
+    return m;
+  }
+  function classKeys() { var m = classMap(); return Object.keys(m).sort(); }
+
+  /* ---------- Supabase ---------- */
+  function hdr(tok, extra) { var h = { apikey: SB_KEY, Authorization: 'Bearer ' + tok, 'Content-Type': 'application/json' }; for (var k in (extra || {})) h[k] = extra[k]; return h; }
+  function httpErr(r) { var e = new Error('HTTP ' + r.status); e.status = r.status; return e; }
+  function load() {
+    return sbToken().then(function (tok) {
+      var all = [];
+      function page(off) {
+        return fetch(SB_URL + '/rest/v1/class_students?select=class_no,ord,first_name,last_name,full_name&order=class_no.asc,ord.asc&limit=1000&offset=' + off, { headers: hdr(tok) })
+          .then(function (r) { if (!r.ok) throw httpErr(r); return r.json(); })
+          .then(function (rows) { all = all.concat(rows); return rows.length === 1000 ? page(off + 1000) : all; });
+      }
+      return page(0);
+    }).then(function (rows) {
+      ST.rows = {};
+      rows.forEach(function (r) { (ST.rows[r.class_no] = ST.rows[r.class_no] || []).push(toP(r)); });
+      ST.loaded = true;
+    });
+  }
+  /* rewrite one class: upsert positions 1..N (one statement), then drop leftover tail rows */
+  function saveClass(k, list) {
+    var rows = list.map(function (p, i) { return { class_no: k, ord: i + 1, first_name: p.first, last_name: p.last, full_name: full(p) }; });
+    var job = function () {
+      return sbToken().then(function (tok) {
+        var up = rows.length
+          ? fetch(SB_URL + '/rest/v1/class_students?on_conflict=class_no,ord', { method: 'POST', headers: hdr(tok, { Prefer: 'resolution=merge-duplicates,return=minimal' }), body: JSON.stringify(rows) })
+          : Promise.resolve({ ok: true });
+        return up.then(function (r) {
+          if (!r.ok) throw httpErr(r);
+          return fetch(SB_URL + '/rest/v1/class_students?class_no=eq.' + encodeURIComponent(k) + '&ord=gt.' + rows.length, { method: 'DELETE', headers: hdr(tok, { Prefer: 'return=minimal' }) });
+        }).then(function (r) { if (!r.ok) throw httpErr(r); });
+      });
+    };
+    ST.q = ST.q.then(job, job);           /* writes run one after another */
+    return ST.q;
+  }
+  function failMsg(e) {
+    if (e && e.status === 400) return 'ستون‌های نام/نام خانوادگی در جدول نیست؛ ابتدا فایل supabase-students.sql را در SQL Editor اجرا کنید';
+    if (e && (e.status === 401 || e.status === 403)) return 'سرور اجازه‌ی نوشتن نداد؛ خارج و دوباره وارد شوید';
+    if (e && e.status === 404) return 'جدول class_students در Supabase پیدا نشد؛ فایل supabase-students.sql را اجرا کنید';
+    return 'ارتباط با سرور برقرار نشد' + (e && e.status ? ' (خطای ' + e.status + ')' : '');
+  }
+  function toast(m) { if (typeof showAdminToast === 'function') showAdminToast(m); }
+  function status(m) { var s = $('stStatus'); if (s) s.textContent = m || ''; }
+
+  /* ---------- render ---------- */
+  function buildSelect() {
+    var m = classMap(), keys = classKeys(), sel = $('stClass'), html = '';
+    GRADES.forEach(function (g) {
+      var ks = keys.filter(function (k) { return gradeOf(k) === g; });
+      if (ks.length) html += '<optgroup label="پایه ' + g + '">' + ks.map(function (k) { return '<option value="' + k + '">' + esc(m[k]) + '</option>'; }).join('') + '</optgroup>';
+    });
+    sel.innerHTML = html;
+    if (!ST.cls || keys.indexOf(ST.cls) < 0) ST.cls = keys[0] || '';
+    sel.value = ST.cls;
+  }
+  function render() {
+    var list = ST.rows[ST.cls] || [], tb = $('stBody'), m = classMap();
+    $('stCount').textContent = list.length ? fa(list.length) + ' دانش‌آموز' : 'این کلاس هنوز دانش‌آموزی ندارد';
+    var opts = classKeys().filter(function (k) { return k !== ST.cls; }).map(function (k) { return '<option value="' + k + '">' + esc(m[k]) + '</option>'; }).join('');
+    tb.innerHTML = list.map(function (p, i) {
+      if (ST.edit === i) {
+        return '<tr><td>' + fa(i + 1) + '</td><td><input class="admin-control" id="stEF" value="' + esc(p.first) + '"></td><td><input class="admin-control" id="stEL" value="' + esc(p.last) + '"></td>' +
+          '<td class="st-acts"><button class="admin-edit-btn" onclick="STU.saveEdit(' + i + ')">ذخیره</button> <button class="admin-edit-btn" onclick="STU.cancel()">انصراف</button></td></tr>';
+      }
+      if (ST.move === i) {
+        return '<tr><td>' + fa(i + 1) + '</td><td>' + esc(p.first) + '</td><td>' + esc(p.last) + '</td>' +
+          '<td class="st-acts"><select class="admin-control" id="stMoveTo" style="width:auto">' + opts + '</select> <button class="admin-edit-btn" onclick="STU.doMove(' + i + ')">انتقال</button> <button class="admin-edit-btn" onclick="STU.cancel()">انصراف</button></td></tr>';
+      }
+      return '<tr id="stRow' + i + '"><td>' + fa(i + 1) + '</td><td>' + esc(p.first) + '</td><td>' + esc(p.last) + '</td>' +
+        '<td class="st-acts"><button class="admin-edit-btn" onclick="STU.edit(' + i + ')">ویرایش</button> <button class="admin-edit-btn" onclick="STU.move(' + i + ')">انتقال</button> <button class="admin-edit-btn" onclick="STU.del(' + i + ')">حذف</button></td></tr>';
+    }).join('');
+  }
+  function show() {
+    status('در حال دریافت از سرور…');
+    load().then(function () { status(''); buildSelect(); render(); })
+      .catch(function (e) { status('⚠️ ' + failMsg(e)); buildSelect(); render(); });
+  }
+  function refreshAfterFail(e) { toast('⚠️ ' + failMsg(e)); return load().catch(function () { }).then(function () { buildSelect(); render(); }); }
+
+  /* ---------- actions ---------- */
+  var STU = window.STU = {
+    cancel: function () { ST.edit = -1; ST.move = -1; render(); },
+    edit: function (i) { ST.edit = i; ST.move = -1; render(); var f = $('stEF'); if (f) f.focus(); },
+    move: function (i) { ST.move = i; ST.edit = -1; render(); },
+    add: function () {
+      var f = norm($('stFirst').value), l = norm($('stLast').value);
+      if (!f || !l) { toast('نام و نام خانوادگی را وارد کنید'); return; }
+      if (/[0-9۰-۹]/.test(f + l)) { toast('نام نباید عدد داشته باشد'); return; }
+      var list = (ST.rows[ST.cls] || []).slice();
+      if (list.some(function (p) { return p.first === f && p.last === l; }) && !confirm('دانش‌آموزی با همین نام در این کلاس هست. دوباره اضافه شود؟')) return;
+      list.push({ first: f, last: l }); list.sort(cmpP);
+      status('در حال ذخیره…');
+      saveClass(ST.cls, list).then(function () {
+        ST.rows[ST.cls] = list; $('stFirst').value = ''; $('stLast').value = ''; status(''); render(); toast('✅ دانش‌آموز اضافه شد');
+        for (var i = 0; i < list.length; i++) if (list[i].first === f && list[i].last === l) { var r = $('stRow' + i); if (r && r.scrollIntoView) r.scrollIntoView({ block: 'center' }); break; }
+      }).catch(function (e) { status(''); refreshAfterFail(e); });
+    },
+    saveEdit: function (i) {
+      var f = norm($('stEF').value), l = norm($('stEL').value);
+      if (!f || !l) { toast('نام و نام خانوادگی را وارد کنید'); return; }
+      if (/[0-9۰-۹]/.test(f + l)) { toast('نام نباید عدد داشته باشد'); return; }
+      var list = ST.rows[ST.cls].slice(); list[i] = { first: f, last: l }; list.sort(cmpP);
+      status('در حال ذخیره…');
+      saveClass(ST.cls, list).then(function () { ST.rows[ST.cls] = list; ST.edit = -1; status(''); render(); toast('✅ ذخیره شد'); })
+        .catch(function (e) { status(''); ST.edit = -1; refreshAfterFail(e); });
+    },
+    del: function (i) {
+      var p = ST.rows[ST.cls][i];
+      if (!confirm('«' + full(p) + '» از این کلاس حذف شود؟')) return;
+      var list = ST.rows[ST.cls].slice(); list.splice(i, 1);
+      status('در حال ذخیره…');
+      saveClass(ST.cls, list).then(function () { ST.rows[ST.cls] = list; status(''); render(); toast('✅ حذف شد'); })
+        .catch(function (e) { status(''); refreshAfterFail(e); });
+    },
+    doMove: function (i) {
+      var to = $('stMoveTo').value, from = ST.cls, p = ST.rows[from][i];
+      if (!to) return;
+      var dst = (ST.rows[to] || []).slice(); dst.push({ first: p.first, last: p.last }); dst.sort(cmpP);
+      var src = ST.rows[from].slice(); src.splice(i, 1);
+      status('در حال انتقال…');
+      saveClass(to, dst).then(function () {           /* add to the new class first: nobody is ever lost */
+        ST.rows[to] = dst;
+        return saveClass(from, src).then(function () { ST.rows[from] = src; ST.move = -1; status(''); render(); toast('✅ منتقل شد'); });
+      }).catch(function (e) { status(''); ST.move = -1; refreshAfterFail(e); });
+    },
+    search: function () {
+      var q = norm($('stSearch').value).replace(/[\s\u200c]/g, ''), box = $('stSearchRes');
+      if (q.length < 2) { box.innerHTML = ''; return; }
+      var m = classMap(), hits = [];
+      classKeys().forEach(function (k) {
+        (ST.rows[k] || []).forEach(function (p, i) { if (full(p).replace(/[\s\u200c]/g, '').indexOf(q) >= 0) hits.push({ k: k, i: i, p: p }); });
+      });
+      box.innerHTML = hits.length
+        ? hits.slice(0, 30).map(function (h) { return '<button class="st-hit" onclick="STU.open(\'' + h.k + '\',' + h.i + ')"><b>' + esc(full(h.p)) + '</b><span>' + esc(m[h.k]) + '</span></button>'; }).join('') + (hits.length > 30 ? '<div class="admin-muted">و ' + fa(hits.length - 30) + ' نتیجه‌ی دیگر؛ عبارت را دقیق‌تر کنید</div>' : '')
+        : '<div class="admin-muted">موردی پیدا نشد</div>';
+    },
+    open: function (k, i) {
+      ST.cls = k; ST.edit = -1; ST.move = -1; buildSelect(); render();
+      var r = $('stRow' + i); if (r) { r.scrollIntoView({ block: 'center' }); r.classList.add('st-flash'); setTimeout(function () { r.classList.remove('st-flash'); }, 2200); }
+    },
+    pick: function () { ST.cls = $('stClass').value; ST.edit = -1; ST.move = -1; render(); }
+  };
+
+  /* ---------- minimal .xlsx writer: right-to-left sheets, no library ---------- */
+  var CRC = (function () { var t = [], c, n, k; for (n = 0; n < 256; n++) { c = n; for (k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+  function crc32(u) { var c = 0xFFFFFFFF; for (var i = 0; i < u.length; i++) c = CRC[(c ^ u[i]) & 255] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+  var enc = function (s) { return new TextEncoder().encode(s); };
+  function zip(files) {
+    var parts = [], central = [], off = 0;
+    files.forEach(function (f) {
+      var nm = enc(f.name), crc = crc32(f.data), sz = f.data.length;
+      var lh = new DataView(new ArrayBuffer(30));
+      lh.setUint32(0, 0x04034b50, true); lh.setUint16(4, 20, true); lh.setUint16(6, 0x0800, true); lh.setUint16(10, 0, true); lh.setUint16(12, 0x21, true);
+      lh.setUint32(14, crc, true); lh.setUint32(18, sz, true); lh.setUint32(22, sz, true); lh.setUint16(26, nm.length, true);
+      parts.push(new Uint8Array(lh.buffer), nm, f.data);
+      var ch = new DataView(new ArrayBuffer(46));
+      ch.setUint32(0, 0x02014b50, true); ch.setUint16(4, 20, true); ch.setUint16(6, 20, true); ch.setUint16(8, 0x0800, true); ch.setUint16(14, 0x21, true);
+      ch.setUint32(16, crc, true); ch.setUint32(20, sz, true); ch.setUint32(24, sz, true); ch.setUint16(28, nm.length, true); ch.setUint32(42, off, true);
+      central.push(new Uint8Array(ch.buffer), nm);
+      off += 30 + nm.length + sz;
+    });
+    var csz = central.reduce(function (a, c) { return a + c.length; }, 0), end = new DataView(new ArrayBuffer(22));
+    end.setUint32(0, 0x06054b50, true); end.setUint16(8, files.length, true); end.setUint16(10, files.length, true); end.setUint32(12, csz, true); end.setUint32(16, off, true);
+    return new Blob(parts.concat(central, [new Uint8Array(end.buffer)]), { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  }
+  var xe = function (v) { return String(v == null ? '' : v).replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+  function colL(i) { return String.fromCharCode(65 + i); }
+  function sheetName(n, used) {
+    n = String(n).replace(/[\[\]:*?\/\\]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 31) || 'Sheet';
+    var base = n, c = 2; while (used[n.toLowerCase()]) { n = base.slice(0, 28) + ' ' + c++; }
+    used[n.toLowerCase()] = 1; return n;
+  }
+  /* sheets: [{name, widths:[..], rows:[[...]]}]; first row is the header; numbers are written as numbers */
+  function makeXlsx(sheets) {
+    var used = {}, NS = 'xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"', R = 'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"';
+    var files = [], names = sheets.map(function (s) { return sheetName(s.name, used); });
+    files.push({ name: '[Content_Types].xml', data: enc('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>' + sheets.map(function (s, i) { return '<Override PartName="/xl/worksheets/sheet' + (i + 1) + '.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>'; }).join('') + '</Types>') });
+    files.push({ name: '_rels/.rels', data: enc('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>') });
+    files.push({ name: 'xl/workbook.xml', data: enc('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook ' + NS + ' ' + R + '><sheets>' + names.map(function (n, i) { return '<sheet name="' + xe(n).replace(/"/g, '&quot;') + '" sheetId="' + (i + 1) + '" r:id="rId' + (i + 1) + '"/>'; }).join('') + '</sheets></workbook>') });
+    files.push({ name: 'xl/_rels/workbook.xml.rels', data: enc('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' + sheets.map(function (s, i) { return '<Relationship Id="rId' + (i + 1) + '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet' + (i + 1) + '.xml"/>'; }).join('') + '<Relationship Id="rId' + (sheets.length + 1) + '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>') });
+    var b = '<border><left style="thin"><color rgb="FFB0B7B6"/></left><right style="thin"><color rgb="FFB0B7B6"/></right><top style="thin"><color rgb="FFB0B7B6"/></top><bottom style="thin"><color rgb="FFB0B7B6"/></bottom><diagonal/></border>';
+    var al = '<alignment horizontal="right" vertical="center" readingOrder="2"/>';
+    files.push({ name: 'xl/styles.xml', data: enc('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet ' + NS + '><fonts count="2"><font><sz val="11"/><name val="Tahoma"/></font><font><b/><sz val="11"/><name val="Tahoma"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFD9DEDD"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border>' + b + '</borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="4"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0" applyBorder="1" applyAlignment="1">' + al + '</xf><xf numFmtId="0" fontId="1" fillId="2" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1">' + al + '</xf><xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="center"/></xf></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>') });
+    sheets.forEach(function (s, si) {
+      var x = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet ' + NS + '><sheetViews><sheetView rightToLeft="1" ' + (si === 0 ? 'tabSelected="1" ' : '') + 'workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/><selection pane="bottomLeft"/></sheetView></sheetViews><sheetFormatPr defaultRowHeight="20"/><cols>' +
+        s.widths.map(function (w, i) { return '<col min="' + (i + 1) + '" max="' + (i + 1) + '" width="' + w + '" customWidth="1"/>'; }).join('') + '</cols><sheetData>';
+      s.rows.forEach(function (row, ri) {
+        x += '<row r="' + (ri + 1) + '">' + row.map(function (v, ci) {
+          var ref = colL(ci) + (ri + 1);
+          if (typeof v === 'number') return '<c r="' + ref + '" s="3"><v>' + v + '</v></c>';
+          return '<c r="' + ref + '" s="' + (ri === 0 ? 2 : 1) + '" t="inlineStr"><is><t xml:space="preserve">' + xe(v) + '</t></is></c>';
+        }).join('') + '</row>';
+      });
+      files.push({ name: 'xl/worksheets/sheet' + (si + 1) + '.xml', data: enc(x + '</sheetData></worksheet>') });
+    });
+    return zip(files);
+  }
+  function download(blob, name) {
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 400);
+  }
+  window.makeXlsx = makeXlsx;
+
+  /* ---------- exports ---------- */
+  window.exportTeachersXlsx = function () {
+    var names = getAdminTeachers(), rows = [['ردیف', 'نام دبیر', 'دروس']];
+    names.forEach(function (n, i) {
+      var subs = Object.keys((getAdminTeacherRecord(n) || {}).subjects || {}).filter(Boolean).sort(function (a, b) { return a.localeCompare(b, 'fa'); });
+      rows.push([i + 1, n, subs.join('، ')]);
+    });
+    download(makeXlsx([{ name: 'دبیران', widths: [8, 28, 60], rows: rows }]), 'Bagheri_Teachers_Subjects.xlsx');
+    toast('✅ فایل اکسل دبیران آماده شد (' + fa(names.length) + ' دبیر)');
+  };
+  function buildStudentSheets() {
+    var m = classMap(), sheets = [], keys = classKeys();
+    GRADES.forEach(function (g) {
+      var ks = keys.filter(function (k) { return gradeOf(k) === g && (ST.rows[k] || []).length; });
+      if (!ks.length) return;
+      var rows = [['ردیف', 'نام', 'نام خانوادگی', 'کلاس']], n = 0;
+      ks.forEach(function (k) { ST.rows[k].forEach(function (p) { rows.push([++n, p.first, p.last, m[k]]); }); });
+      sheets.push({ name: 'پایه ' + g, widths: [8, 22, 28, 18], rows: rows });
+    });
+    keys.forEach(function (k) {
+      var list = ST.rows[k] || []; if (!list.length) return;
+      var rows = [['ردیف', 'نام', 'نام خانوادگی']];
+      list.forEach(function (p, i) { rows.push([i + 1, p.first, p.last]); });
+      sheets.push({ name: gradeOf(k) + ' ' + m[k], widths: [8, 22, 28], rows: rows });
+    });
+    return sheets;
+  }
+  window.exportStudentsXlsx = function () {
+    var go = function () {
+      var sheets = buildStudentSheets();
+      if (!sheets.length) { toast('هنوز لیست دانش‌آموزی در Supabase ثبت نشده است'); return; }
+      download(makeXlsx(sheets), 'Bagheri_Students_Classes.xlsx');
+      toast('✅ فایل اکسل دانش‌آموزان آماده شد (' + fa(sheets.length) + ' شیت)');
+    };
+    if (ST.loaded) { go(); return; }
+    toast('در حال دریافت لیست دانش‌آموزان…');
+    load().then(go).catch(function (e) { toast('⚠️ ' + failMsg(e)); });
+  };
+
+  /* ---------- page switch ---------- */
+  var _p = window.adminPage;
+  window.adminPage = function (btn, title) {
+    _p.apply(this, arguments);
+    if (title === 'دانش‌آموزان') {
+      document.querySelectorAll('.ad-page').forEach(function (x) { x.classList.remove('active'); });
+      $('ad-students').classList.add('active');
+      show();
+    }
+  };
+})();
+</script>
+
 </body>
 </html>
