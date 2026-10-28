@@ -5067,6 +5067,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 #sgBox button{flex:1;font:inherit;padding:11px;border-radius:12px;border:1px solid var(--glass-border);background:transparent;color:var(--gold-light);cursor:pointer}
 #sgBox button.p{background:var(--gold-light);color:#06141B;font-weight:700}#sgBox button:disabled{opacity:.6}
 #sgMsg{font-size:13px;min-height:18px;margin-bottom:8px}.sg-h{position:absolute;left:-9999px}
+#sgBox{max-height:92vh;overflow:auto}#sgBox .sg-tabs{display:flex;gap:6px;margin-bottom:14px}#sgBox .sg-tabs button{padding:8px;font-size:13px}#sgBox .sg-tabs button.on{background:var(--gold-light);color:#06141B;font-weight:700}#sgBox [hidden]{display:none}#sgRes{margin-bottom:10px;font-size:13px;min-height:18px}.sg-st{font-weight:700;margin-bottom:8px}#sgRes .sg-rp{padding:12px;border-radius:12px;background:var(--input-bg);border:1px solid var(--input-border);line-height:1.9;white-space:pre-wrap;word-break:break-word}
 @media(max-width:560px){#sgFab{padding:13px;left:12px;bottom:12px}#sgFab .sg-t{display:none}}
 </style>
 
@@ -5089,28 +5090,65 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     return h + '</div>';
   };
 
+  var AL = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  function code() { var a = new Uint32Array(8), s = ''; if (window.crypto && crypto.getRandomValues) crypto.getRandomValues(a); else for (var i = 0; i < 8; i++) a[i] = Math.random() * 4294967296; for (var j = 0; j < 8; j++) s += AL[a[j] % 32]; return s; }
+  function en(s) { return String(s || '').replace(/[۰-۹]/g, function (c) { return '۰۱۲۳۴۵۶۷۸۹'.indexOf(c); }).replace(/[٠-٩]/g, function (c) { return '٠١٢٣٤٥٦٧٨٩'.indexOf(c); }).replace(/\s+/g, ''); }
+  var PH_ERR = 'شماره‌ی موبایل را به‌صورت ۰۹۱۲۳۴۵۶۷۸۹ وارد کنید.';
   var fab = document.createElement('button'); fab.id = 'sgFab'; fab.type = 'button'; fab.setAttribute('aria-label', 'پیشنهاد یا گزارش مشکل'); fab.innerHTML = '💬<span class="sg-t">پیشنهاد / گزارش مشکل</span>';
   var bg = document.createElement('div'); bg.id = 'sgBg';
-  bg.innerHTML = '<div id="sgBox" role="dialog" aria-modal="true" aria-label="ثبت پیشنهاد"><h3>پیشنهاد یا گزارش مشکل</h3><p class="sg-s">نظر شما مستقیم به دست مدیر سایت می‌رسد.</p><select id="sgCat" aria-label="دسته"><option>پیشنهاد</option><option>برنامه</option><option>امکانات</option><option>نظافت</option><option>سایر</option></select><textarea id="sgTxt" maxlength="600" placeholder="پیام خود را بنویسید (حداقل ۵ و حداکثر ۶۰۰ حرف)"></textarea><input id="sgCon" maxlength="80" placeholder="راه تماس (اختیاری)"><input class="sg-h" id="sgHp" tabindex="-1" autocomplete="off" aria-hidden="true"><div id="sgMsg" role="status"></div><div class="r"><button type="button" id="sgX">انصراف</button><button type="button" class="p" id="sgOk">ارسال</button></div></div>';
+  bg.innerHTML = '<div id="sgBox" role="dialog" aria-modal="true" aria-label="پیشنهاد و گزارش مشکل">' +
+    '<div class="sg-tabs"><button type="button" id="sgT1" class="on">ثبت پیام</button><button type="button" id="sgT2">🔎 پیگیری پاسخ</button></div>' +
+    '<div id="sgV1"><h3>پیشنهاد یا گزارش مشکل</h3><p class="sg-s">نام و شماره‌ی شما فقط برای پاسخ‌گویی مدیر استفاده می‌شود و در سایت نمایش داده نمی‌شود.</p>' +
+    '<input id="sgNm" maxlength="80" autocomplete="name" placeholder="نام و نام خانوادگی (الزامی)">' +
+    '<input id="sgPh" type="tel" inputmode="numeric" maxlength="14" dir="ltr" autocomplete="tel" placeholder="شماره‌ی موبایل، مثلاً 09123456789 (الزامی)">' +
+    '<select id="sgCat" aria-label="دسته"><option>پیشنهاد</option><option>برنامه</option><option>امکانات</option><option>نظافت</option><option>سایر</option></select>' +
+    '<textarea id="sgTxt" maxlength="600" placeholder="پیام خود را بنویسید (حداقل ۵ و حداکثر ۶۰۰ حرف)"></textarea>' +
+    '<input class="sg-h" id="sgHp" tabindex="-1" autocomplete="off" aria-hidden="true"><div id="sgMsg" role="status"></div>' +
+    '<div class="r"><button type="button" id="sgX">انصراف</button><button type="button" class="p" id="sgOk">ارسال</button></div></div>' +
+    '<div id="sgV2" hidden><h3>پیگیری پاسخ</h3><p class="sg-s">کد پیگیری هنگام ثبت پیام به شما نمایش داده شد.</p>' +
+    '<input id="sgCd" maxlength="8" dir="ltr" autocapitalize="characters" placeholder="کد پیگیری، مثلاً K7M2QX9P">' +
+    '<input id="sgPh2" type="tel" inputmode="numeric" maxlength="14" dir="ltr" placeholder="شماره‌ی موبایلی که ثبت کردید">' +
+    '<div id="sgRes" role="status"></div><div class="r"><button type="button" id="sgX2">بستن</button><button type="button" class="p" id="sgChk">بررسی</button></div></div></div>';
   document.body.appendChild(fab); document.body.appendChild(bg);
   var $ = function (i) { return document.getElementById(i); };
   function close() { bg.className = ''; }
-  fab.onclick = function () { bg.className = 'on'; $('sgMsg').textContent = ''; setTimeout(function () { $('sgTxt').focus(); }, 50); };
-  $('sgX').onclick = close;
+  function view(n) { $('sgV1').hidden = n !== 1; $('sgV2').hidden = n !== 2; $('sgT1').className = n === 1 ? 'on' : ''; $('sgT2').className = n === 2 ? 'on' : ''; }
+  function saved() { try { return JSON.parse(localStorage.getItem('sg_track') || 'null'); } catch (e) { return null; } }
+  fab.onclick = function () { bg.className = 'on'; $('sgMsg').textContent = ''; view(1); setTimeout(function () { $('sgNm').focus(); }, 50); };
+  $('sgT1').onclick = function () { view(1); };
+  $('sgT2').onclick = function () { view(2); var s = saved(); if (s) { $('sgCd').value = s.c; $('sgPh2').value = s.p; } $('sgRes').textContent = ''; };
+  $('sgX').onclick = $('sgX2').onclick = close;
   bg.onclick = function (e) { if (e.target === bg) close(); };
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
   $('sgOk').onclick = function () {
-    var m = $('sgTxt').value.trim(), msg = $('sgMsg'), last = 0;
+    var nm = $('sgNm').value.trim().replace(/\s+/g, ' '), ph = en($('sgPh').value), m = $('sgTxt').value.trim(), msg = $('sgMsg'), last = 0, c = code();
     try { last = +localStorage.getItem('sg_last') || 0; } catch (e) { }
     if ($('sgHp').value) return close();
+    if (nm.length < 3 || !/\S+\s+\S+/.test(nm)) { msg.textContent = 'نام و نام خانوادگی را کامل وارد کنید.'; return; }
+    if (!/^09\d{9}$/.test(ph)) { msg.textContent = PH_ERR; return; }
     if (m.length < 5) { msg.textContent = 'پیام خیلی کوتاه است.'; return; }
     if (Date.now() - last < 60000) { msg.textContent = 'لطفاً یک دقیقه بعد دوباره تلاش کنید.'; return; }
     $('sgOk').disabled = true; msg.textContent = 'در حال ارسال…';
     fetch(SB_URL + '/rest/v1/suggestions', { method: 'POST', headers: { apikey: SB_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
-      body: JSON.stringify({ category: $('sgCat').value, message: m, contact: $('sgCon').value.trim() || null }) })
-      .then(function (r) { if (!r.ok) throw 0; try { localStorage.setItem('sg_last', Date.now()); } catch (e) { } $('sgTxt').value = ''; msg.textContent = '✅ ممنون! پیام شما ثبت شد.'; setTimeout(close, 1400); })
+      body: JSON.stringify({ full_name: nm, contact: ph, category: $('sgCat').value, message: m, track_code: c }) })
+      .then(function (r) { if (!r.ok) throw 0; try { localStorage.setItem('sg_last', Date.now()); localStorage.setItem('sg_track', JSON.stringify({ c: c, p: ph })); } catch (e) { } $('sgTxt').value = ''; msg.innerHTML = '✅ پیام شما ثبت شد.<br>کد پیگیری: <b dir="ltr">' + c + '</b> — برای دیدن پاسخ از «پیگیری پاسخ» استفاده کنید.'; })
       .catch(function () { msg.textContent = 'ارسال نشد؛ کمی بعد دوباره تلاش کنید.'; })
       .then(function () { $('sgOk').disabled = false; });
+  };
+  $('sgChk').onclick = function () {
+    var cd = $('sgCd').value.trim().toUpperCase(), ph = en($('sgPh2').value), res = $('sgRes');
+    if (!/^[A-Z2-9]{8}$/.test(cd) || !/^09\d{9}$/.test(ph)) { res.textContent = 'کد پیگیری (۸ حرف) و شماره‌ی موبایل را درست وارد کنید.'; return; }
+    $('sgChk').disabled = true; res.textContent = 'در حال بررسی…';
+    fetch(SB_URL + '/rest/v1/rpc/suggestion_status', { method: 'POST', headers: { apikey: SB_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify({ p_code: cd, p_phone: ph }) })
+      .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+      .then(function (d) {
+        if (!d.length) { res.textContent = 'پیامی با این کد و شماره پیدا نشد.'; return; }
+        var x = d[0], S = { 'new': 'ثبت شده و در انتظار بررسی است', review: 'در حال بررسی است', done: 'بررسی شد' };
+        res.textContent = ''; var a = document.createElement('div'); a.className = 'sg-st'; a.textContent = 'وضعیت پیام شما: ' + (S[x.status] || ''); res.appendChild(a);
+        var b = document.createElement('div'); b.className = 'sg-rp'; b.textContent = x.reply ? x.reply : 'هنوز پاسخی ثبت نشده است.'; res.appendChild(b);
+      })
+      .catch(function () { res.textContent = 'بررسی انجام نشد؛ کمی بعد دوباره تلاش کنید.'; })
+      .then(function () { $('sgChk').disabled = false; });
   };
 })();
 </script>
