@@ -3619,6 +3619,7 @@ function showClassSchedule(className) {
     html += '</div>';
     html += '</div>';
     html += classMatrixHtml(classData);
+    html += (typeof classExamHtml === 'function' ? classExamHtml(className) : '');
     html += '<div class="teacher-actions">';
     html += '<button type="button" class="action-btn primary" id="rosterBtn" aria-expanded="false" aria-controls="rosterBox" onclick="toggleRoster()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span id="rosterBtnTxt">لیست کلاسی</span></button>';
     html += '<button type="button" class="action-btn" onclick="renderClassesList()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span>بازگشت</span></button>';
@@ -5050,5 +5051,69 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   } catch (e) { }
 })();
 </script>
+<style id="ix-style">
+.ex-card{margin:16px 0;padding:16px 18px;border-radius:18px;background:var(--card-bg);border:1px solid var(--card-border);color:var(--text-light)}
+.ex-h{font-size:13px;color:var(--text-soft);margin-bottom:6px}.ex-big{font-size:1.4rem;font-weight:800;color:var(--gold-light)}
+.ex-m{font-size:13px;color:var(--text-soft);margin-top:4px}.ex-tag{display:inline-block;margin-inline-start:8px;padding:2px 10px;border-radius:999px;border:1px solid var(--card-border);font-size:11px;font-weight:600;color:var(--text-soft)}
+.ex-subs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.ex-sub{padding:7px 14px;border-radius:999px;background:var(--input-bg);border:1px solid var(--input-border);font-size:14px}
+.ex-more{margin-top:12px;font-size:13px}.ex-more summary{cursor:pointer;color:var(--text-soft)}
+.ex-row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed var(--card-border)}.ex-row span:last-child{color:var(--text-soft);white-space:nowrap}
+#sgFab{position:fixed;left:16px;bottom:16px;z-index:900;display:flex;align-items:center;gap:8px;font:inherit;font-size:14px;font-weight:700;padding:12px 18px;border-radius:999px;border:1px solid var(--glass-border);background:var(--glass-bg);color:var(--gold-light);cursor:pointer;box-shadow:0 8px 24px var(--shadow);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+#sgBg{position:fixed;inset:0;z-index:1300;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(2,8,12,.7)}#sgBg.on{display:flex}
+#sgBox{width:100%;max-width:420px;border-radius:20px;padding:22px;background:var(--modal-bg);border:1px solid var(--glass-border);color:var(--text-light);direction:rtl}
+#sgBox h3{margin:0 0 4px;font-size:17px}#sgBox .sg-s{margin:0 0 12px;font-size:12px;color:var(--text-soft)}
+#sgBox select,#sgBox textarea,#sgBox input{width:100%;margin:0 0 10px;padding:11px 12px;border-radius:12px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-light);font:inherit;font-size:14px;box-sizing:border-box}
+#sgBox textarea{min-height:110px;resize:vertical}#sgBox .r{display:flex;gap:8px}
+#sgBox button{flex:1;font:inherit;padding:11px;border-radius:12px;border:1px solid var(--glass-border);background:transparent;color:var(--gold-light);cursor:pointer}
+#sgBox button.p{background:var(--gold-light);color:#06141B;font-weight:700}#sgBox button:disabled{opacity:.6}
+#sgMsg{font-size:13px;min-height:18px;margin-bottom:8px}.sg-h{position:absolute;left:-9999px}
+@media(max-width:560px){#sgFab{padding:13px;left:12px;bottom:12px}#sgFab .sg-t{display:none}}
+</style>
+
+<script src="exams.js"></script>
+<script id="ix-script">
+/* آزمون‌های پیش‌روی کلاس (داده از exams.js) + فرم پیشنهاد/گزارش مشکل */
+(function () {
+  var EXP = window.EXAM_PLAN || [], TRK = window.EXAM_TRACKS || [], GRP = window.EXAM_GROUPS || [];
+  function j2g(jy,jm,jd){jy+=1595;var days=-355668+365*jy+~~(jy/33)*8+~~(((jy%33)+3)/4)+jd+(jm<7?(jm-1)*31:(jm-7)*30+186),gy=400*~~(days/146097);days%=146097;if(days>36524){gy+=100*~~(--days/36524);days%=36524;if(days>=365)days++}gy+=4*~~(days/1461);days%=1461;if(days>365){gy+=~~((days-1)/365);days=(days-1)%365}var gd=days+1,s=[0,31,(gy%4==0&&gy%100!=0)||gy%400==0?29:28,31,30,31,30,31,31,30,31,30,31],gm=0;for(;gm<13&&gd>s[gm];gm++)gd-=s[gm];return[gy,gm,gd]}
+  function left(d){var n=new Date();return Math.round((d-new Date(n.getFullYear(),n.getMonth(),n.getDate()))/864e5)}
+  function rel(n){return n===0?'امروز':n===1?'فردا':toFa(n)+' روز دیگر'}
+  function fd(d,o){try{return d.toLocaleDateString('fa-IR',o)}catch(e){return d.toDateString()}}
+  function colOf(cn){var p=String(cn).trim().split(/\s+/),f=p.slice(0,-1).join(' '),n=parseInt(p[p.length-1].replace(/[۰-۹]/g,function(c){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(c)}),10),g=n>=100&&n<110?0:n>=110&&n<120?1:n>=120&&n<130?2:-1,t={'تجربی':0,'ریاضی':1,'انسانی':2}[f];return g<0||t==null?-1:t*3+g}
+  window.classExamHtml = function (cn) {
+    var c = colOf(cn); if (c < 0 || !EXP.length) return '';
+    var L = EXP.map(function (e) { var p = e[0].split('/').map(Number), g = j2g(p[0], p[1], p[2]), d = new Date(g[0], g[1] - 1, g[2]); return { d: d, g: e[1], s: String(e[2]).split('|')[c] || '' }; }).filter(function (x) { return left(x.d) >= 0 && x.s; });
+    if (!L.length) return '<div class="ex-card"><div class="ex-h">🗓️ آزمون‌های پیش‌رو</div><div class="ex-m">آزمون پیش‌رویی ثبت نشده است.</div></div>';
+    var n = L[0], h = '<div class="ex-card"><div class="ex-h">🗓️ آزمون بعدی ' + esc(TRK[c] || '') + (n.g ? '<span class="ex-tag">' + esc(GRP[n.g] || '') + '</span>' : '') + '</div><div class="ex-big">' + rel(left(n.d)) + '</div><div class="ex-m">' + fd(n.d, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + ' · زنگ آزمون (زنگ ' + toFa(4) + ')</div><div class="ex-subs">' + n.s.split(' - ').map(function (s) { return '<span class="ex-sub">' + esc(toFa(s)) + '</span>'; }).join('') + '</div>';
+    if (L.length > 1) h += '<details class="ex-more"><summary>آزمون‌های بعدی (' + toFa(L.length - 1) + ')</summary>' + L.slice(1).map(function (x) { return '<div class="ex-row"><span>' + fd(x.d, { day: 'numeric', month: 'long' }) + ' — ' + esc(toFa(x.s)) + '</span><span>' + rel(left(x.d)) + '</span></div>'; }).join('') + '</details>';
+    return h + '</div>';
+  };
+
+  var fab = document.createElement('button'); fab.id = 'sgFab'; fab.type = 'button'; fab.setAttribute('aria-label', 'پیشنهاد یا گزارش مشکل'); fab.innerHTML = '💬<span class="sg-t">پیشنهاد / گزارش مشکل</span>';
+  var bg = document.createElement('div'); bg.id = 'sgBg';
+  bg.innerHTML = '<div id="sgBox" role="dialog" aria-modal="true" aria-label="ثبت پیشنهاد"><h3>پیشنهاد یا گزارش مشکل</h3><p class="sg-s">نظر شما مستقیم به دست مدیر سایت می‌رسد.</p><select id="sgCat" aria-label="دسته"><option>پیشنهاد</option><option>برنامه</option><option>امکانات</option><option>نظافت</option><option>سایر</option></select><textarea id="sgTxt" maxlength="600" placeholder="پیام خود را بنویسید (حداقل ۵ و حداکثر ۶۰۰ حرف)"></textarea><input id="sgCon" maxlength="80" placeholder="راه تماس (اختیاری)"><input class="sg-h" id="sgHp" tabindex="-1" autocomplete="off" aria-hidden="true"><div id="sgMsg" role="status"></div><div class="r"><button type="button" id="sgX">انصراف</button><button type="button" class="p" id="sgOk">ارسال</button></div></div>';
+  document.body.appendChild(fab); document.body.appendChild(bg);
+  var $ = function (i) { return document.getElementById(i); };
+  function close() { bg.className = ''; }
+  fab.onclick = function () { bg.className = 'on'; $('sgMsg').textContent = ''; setTimeout(function () { $('sgTxt').focus(); }, 50); };
+  $('sgX').onclick = close;
+  bg.onclick = function (e) { if (e.target === bg) close(); };
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  $('sgOk').onclick = function () {
+    var m = $('sgTxt').value.trim(), msg = $('sgMsg'), last = 0;
+    try { last = +localStorage.getItem('sg_last') || 0; } catch (e) { }
+    if ($('sgHp').value) return close();
+    if (m.length < 5) { msg.textContent = 'پیام خیلی کوتاه است.'; return; }
+    if (Date.now() - last < 60000) { msg.textContent = 'لطفاً یک دقیقه بعد دوباره تلاش کنید.'; return; }
+    $('sgOk').disabled = true; msg.textContent = 'در حال ارسال…';
+    fetch(SB_URL + '/rest/v1/suggestions', { method: 'POST', headers: { apikey: SB_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+      body: JSON.stringify({ category: $('sgCat').value, message: m, contact: $('sgCon').value.trim() || null }) })
+      .then(function (r) { if (!r.ok) throw 0; try { localStorage.setItem('sg_last', Date.now()); } catch (e) { } $('sgTxt').value = ''; msg.textContent = '✅ ممنون! پیام شما ثبت شد.'; setTimeout(close, 1400); })
+      .catch(function () { msg.textContent = 'ارسال نشد؛ کمی بعد دوباره تلاش کنید.'; })
+      .then(function () { $('sgOk').disabled = false; });
+  };
+})();
+</script>
+
 </body>
 </html>

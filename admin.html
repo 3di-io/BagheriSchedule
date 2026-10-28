@@ -2713,6 +2713,9 @@ html.gs-pending .search-section.visible { opacity: 0; }
       <button onclick="adminPage(this,'اطلاع‌رسانی')">📢 اطلاع‌رسانی</button>
       <button onclick="adminPage(this,'دانش‌آموزان')">👥 دانش‌آموزان</button>
       <button onclick="adminPage(this,'آمار بازدید')">📈 آمار بازدید</button>
+      <button onclick="adminPage(this,'تقویم امتحانات')">🗓️ تقویم امتحانات</button>
+      <button onclick="adminPage(this,'اساتید آزاد')">🧑‍🏫 اساتید آزاد</button>
+      <button onclick="adminPage(this,'صندوق پیشنهادها')">📬 صندوق پیشنهادها<span class="adb" id="adInboxBadge" hidden></span></button>
       <button onclick="adminPage(this,'تنظیمات')">⚙️ تنظیمات</button>
     </nav>
   </aside>
@@ -2921,6 +2924,25 @@ html.gs-pending .search-section.visible { opacity: 0; }
   <button class="admin-quick" onclick="adminRestorePick()">♻️ بازیابی از فایل پشتیبان</button>
   <button class="admin-quick" onclick="saveAdminSettings()">☁️ ارسال دوباره به سرور</button></div>
   <p class="admin-muted" style="margin-top:12px">فایل پشتیبان شامل همه‌ی تغییرات مدیر (حذف، ویرایش و افزودن) است.</p></div></div>
+<div id="ad-exams" class="ad-page">
+  <div class="dz-head"><div><h3>تقویم امتحانات هوشمند</h3><p>آزمون‌ها دوشنبه‌ها و در زنگ آزمون (زنگ ۴) برگزار می‌شوند</p></div>
+    <div class="dz-head-btns"><select id="adExClass" class="admin-control" style="width:auto;margin:0" onchange="adExRender()"></select></div></div>
+  <div id="adExNext"></div>
+  <div class="dz-card" style="margin-top:14px"><div class="ex-wrap" id="adExTable"></div></div>
+</div>
+<div id="ad-free" class="ad-page">
+  <div class="dz-head"><div><h3>اساتید آزاد</h3><p id="adFreeSub"></p></div>
+    <div class="dz-head-btns"><button class="dz-btn solid" onclick="adFreeCopy()">📋 کپی لیست</button></div></div>
+  <div id="adFreeBody"></div>
+</div>
+<div id="ad-inbox" class="ad-page">
+  <div class="dz-head"><div><h3>صندوق پیشنهادها و گزارش مشکل</h3><p>پیام‌هایی که از سایت ثبت می‌شود</p></div>
+    <div class="dz-head-btns"><select id="adSgSt" class="admin-control" style="width:auto;margin:0" onchange="adSgRender()"><option value="all">همه‌ی وضعیت‌ها</option><option value="new">جدید</option><option value="review">در حال بررسی</option><option value="done">انجام شد</option></select>
+    <select id="adSgCat" class="admin-control" style="width:auto;margin:0" onchange="adSgRender()"><option value="all">همه‌ی دسته‌ها</option><option>امکانات</option><option>برنامه</option><option>نظافت</option><option>پیشنهاد</option><option>سایر</option></select>
+    <button class="dz-btn solid" onclick="adSgLoad()">🔄 به‌روزرسانی</button></div></div>
+  <div class="dz-stats" id="adSgStats"></div>
+  <div id="adSgMsg" class="admin-muted"></div><div id="adSgList"></div>
+</div>
     </section>
   </main>
 </div>
@@ -5860,5 +5882,118 @@ tr.st-flash td{background:rgba(204,208,207,.3)!important;transition:background .
 })();
 </script>
 
+<style id="adx-style">
+/* welcome banner, free teachers, exam calendar, inbox */
+.adw{border-radius:22px;padding:22px 26px;margin-bottom:18px;background:linear-gradient(135deg,rgba(204,208,207,.18),rgba(204,208,207,.04));border:1px solid rgba(204,208,207,.22);animation:adwIn .5s ease both}
+.adw h3{font-size:1.55rem;color:#fff;margin:0 0 4px}.adw p{color:#E6E9E8;font-size:15px}.adw small{display:block;color:#9fb0b8;margin-top:6px;font-size:12px}
+@keyframes adwIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.adx-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.adc{font:inherit;font-size:13px;padding:8px 14px;border-radius:999px;border:1px solid rgba(204,208,207,.3);background:rgba(204,208,207,.08);color:#E6E9E8;cursor:pointer}
+.adc:hover{background:rgba(204,208,207,.2)}.adc.on{background:#E6E9E8;color:#06141B;font-weight:700}
+.adb{display:inline-block;min-width:20px;padding:0 6px;margin-inline-start:auto;border-radius:999px;background:#ef4444;color:#fff;font-size:11px;line-height:20px;text-align:center}
+.adb[hidden]{display:none}
+.fr-chip{display:inline-block;margin:0 0 6px 6px;padding:6px 12px;border-radius:999px;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);color:#c9f5e4;font-size:13px}
+.fr-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}
+.fr-col{background:rgba(204,208,207,.06);border-radius:14px;padding:12px;max-height:320px;overflow:auto}
+.fr-col h5{font-size:13px;margin-bottom:8px;color:#fff}.fr-col span{display:block;font-size:13px;padding:3px 0;color:#E6E9E8}
+.ex-wrap{overflow-x:auto}.ex-tbl{border-collapse:separate;border-spacing:0 4px;width:100%;min-width:760px;font-size:12px;color:#E6E9E8}
+.ex-tbl th{color:#9fb0b8;font-weight:600;padding:6px 8px;text-align:right;white-space:nowrap}
+.ex-tbl td{padding:8px;background:rgba(204,208,207,.05);vertical-align:top}.ex-tbl td:first-child{border-radius:0 10px 10px 0;white-space:nowrap}.ex-tbl td:last-child{border-radius:10px 0 0 10px}
+.ex-tbl tr.past td{opacity:.4}.ex-tbl tr.nx td{background:rgba(204,208,207,.2);color:#fff}
+.ex-tbl tr.grp td{background:transparent;color:#fff;font-weight:700;padding-top:14px}
+.ex-warn{color:#fbbf24;font-size:11px;display:block}
+.sg-card{background:rgba(204,208,207,.06);border:1px solid rgba(204,208,207,.16);border-radius:16px;padding:14px 16px;margin-top:10px}
+.sg-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:12px;color:#9fb0b8}
+.sg-cat{color:#06141B;background:#E6E9E8;border-radius:999px;padding:3px 10px;font-weight:700}
+.sg-card p{margin:10px 0;line-height:1.9;color:#fff;white-space:pre-wrap;word-break:break-word}
+.sg-act{display:flex;gap:8px;align-items:center}.sg-act select{width:auto;margin:0}
+@media(max-width:900px){.fr-cols{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.fr-cols{grid-template-columns:1fr}.adw{padding:18px}}
+</style>
+
+<script src="exams.js"></script>
+<script id="adx-script">
+(function(){
+var ADMIN_NAME='عرفان',$=function(i){return document.getElementById(i)},fa=function(n){return toFa(String(n))},esc=function(s){return escapeHtmlAdmin(String(s==null?'':s))};
+var G=window.EXAM_GROUPS||[],TR=window.EXAM_TRACKS||[];
+var DAYS=['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه'],JDAY={6:'شنبه',0:'یکشنبه',1:'دوشنبه',2:'سه‌شنبه',3:'چهارشنبه'};
+function j2g(jy,jm,jd){jy+=1595;var days=-355668+365*jy+~~(jy/33)*8+~~(((jy%33)+3)/4)+jd+(jm<7?(jm-1)*31:(jm-7)*30+186),gy=400*~~(days/146097);days%=146097;if(days>36524){gy+=100*~~(--days/36524);days%=36524;if(days>=365)days++}gy+=4*~~(days/1461);days%=1461;if(days>365){gy+=~~((days-1)/365);days=(days-1)%365}var gd=days+1,s=[0,31,(gy%4==0&&gy%100!=0)||gy%400==0?29:28,31,30,31,30,31,31,30,31,30,31],gm=0;for(;gm<13&&gd>s[gm];gm++)gd-=s[gm];return[gy,gm,gd]}
+var EX=(window.EXAM_PLAN||[]).slice();
+EX=EX.map(function(e){var p=e[0].split('/').map(Number),g=j2g(p[0],p[1],p[2]);return{d:new Date(g[0],g[1]-1,g[2]),g:e[1],c:e[2].split('|')}});
+function t0(){var n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate())}
+function left(d){return Math.round((d-t0())/864e5)}
+function fd(d,o){try{return d.toLocaleDateString('fa-IR',o||{weekday:'long',day:'numeric',month:'long',year:'numeric'})}catch(e){return d.toDateString()}}
+function rel(n){return n<0?'گذشته':n===0?'امروز':n===1?'فردا':fa(n)+' روز دیگر'}
+function today(){return JDAY[new Date().getDay()]||''}
+function go(t){var b=[].slice.call(document.querySelectorAll('.admin-panel-nav button')).filter(function(x){return x.textContent.indexOf(t)>-1})[0];if(b)b.click()}
+function R(){try{return getAdminScheduleRows()}catch(e){return[]}}
+
+/* ---------- free teachers ---------- */
+var freeSel=null;
+function freeData(day){var b={};R().forEach(function(r){if(r.day===day)(b[r.teacher]=b[r.teacher]||{})[r.period]=r.className});return getAdminTeachers().map(function(t){var x=b[t]||{};return{t:t,b:x,n:Object.keys(x).length}})}
+function freeCur(){var td=today();return freeSel||td||'شنبه'}
+function renderFree(){var el=$('adFreeBody');if(!el)return;var td=today(),day=freeCur(),D=freeData(day),full=D.filter(function(x){return!x.n}),P=window.PERIODS||{};
+$('adFreeSub').textContent=(day===td?'امروز · ':'')+fd(new Date())+' — به‌روزرسانی خودکار هر شب ساعت ۰۰:۰۰';
+var h='<div class="adx-chips" style="margin:0 0 14px">'+DAYS.map(function(d){return'<button class="adc'+(d===day?' on':'')+'" onclick="adFreeDay(\''+d+'\')">'+d+(d===td?' (امروز)':'')+'</button>'}).join('')+'</div>';
+if(!td)h+='<p class="admin-muted" style="margin-bottom:12px">امروز روز برنامه‌ی مدرسه نیست؛ لیست شنبه‌ی بعد نمایش داده می‌شود.</p>';
+if(day==='دوشنبه')h+='<p class="admin-muted" style="margin-bottom:12px">زنگ ۴ دوشنبه‌ها «زنگ آزمون» است و برای همه‌ی دبیران بدون کلاس حساب می‌شود.</p>';
+h+='<div class="dz-stats">'+[['دبیران',D.length],['کاملاً آزاد',full.length],['۱ یا ۲ زنگ کلاس',D.filter(function(x){return x.n>0&&x.n<3}).length],['پرکار (۳ زنگ یا بیشتر)',D.filter(function(x){return x.n>=3}).length]].map(function(s,i){return'<div class="dz-stat'+(i===1?' hero':'')+'"><small>'+s[0]+'</small><strong>'+fa(s[1])+'</strong></div>'}).join('')+'</div>';
+h+='<div class="dz-card" style="margin-top:14px"><h4>کاملاً آزاد — بدون هیچ کلاسی در '+day+'</h4>'+(full.length?full.map(function(x){return'<span class="fr-chip">'+esc(x.t)+'</span>'}).join(''):'<span class="admin-muted">همه‌ی دبیران حداقل یک کلاس دارند.</span>')+'</div><div class="fr-cols">';
+[1,2,3,4].forEach(function(p){var f=D.filter(function(x){return!x.b[p]});h+='<div class="fr-col"><h5>زنگ '+fa(p)+(day==='دوشنبه'&&p===4?' (آزمون)':'')+' · '+fa(P[p]?P[p].start:'')+'–'+fa(P[p]?P[p].end:'')+' · '+fa(f.length)+' نفر</h5>'+f.map(function(x){return'<span>'+esc(x.t)+'</span>'}).join('')+'</div>'});
+el.innerHTML=h+'</div>';var ex=EX.filter(function(e){return left(e.d)===0})[0];if(ex&&day===td)el.insertAdjacentHTML('afterbegin','<div class="adx-chips" style="margin:0 0 12px"><button class="adc" onclick="adminGo2(\'تقویم امتحانات\')">🗓️ امروز آزمون هفتگی داریم — مشاهده‌ی برنامه</button></div>')}
+window.adFreeDay=function(d){freeSel=d===today()?null:d;renderFree()};
+window.adFreeCopy=function(){var day=freeCur(),D=freeData(day),t='اساتید آزاد '+day+' — '+fd(new Date())+'\nکاملاً آزاد: '+(D.filter(function(x){return!x.n}).map(function(x){return'استاد '+x.t}).join('، ')||'—');[1,2,3].forEach(function(p){t+='\nزنگ '+fa(p)+': '+D.filter(function(x){return!x.b[p]}).map(function(x){return x.t}).join('، ')});try{navigator.clipboard.writeText(t);showAdminToast('لیست کپی شد')}catch(e){showAdminToast('کپی انجام نشد')}};
+window.adminGo2=go;
+
+/* ---------- exam calendar ---------- */
+function nz(s){return String(s).replace(/[\u200c\s\d۰-۹يك]/g,function(c){return c==='ي'?'ی':c==='ك'?'ک':''})}
+function same(a,b){a=nz(a);b=nz(b);return a===b||a.indexOf(b)>-1||b.indexOf(a)>-1||(a==='دینوزندگی'&&b==='دینی')||(b==='دینوزندگی'&&a==='دینی')}
+function colOf(cn){var p=String(cn).trim().split(/\s+/),f=p.slice(0,-1).join(' '),n=adminClassNumber(p[p.length-1]),g=n>=100&&n<110?0:n>=110&&n<120?1:n>=120&&n<130?2:-1,t={'تجربی':0,'ریاضی':1,'انسانی':2}[f];return g<0||t==null?-1:t*3+g}
+function teachersOf(cn,sub){var b=String(sub).replace(/\s*[\d۰-۹]+\s*$/,''),o={};R().forEach(function(r){if(r.className===cn&&same(r.subject,b))o[r.teacher]=1});return Object.keys(o)}
+function exInit(){var s=$('adExClass');if(!s||s.options.length)return;s.innerHTML='<option value="all">همه‌ی رشته‌ها و پایه‌ها</option>'+getAdminClasses().map(function(c){return'<option>'+esc(c)+'</option>'}).join('')}
+function renderExams(){exInit();var cn=$('adExClass').value,ci=cn==='all'?-1:colOf(cn),nx=EX.filter(function(e){return left(e.d)>=0})[0],h='';
+if(nx){var n=left(nx.d),cells=ci>=0?[ci]:TR.map(function(_,i){return i});
+h='<div class="dz-card"><h4>آزمون بعدی — '+rel(n)+'</h4><p style="font-size:15px;color:#fff;margin-bottom:10px">'+fd(nx.d)+' · زنگ آزمون · '+G[nx.g]+'</p>'+cells.map(function(i){return'<div class="li" style="display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid rgba(204,208,207,.12);font-size:13px"><span>'+TR[i]+'</span><span>'+fa(nx.c[i])+'</span></div>'}).join('')+'<div class="adx-chips"><button class="adc" onclick="adExAnn()">📢 آماده‌سازی اطلاعیه</button></div></div>'}else h='<div class="dz-card"><h4>آزمون پیش‌رویی در برنامه نیست.</h4></div>';
+$('adExNext').innerHTML=h;
+var t='<table class="ex-tbl"><tr><th>تاریخ</th><th>فاصله</th>'+(ci>=0?'<th>دروس آزمون</th><th>دبیران این دروس در کلاس '+esc(cn)+'</th>':TR.map(function(x){return'<th>'+x+'</th>'}).join(''))+'</tr>',pg=-1;
+EX.forEach(function(e){var n=left(e.d),w=e.d.getDay()!==1;if(e.g!==pg){pg=e.g;t+='<tr class="grp"><td colspan="'+(ci>=0?4:11)+'">'+G[e.g]+'</td></tr>'}
+t+='<tr class="'+(n<0?'past':e===nx?'nx':'')+'"><td>'+fd(e.d,{day:'numeric',month:'long',year:'numeric'})+(w?'<span class="ex-warn">⚠️ این تاریخ دوشنبه نیست — تاریخ را در اکسل بررسی کنید</span>':'')+'</td><td>'+rel(n)+'</td>';
+if(ci>=0){var subs=e.c[ci].split(' - ');t+='<td>'+fa(e.c[ci])+'</td><td>'+subs.map(function(s){var T=teachersOf(cn,s);return esc(s.replace(/\s*\d+$/,''))+': '+(T.length?esc(T.join('، ')):'—')}).join('<br>')+'</td>'}
+else t+=e.c.map(function(c){return'<td>'+fa(c).replace(' - ','<br>')+'</td>'}).join('');t+='</tr>'});
+$('adExTable').innerHTML=t+'</table>'}
+window.adExRender=renderExams;
+window.adExAnn=function(){var nx=EX.filter(function(e){return left(e.d)>=0})[0],cn=$('adExClass').value,ci=cn==='all'?-1:colOf(cn);if(!nx)return;var t='یادآوری: آزمون هفتگی '+fd(nx.d,{weekday:'long',day:'numeric',month:'long'})+' در زنگ آزمون برگزار می‌شود.'+(ci>=0?' '+TR[ci]+': '+fa(nx.c[ci]):'');go('اطلاع‌رسانی');var a=$('annText');if(a){a.value=t.slice(0,300);if(window.annCount)window.annCount()}showAdminToast('متن اطلاعیه آماده شد؛ مدت نمایش را بررسی و منتشر کنید')};
+
+/* ---------- inbox ---------- */
+var SG=[],ST={new:'جدید',review:'در حال بررسی',done:'انجام شد'},CI={'امکانات':'🏫','برنامه':'📅','نظافت':'🧹','پیشنهاد':'💡','سایر':'📌'};
+function sb(path,o){return sbToken().then(function(tok){o=o||{};o.headers=Object.assign({apikey:SB_KEY,Authorization:'Bearer '+tok,'Content-Type':'application/json'},o.headers||{});return fetch(SB_URL+'/rest/v1/'+path,o)})}
+function badge(){var n=SG.filter(function(x){return x.status==='new'}).length,b=$('adInboxBadge');if(b){b.textContent=fa(n);b.hidden=!n}}
+function sgLoad(){var m=$('adSgMsg');if(m)m.textContent='در حال دریافت…';return sb('suggestions?select=*&order=created_at.desc&limit=300').then(function(r){if(r.status===404||r.status===400)throw 'nt';if(!r.ok)throw r.status;return r.json()}).then(function(d){SG=d;badge();renderInbox();renderWelcome()}).catch(function(e){if(m)m.textContent=e==='nt'?'جدول suggestions هنوز ساخته نشده است؛ فایل supabase-suggestions.sql را در Supabase اجرا کنید.':'دریافت پیام‌ها ناموفق بود. اتصال یا ورود مدیر را بررسی کنید.'})}
+function renderInbox(){var s=$('adSgSt').value,c=$('adSgCat').value,L=SG.filter(function(x){return(s==='all'||x.status===s)&&(c==='all'||x.category===c)}),cnt={};SG.forEach(function(x){cnt[x.category]=(cnt[x.category]||0)+1});var top=Object.keys(cnt).sort(function(a,b){return cnt[b]-cnt[a]})[0];
+$('adSgStats').innerHTML=[['جدید',SG.filter(function(x){return x.status==='new'}).length],['در حال بررسی',SG.filter(function(x){return x.status==='review'}).length],['انجام شد',SG.filter(function(x){return x.status==='done'}).length],['پرتکرارترین دسته',top?top:'—']].map(function(x,i){return'<div class="dz-stat'+(i===0?' hero':'')+'"><small>'+x[0]+'</small><strong>'+(typeof x[1]==='number'?fa(x[1]):esc(x[1]))+'</strong></div>'}).join('');
+$('adSgMsg').textContent=SG.length?'':'هنوز پیامی ثبت نشده است.';
+$('adSgList').innerHTML=L.map(function(x){return'<div class="sg-card" data-id="'+esc(x.id)+'"><div class="sg-top"><span class="sg-cat">'+(CI[x.category]||'')+' '+esc(x.category)+'</span><span>'+when(Date.parse(x.created_at))+'</span>'+(x.contact?'<span>تماس: '+esc(x.contact)+'</span>':'')+'</div><p>'+esc(x.message)+'</p><div class="sg-act"><select class="admin-control" data-st>'+Object.keys(ST).map(function(k){return'<option value="'+k+'"'+(k===x.status?' selected':'')+'>'+ST[k]+'</option>'}).join('')+'</select><button class="admin-edit-btn admin-danger" data-del>حذف</button></div></div>'}).join('')}
+window.adSgRender=renderInbox;window.adSgLoad=sgLoad;
+document.addEventListener('change',function(e){var s=e.target.closest&&e.target.closest('[data-st]');if(!s)return;var id=s.closest('.sg-card').dataset.id;sb('suggestions?id=eq.'+encodeURIComponent(id),{method:'PATCH',body:JSON.stringify({status:s.value}),headers:{Prefer:'return=minimal'}}).then(function(r){if(!r.ok)throw 0;SG.forEach(function(x){if(x.id===id)x.status=s.value});badge();renderInbox();renderWelcome()}).catch(function(){showAdminToast('تغییر وضعیت ذخیره نشد')})});
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-del]');if(!b)return;var id=b.closest('.sg-card').dataset.id;if(!confirm('این پیام حذف شود؟'))return;sb('suggestions?id=eq.'+encodeURIComponent(id),{method:'DELETE',headers:{Prefer:'return=minimal'}}).then(function(r){if(!r.ok)throw 0;SG=SG.filter(function(x){return x.id!==id});badge();renderInbox();renderWelcome()}).catch(function(){showAdminToast('حذف انجام نشد')})});
+
+/* ---------- welcome ---------- */
+function renderWelcome(){var d=$('ad-dashboard');if(!d)return;var w=$('adWelcome');if(!w){w=document.createElement('div');w.id='adWelcome';w.className='adw';d.insertBefore(w,d.firstChild)}
+var td=today(),fc=td?freeData(td).filter(function(x){return!x.n}).length:0,nx=EX.filter(function(e){return left(e.d)>=0})[0],nn=SG.filter(function(x){return x.status==='new'}).length;
+w.innerHTML='<h3>خوش آمدی '+ADMIN_NAME+' جان! 👋</h3><p>امروز چه کاری از دستم برمیاد، رئیس؟</p><small>'+fd(new Date())+'</small><div class="adx-chips">'+(td?'<button class="adc" onclick="adminGo2(\'اساتید آزاد\')">🧑‍🏫 '+fa(fc)+' استاد امروز کاملاً آزادند</button>':'')+(nx?'<button class="adc" onclick="adminGo2(\'تقویم امتحانات\')">🗓️ آزمون بعدی: '+rel(left(nx.d))+'</button>':'')+'<button class="adc" onclick="adminGo2(\'صندوق پیشنهادها\')">📬 '+(nn?fa(nn)+' پیام جدید':'صندوق پیشنهادها')+'</button></div>'}
+
+/* ---------- page hook ---------- */
+var P={'تقویم امتحانات':['ad-exams',renderExams],'اساتید آزاد':['ad-free',function(){freeSel=null;renderFree()}],'صندوق پیشنهادها':['ad-inbox',function(){renderInbox();sgLoad()}]},prev=window.adminPage,lastLoad=0;
+window.adminPage=function(btn,title){var r=prev.apply(this,arguments),p=P[title];if(p){document.querySelectorAll('.ad-page').forEach(function(x){x.classList.remove('active')});$(p[0]).classList.add('active');p[1]()}else if(title==='داشبورد'){renderWelcome();if(Date.now()-lastLoad>12e4){lastLoad=Date.now();sgLoad()}}return r};
+
+/* ---------- midnight refresh ---------- */
+var key=new Date().toDateString();
+function tick(){var k=new Date().toDateString();if(k===key)return;key=k;freeSel=null;renderWelcome();if($('ad-free').classList.contains('active'))renderFree();if($('ad-exams').classList.contains('active'))renderExams();try{showAdminToast('☀️ روز جدید شروع شد؛ لیست اساتید آزاد به‌روز شد')}catch(e){}}
+function arm(){var n=new Date();setTimeout(function(){tick();arm()},new Date(n.getFullYear(),n.getMonth(),n.getDate()+1,0,0,2)-n)}
+arm();setInterval(tick,30000);document.addEventListener('visibilitychange',tick);
+try{renderWelcome()}catch(e){}
+})();
+
+</script>
 </body>
 </html>
