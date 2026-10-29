@@ -2617,7 +2617,41 @@ html.gs-pending .search-section.visible { opacity: 0; }
 .drawer-foot { margin-top: auto; padding-top: 18px; display: flex; justify-content: center; border-top: 1px solid rgba(204,208,207,.2); }
 .drawer-foot .site-header-update, .drawer-foot .site-header-update.hidden { position: static; opacity: 1; transform: none; pointer-events: auto; margin: 0 auto; font-size: 11.5px; padding: 7px 14px; color: #fff; background: rgba(255,255,255,.06); border: 1px solid rgba(204,208,207,.3); }
 .admin-drawer { display: flex; flex-direction: column; }
-.admin-drawer > * { flex: none; }</style>
+.admin-drawer > * { flex: none; }
+/* ===== نوار روز آزمون (فقط روزهای آزمون ساخته می‌شود) ===== */
+.ex-bar{position:fixed;top:0;left:0;right:0;z-index:1190;height:30px;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 12px;font-size:13px;font-weight:700;line-height:1;white-space:nowrap;overflow:hidden;background:#CCD0CF;color:#06141B;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+.ex-bar::before{content:"";width:8px;height:8px;border-radius:50%;background:#06141B;flex:0 0 auto}
+html.ex-on .site-header{top:30px}
+html.ex-on #smooth-content{padding-top:30px}
+@media(max-width:420px){.ex-bar{font-size:12px}}
+
+/* ===== چاپ برنامه‌ی کلاس ===== */
+#printSheet{display:none}
+@media print{
+  html,body{height:auto!important;min-height:0!important;overflow:visible!important}
+  body.printing-class{background:#fff!important;padding:0!important;margin:0!important}
+  body.printing-class::before,body.printing-class::after{display:none!important}
+  body.printing-class>*:not(#printSheet){display:none!important}
+  body.printing-class>#printSheet{display:block!important;direction:rtl;font-family:'Vazirmatn',Tahoma,sans-serif;color:#000;background:#fff}
+  #printSheet,#printSheet *{background:transparent!important;color:#000!important;box-shadow:none!important;text-shadow:none!important;animation:none!important;transition:none!important;filter:none!important}
+  #printSheet .ps-head{text-align:center;margin-bottom:10mm}
+  #printSheet .ps-school{font-size:12pt;font-weight:600}
+  #printSheet .ps-class{font-size:18pt;font-weight:800;margin-top:2mm}
+  #printSheet .wk-wrap{overflow:visible;border:0;border-radius:0}
+  #printSheet .wk-table{width:100%;min-width:0;table-layout:fixed;border-collapse:collapse}
+  #printSheet .wk-table th,#printSheet .wk-table td{border:1px solid #000;padding:2mm 1.5mm;text-align:center;vertical-align:middle;box-shadow:none}
+  #printSheet .wk-table thead th{background:#eee!important;font-size:11pt;font-weight:800;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #printSheet .wk-table thead th small{display:block;font-size:8.5pt;font-weight:500;margin-top:1mm}
+  #printSheet .wk-table tbody th{width:24mm;font-size:11pt;font-weight:800;background:#f4f4f4!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #printSheet .wk-table .wk-corner{width:24mm}
+  #printSheet .wk-cell{height:28mm}
+  #printSheet .wk-sub{font-size:12pt;font-weight:700}
+  #printSheet .wk-tch{font-size:9.5pt;font-weight:500;margin-top:1mm}
+  #printSheet .wk-multi .wk-ent+.wk-ent{margin-top:1.5mm;padding-top:1.5mm;border-top:1px dashed #000}
+  #printSheet .wk-dash{color:#000}
+  #printSheet .ps-foot{margin-top:6mm;text-align:left;font-size:9pt}
+}
+</style>
 <style id="cls-matrix">
 .wk-title{font-size:.95rem;font-weight:800;color:var(--gold-light);margin:4px 2px 12px}
 .wk-wrap{overflow-x:auto;border-radius:18px;border:1px solid var(--card-border);background:var(--card-bg);-webkit-overflow-scrolling:touch}
@@ -2640,13 +2674,6 @@ html.gs-pending .search-section.visible { opacity: 0; }
 .wk-table tr.wk-today>*{background:linear-gradient(135deg,rgba(204,208,207,.16),rgba(204,208,207,.06))}
 .wk-table tr.wk-today>th{color:#fff;box-shadow:inset -3px 0 0 var(--gold)}
 @media(min-width:640px){.wk-cell{height:84px}.wk-sub{font-size:.9rem}.wk-tch{font-size:.74rem}.wk-table thead th small{font-size:.7rem}.wk-table tbody th,.wk-table .wk-corner{width:84px}}
-.roster{margin-top:18px;padding:18px 16px;border-radius:18px;border:1px solid var(--card-border);background:var(--card-bg)}
-.roster[hidden]{display:none}
-.roster-title{font-size:.95rem;font-weight:800;color:var(--gold-light);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(204,208,207,.16)}
-.roster-msg{font-size:.85rem;color:var(--text-soft)}
-.roster-msg:empty{display:none}
-.roster-list{list-style:none;margin:0;padding:0;column-width:160px;column-gap:18px}
-.roster-list li{break-inside:avoid;padding:7px 10px;margin-bottom:6px;border-radius:10px;background:rgba(204,208,207,.06);font-size:.86rem;line-height:1.6;color:#fff}
 </style>
 <body class="dark">
 <div class="site-header" id="siteHeader">
@@ -3517,34 +3544,8 @@ function classKey(cn) {
     var m = String(cn).replace(/[۰-۹]/g, function (d) { return "۰۱۲۳۴۵۶۷۸۹".indexOf(d); }).match(/\d+/);
     return m ? m[0] : null;
 }
-var ROSTER_FALLBACK = {"101":["امیرحسین ابراهیمی","صدرا افضلیان","محمدامین الهی","پارسا اینه وند","علیرضا باقرشاهی","محمد طاها بخشی","آرتین پیروزنیا","عرفان جلالوند","علیرضا جلیل پور","سید محمد ماهان حسینی مقدم","محمدحسین خائف","ارمین خیری","امیرعلی خیری","محمد صدرا دانا","آریا رحمانی لاهرودی","مانی زین‌العابدینی ملک میان","راستین سالاری عرب","امیرعلی سپهری","سید حسین سعیدی نژاد","بنیامین شکری","پارسا صادق زاده","امیررضا صفری","علی اکبر علی جعفری","کسرا غلامی","امیرحسین قائدرحمتی","یاسین قراگوزلو","ایمان لشکرانی","بردیا محسنی کیا","مصطفی محقق","سید حامد محمودی","امیرعلی مددی","محمد امین مرالی","سید حسین موسوی","محمد مهراد موسوی","آرمین مینقی اصل","مبین نادری بیدسرخی","محمدحسین یاوری","اشکان اولادحمزه زاده"],"102":["احمد احمدی خبوشان","محمد طاها اقبال جو","نریمان امانی پیشخانی","سید محمد مهدی امینی","آرمان آجودانی","کیارش باقری","آرین باوفا","پویا برادران","محمد سپهر برخورداری","محمد حسین بصائری","امیرحسین تاجدینی","صدرا توکلی قرخبلاغ","محمدحسن جعفری","محمدعلی حسین زاده","مهدی حیدری","امیر رضا ده مرده قلعه نو","نیما دهبانی بابازیدی","آرتین دهقان","امیر علی دهقانی","علیرضا ذاکرزاده","مهبد رجبی پور طهرانی مقدم","مهبد رحیم زاده","حسین سرلک","امیرعلی سعیدی","میلاد شاه محمدی","امیرحسین عابدی","محمد مهدی عابدینی","متین عباسی","امیرعلی عبدی","ایلیا عبدی","امیرحسین عرب قناد","امیر مهدی کدخدایی","محمدطاها گودرزی","علیرضا لشگری","فربد مردانی کمالی","توحید مزینانی","اهورا مقداد زاده کرمانی","امیرحسین منتظری","امیر علی نامداری فرد","امیرعلی همتی"],"103":["ایلیا اسدی یکان","سینا اسمعیلی گالشی","مهدی آقاجانی براگوری","امیرحسین بذرافشان","آرین برجکی","امیر مهدی جعفرزاده درزی","امیرعلی جعفری","محمدحسن جعفری","امیر محمد جوشنی","محمد امین چراغی","محمد متین چراغی","امیرعلی حسن زاده","مانی حسین طهرانی","مانیاد حیدربیگی","پرهام حیدری میبدی","پویان خالدیان","امیر سام خسروی","سورنا خیری","آرتین زندی","سامیار سعیدی نژند بناب","محمد صادق شاهرخی","مصطفی شایسته نیک","محمدصادق طاری بخش","آرمین عبداللهی","امیرمحمد عبداللهی","امیرحسین غفوریان","حسین فرهادی","سیدعلی فلسفی","رادمان قاضی","رهام کاظم زاده فیض آبادی","امیرحسین کاظمی","محمد امین کرمی","رضا محمدصالحی","محمد مهدی موسی پور","علی نجفی","محمد طاها نیکبختیان","محمد همراهی کوزه کنان","امیر محمد هوشمند","علیرضا وقاری","ارمیا ولی زاده"],"104":["مهدی احمد خانی ها","محمدمهدی اصغری باروق","سروش افتخاری","محمد جواد اقامتی","کسرا امر اللهی","پرهام امینیان","کیارش انصاری اشلقی","محمد مبین ایرانی","متین ایمان","مسیح آقابابازاده","امیرعلی باقری اصل","کیانوش بختیاری","یاسین پزشک پور","دانیال پور رحیم","سیدمحمدعلی حسینی","امیرعباس خداقلیزاده","محمد رشیدی شه وندی","عباس رضایی","ابوالفضل رضایی","سید محمد صادق رضوانی","سید محمد مهدی سربازی","محمد طاها شاهرخی","محمدحسن شفیعی","مهدی صالحی بیرنق","محمد رسا طالبی","امیرمهدی عیسی پور","سید محمد سینا قریشی","محمدرضا قلی نژاد","امیرعلی قلیچ‌خانی","علیرضا معرفتی","سامیار معیری","ارسلان میرزایی","محمدیاسین نبی","محمد هادی نجفی خلج","مهدی یگانه","امیرفراز یاری","آراد ندایی ابوذر"],"105":["محمدحسین استادی","شایان اسماعیلی","امیرعلی الف خانی","ابوالفضل امیری حیدری","اردلان اینانلو","مهرسام آرزومندی عراقی","محمد امین آقاجانی","امیرمحمد آقازاده","محمد ماهان بختیاری","امیر مهدی بیات","امیرعباس بیرامی","آروین پیوندی","سینا جعفری","ابوالفضل حسین پور","سید آراد حسینی","سید امیرعلی حسینیان","حسین خان بابایی","محمد طاها راز پور شربیانی","سیدمحمد سبحان روحانی","امیر علی زاهدی نسب","پارسینا زرین کلاه","پرهام زمانپورنیاوران","ارتین سلمانی اسفجر","محمدطاها سیاهکالی مرادی","مانی طهرانی فرد","محمدعماد عباس پور","اریا عباس زاده توری","پارسا عرب","محمد پارسا عزیزی آلام","کورش غلامی","محمد پویان کشی پور","حامد مسعودی","مهیار مقرب","عرفان میرزای","پوریا مینایی مشتقین","عرشیا نشان","محمد یاسین نقدی","ایمان وصال تیموری","امین یادگارنیا","برسام یاریان","ابوالفضل آریانسب"],"106":["عرفان اب برین","مهدی جباری","محمد صادق حاجی حسینی","علی‌اصغر حسنوند","محمدمعین حمیدی","علی حیدریان","علی رزباری","امیر رضا رستمی","علیرضا رنجبرگرگری","محمد زارع ایوقی","محمد زارع عبداللهی","آرتین سلیمان","سیدکیان سیدافقهی","طاها عبدالخانی","امیرحسین عرب","ماهان فتحی","آرتام قدسی","امیرحسین قرائی","محمد صادق کردلو","مهدی کهساری هاچه سو","محمد یاسین گرشاسبی","آرش محمدی","یاسین محمدی پویا","آرسام مددی گلی","بردیا مستعان","امیریل معروف خانی","پرهام ملکیان","امیررضا مولائی مشتقین","کوروش نوری","سید شایان یوسفی","محمدطاها جامه بزرگ"],"107":["محمدهومان اسمعیلی","امیرعلی اشتری ماهینی","امیر مهیار اکبری","امیرحسین الوندی","آرمان انوشه","محمد جواد پورموسوی","ایلیا جاوید","طاها جلالیانی","کوروش خرمی شندی","امیرعلی خواجوی","محمد خوبان","محمدمهدی سرخیلی","حسین سعدان","شایان شیرازی","پارسیس صادقی","ایلیا صفرآبادی","علی سان عبدالهی","امیرپارسا غلامیان","محمد متین فلاحی","آروین فیاضی","پارسا قاسم پور","مانی کاظم رضی","رضا کریم نسب","محمد گودینی","محمدطاها مرادپور","آروین نادری","ابوالفضل همایون روز","محمدطاها یوسف وند"],"108":["شایان احمدی قلعه لر","آرین اسماعیلی","محمدعلی اشترانی","امیر سام امیری","محمدمبین بدل زاده","محمدطاها براتی هاشم آبادی","محمدطاها بیات","محمدحسین پاشایی احمد آباد","محمد کیان جعفری","محمد طاها جعفری","سید سهیل جلالی","سامی جهانگیری شمس آبادی","کسرا حاجی حسینعلی","متین حسن علیپور تمیجانی","سید طاها حسینی","سید محمد طاها حسینی","محمد مهدی خدایی","پویان دهبانی","پارسا رضازاده","محمدمهدی شیرخانی","پرهام صادقچه","ایمان صادقی نژاد برزلقی","امیرعلی صادقی نیاری","حسین طالع امجد","سورنا طحان پور","محمدماهان عباسی","سبحان عبدالله پور","ابوالفضل عبدالملکی","عرشیا عربی محمود آبادی","محمدرضا عظیمی نوعدوست","کسری غلامی","پوریا فتحی خان قشلاقی","حسین کریمی","علیرضا کیادربندسری","محمدپارسا گودرزی","محسن محمدی جعفری","محمدامین مرادی","حامد مسعودی","ارمیا میرزائی","امیر عباس هاشمی","کسری وحدتی آرام","امیررضا جعفرزاده درزی","محمدجواد پرمایه"],"111":["مهرزاد آقائی حصاری","یاسین ترخان","آیدین تندکار","علیرضا جهان شادمطلق","پرهام چهارمیری","عرفان حسنی","علی خالقی","آروین دوست طلب دیلمقانی","امیرمهدی رخصی","امیرمهدی روحی","محمدرضا سلطانی","امیرحسین شجاعی","محمد صادقی","امیرعلی ضیائیان","آراد طاهری مالک آبادی","محمدامین عبدالهی","سیدمحمدرضا عمادی","سیدعلی رضا فاطمی","امیرمحمد فرزانه","صالح فرهناک","محسن فهیمی","امیرعلی قلی بیگی علم آبادی","محمدمهدی کاظمی ورنامخواستی","ابوالفضل کولانی","امیرعلی کارخانه یوسفی","مهراد محمدی","محمدصادق مطهری کوشکی","مانی معصومی","اشکان مقدم","محمدرضا ملک محمدی","سیدامیرسام موسوی","محمدسجاد مولایاری","محمدحسین میرابی قشونی","سیدمحمدباقر میرسلیمی","امیرحسین نوروزی ورنکشی","سیدعلی نیاکیانی تهرانی","پوریا یحیوی قره باغ","علیرضا یوسفیان"],"112":["امیر اسدی نیکویان","محمدعلی اقبالی","آبتین امیرپورملالار","علیرضا بخشی","کوروش برجسته نژاد","پوریا بهرامی","هادی بهرامی عیسی آبادی","بهراد بهمنی","سیدامیرحسین بینش طریق","نیما پاکدل","یاسین پریزن","محمدحسین حبیبی","مهیار حسینمردی","محمدامین خالق پناه","امیرحسین خورشیدپورنوبندگانی","محمدمهدی دلدارکردهادی","محمدپارسا دلفانی","مهدی رفیعی","فربد رفیعی مزرعه نو","پارسا شریفی قطب آبادی","کامران شعبانی منفرد","امیرحسین شکیب","محمدطاها صادقی","آرش عبادی","مبین غلام حسین کلاکی","علیرضا غلام سقائی","یاسین غلامی","محمدامین کاکو","محمدرضا کمیجانی بزچلوئی","امیررضا محمدحسینی","ایلیا میرصادق فام","سیدرسام میرقاسمی","محمدحسین ندیمی","متین نقوی","آرمان نیری","ماهان نیکنام","سینامهر نیکنام"],"113":["محمدحسین ابوالفتحی","ایلیا احمدی","محمدحسن ازگلی","آراد اسدی دولابی","امیر رضا اکبری","کسری اله وردی","حسین سالار انصاری","مهیار بابک پور","امیرعلی بهزادی فرد","مهدی بیات","صدرا پیرخرد","بردیا حاجی لوئی","رادین حسینی","آرمان رام","امیرحسین رحیمیان کرکان","سینا رشیدی","سپهر رضائی صدرآبادی","صدرا روستاآزاد","علی شریفی","صدرا عامری سرخ آبادی","محمدیاسین فلاح مهید","محمدحسن فیاضی","صالح قمبری جزین","متین قورچیان","امیرحسین محبی","محمدمهدی محمدی تبار","مهدی محمدی گلندوز","رضا مرادی","ماهان مردی بابی","بهداد ملازینلی","علی عباس مؤذنی","محمدمهدی نادری","محمد نیک بخت","امیرطاها نیک نام","علی هادی","آراد هاشم زاده بنفشه درق"],"114":["علی رضا احمدی","سیدامیرعلی اخوندی","سیددانیال ارفعی","محمدماهان اقبالی خیرآبادی","امیررضا بیاتی فر","کیان تقوی زاده اردکانی","رهام جهان یاری","کوروش راستگوئی خسروشاهی","آراس رانین خردمند","فرنام سجادی نیا","سپهر سردابی","سیدسامیار سعید","صدرا سهرابی","ارشیا شفیعی","ایلیا صاحبدل علی جهانی","محمد امین صادقی","سهیل صالحی خو","مهدی عبدالملکی دارانی","کیارش عزیزی","آدین غفاری منفرد","محمدحسین فتحی","آبتین فرامرزی","پرهام فرهادی","سینا قاسمی میمند","فردین کرمی","محمدسینا کیانی انبوهی","رادمهر گرجی دوز","امیررضا گروسی","عرشیا مبارک قدم","پارسا مبارکی","امیرمهدی محکم","امیرحسین مرالی","علی نجارباشی","ابوالفضل نجفی ورزقانی","سیدامیرحسین نوری","امیر نیک آبادی","آرمین همت","مهدی واحد","پارسا یزدانی"],"115":["پارسا ابراهیمی","علی احمد پور","نریمان احمدی جوقی","آرین اسدیان","کیارش اسماعیلی","امیررضا اشرفی","امیرعلی ایمان پورباروق","پارسا آب خوفته","امیرعباس آریاسیرت","محمدعلی پرندین","سیدکوروش پرنیان","آریا پورعلی","سیدپرهام جلالی","سیدامیرمتین حسینی تبار","پارسا حنیفه","علیرضا خاکپور","امیرسام دلفانی","آرمان دوست طلب دیلمقانی","ایلیا رستگار","ایلیا رشیدی","علی رضی کلایه","محمدامین زارع","امیرحسین زارعی حسن بقعه","سبحان سلطانی","سالار عظیمی","امیرمحمد علی آبادی","بردیا علی بیکی","امیرحسین علیزاده","علی اکبر فرجی","رادین فرهادی","پارسا لطفعلی زاده","محمد حسین محمد رضایی","محمدمتین محمدی","امیرپارسا مرادی","آرین معینیان","ماهان نوری اینانلو","ابوالفضل واحدی","آبتین یاراحمدی","سعید یاسمی اقبال"],"116":["علی احمدپور","رضا احمدی","امیرحسین افشاری","نیما الیاس وند","متین امیرنژاد","ابوالفضل آرزومندی","امیرعلی آهن نورد","امیرعلی بابالوئی","امیرمهدی باتقوا","امیرعلی بیگلرراد","محمدحسین ثروتی","امیرحسین جعفرنژادلنگرودی","امیرمحمد جعفری روزبهانی","محمد حسنی نژاد","شایان خاکساری هریس","حسین خانی","مصطفی خوشنام نصرآبادی","سینا درویشی","احسان رحیمی مقدم","محمدعرفان رضاعلی","سیدمحمدمتین رضوی رهقی","عرشیا زاهددوبخشری","امیرعرشیا سیفی","محمدمهدی شریعتی تبار","عماد شه سواری","محمدطاها عبداله وند","محمد عزیزی نظرآبادی","محمدطه فاطمی نسب","بهراد فکری","بهداد فکری","امیرعلی قره بیگلو","سامیار گرشاسبی","عرشیا مروتی","امیرمحمد موسی پور","امیرعلی موسی خانی","سیدمهدی یار میراسماعیلی","امیرعلی نجم","امیررضا نیک زاد"],"117":["حمیدرضا اردزاد","امیرعلی اسمعیلی","مهدی باجمالو","محمدحسین بت شکن آرتی جانی","محمدحسین بهشتی منش","امیررضا جوادی","ماهان حسینی","محمدامین خاوری","محمدامیر خاوری","امیرحسین ده مرده قلعه نو","آریا دیناروندی","محمدمهدی دیوسالار","آرشان رجبی","یاسین سنگانه","شعیب سهرابی","علیرضا سهرابی","محمدطه شریعت زاده","مهدی طولابی","محمد علائی","مجتبی علی زاده رکن آبادی","امیرمحمد غفاری","امیرحسین قدیانی","طاها قهرمانی فره وش","امیرعلی کرد","امیرعلی کمالی","محمد کوه زارع","علی کوه زارع","محمدحسین کیادلیری","محمد مهدی کرمانی نژاد","محمد مهدی کرمانی نژاد","بنیامین مقدسی زاده","مبین مومن زاده","سیدمتین میری","امیرعلی نظرزاده آقبلاغ","علی نقی زاده","محمدطاها نوراللهی","سیدمحمدحسن وارسته هاشمیان"],"121":["ابوالفضل گل پرور","ارشیا گل پرور","احمدرضا رحیمی","امیرپویا متدین","امیرعلی داراب","امیرمحمد بابازاده کلهری","امیرمحمد جیریائی شراهی","امیرمهدی اعزازی","امیرمهدی افتاده نیا","امیرمحمد نصیری فرد","ایلیا صالحی فرید","آبتین رحیمی","آرمان میهن پرست","آرین احدی","پارسا سعیدلو","حسین صفری زنجانی","سهیل صحراگرد","سیدمحمدامین سیداهری","سیدمحمدسبحان حمیدی","علی توسلی","عماد تیره کار","فرهان نباتی مقدم","کسری پورکاوه","کیان مجدآبادی فراهانی","محراب انجمنی","محمد حسین آقا زاده","محمد سام ساجدی فر","محمدپرهام محمدخانی","محمدجواد شیرگیر","محمدحسن فیروزی تکله","محمدرضا اسلامی","محمدصالح رستمی راوری","محمدمهدی غلامی","معین اسماعیل زاده","متین اولادحمزه زارع"],"122":["سپهراد ابراهیمی نژاد","سید حسام ابراهیمی","ایمان بخشی","امیررضا بهرامی پیروز","محمد مهدی پور محمد","محمد حسین رضایی","اسماعیل رضایی نیک","پرهام رفیعی","محمد نیکان سرخیل","محمدمتین سلبعلیان پور","پرهام سلمان زاده گتابی","عرشیا سویزی","سیدمحمدپرهام شریعتی","امیرصدرا شریفی","امیرمحمد صالحی","محمدرضا علی محمدی","یزدان کاهه","نیکان کبیری","عرشیا مردانی کرمانی","علی رضا مصطفی لو","امیرحسین موذنی","سیدامیرمحمد موسوی","سیدمحمدجواد موسوی اطهری","سیدعلیرضا موسوی قاسمی","سیدابوالفضل موسوی قاسمی","احسان نظری","بنیامین نوری شمس آباد","محمدرضا ولی نسب","محمدرضا یقینی"],"123":["محمدپارسا بنار","سیدصدرا پروینی محبی","ابوالفضل جعفری","مهدی جلیلیان","محمدیاسین حسینی نهاد","محمدمهدی حیدری سزنقی","محمدرضا دانی دوزدوزان","فرزاد رضائی","دانیال ساری","سیدامیرمهدی سجادی رفسنجانی","امیرمحمد سلیمی حصاری","امیرعلی سیدصالحی","امیرحسین شاه محمدی","علی شجاع","پارسا صفوی هیر","ایلیا عسگری","آروین غلمان","رایان فراهانی","محمدصدرا فرخنده چچکلو","محمدحسین فرشچیان","شایان فیض عباسی","علی قاسمی","سیدامیرمحمد قاضی میرسعید","محمدمحسن قیصری","رضا کاظمی","ابوالفضل لشگرنژاد","فرهام لطفعلی زاده","ژوبین محمدپور","محمدطاها مرادی","میلاد ملاپور","سیدآرشام موسویان","علی نکونام","پوریا وفی","نویدرضا یحیی بیگی"],"124":["محمدمعین ابوالفتحی","رضا احسانی مهر","محمدطاها احمدی","محمدحسین اسدی","حامد اکبری","سپهر آجورلو","مهراد آقا زاده","یونس بازافکن","عرشیا باستان","محمدطاها بلبلی","بردیا پورشعبانی","شایان پورصاحبقران","محمدطاها جعفری فر","اشکان جعفری کلورزی","سینا جلالیان","پرهام جمشیدی","امیررضا حمیدی","عرشیان حمیدی مقدم","ابوالفضل خسروی مقدم","صالح خیرقلی","محمد رجبی پری","امیرعلی رضائی","سیدمحمدعلی رضویان","محمدحسین رفیعی زنجانی","علی رمضان نژاد","مهدی سهیلی","میثم سهیلی","احمد سورانی","علی عرب قبادی","امیررضا علی ونداولی کندی","سامیار عموزاد","شروین عیدی","بنیامین قره پور","محمدمتین کائید","دانیال لطفی","طاها محبی میکائیل آباد","سیدمهدی مصطفوی منتظری","آریا موسوی","علیرضا نوری شهیاد","محمدسبحان همتی","آران عزیزی","بارمان عزیزی"],"125":["مهدی احمدی","پرهام بابارشانی","مبین برزمینی","محمدرضا بهرامیان","علی اصغر بیک محمدی","محمدمهدی پرکم","یاسین جبلی","متین جعفربگلو","اهورا جعفری","محمدمهدی حسنی","سیدسبحان حسینی رسا","محمدرضا رشوند","سیدامیرحسین رضوی","ارمیا زینلی","سیدمبین سیدنصراله","محمدهادی شهرکی مقدم","معین صادقی","پرهام ضرابی","امیررضا عرب","رادین عسگریان","احسان علی اکبری","علی فرجی","ابوالفضل فرجی","مهدی قدیری","حسین لطفی افین","امیرحسین مجیدی","سیداحمدرضا محسن الحسینی","محمدمهدی محمدخانی","محمدمهدی مفیدی","محمدصادق ملک آبادی","آیدین مهدی زاده","محمدحسن مهماننواز","محمدعلی مهماننواز","سیدعلی موسوی نژاد","سیدعلی میرعلمی","مانی میرفتاحی","آراس ناصری فر","پارسا نقی زاده","امیرمهدی هاشمی"],"126":["سیدمهدی یار اشرف جهانی","مهیار اقدسی قوشچی","حسین امیدزاده","نیما پاشائی","نوید پاشائی","طه پورمحمد","برسام ترابی","امیرمحمد چگینی","محمدطاها چگینی","محمدمسیح حسینی","امیرمهدی حیدری","سیدامیرحسین خضری","امیرعباس خواجه لو","امیرمحمد داراب","امیرمهدی دهقان طزرجانی","محمدرضا روزبهانی","مهدی یار زبیراصل","محمدهادی زرگر","امیرحسین سیف اللهی","محمدارشام شجاعی جزی","امیرحسین شفاعی","امیرمهدی صادقی","محمدجواد صفری","محمدرضا صیفی","امیرحسین عباس زاده","محمدامین علیش زاده","طاها متین کیا","محمد مجازسربیژنی","امیرعباس محمدی","علی مروتی زنجانی","عماد مقدسی","امیرعلی میرزائی قره لر","امیرعباس میرزائی قره لر","امیرعلی نام آوری","امین نجف نیالکی","محمدطاها واحدی","محمدعلی وقاری دوزدوزانی","محمدمهدی ویسی","محمدصدرا هاشمی مطهری","عرفان حسن زاده بچنلو"]};
-var ROSTER_CACHE = {};
-var ROSTER_LS = 'bagheri_roster_v1';
-function __rosterLocal() { try { return JSON.parse(__lsGet(ROSTER_LS) || '{}') || {}; } catch (e) { return {}; } }
-function rosterNow(k) {   /* instant: memory -> browser cache -> copy built into this file (works with no server access) */
-    if (ROSTER_CACHE[k]) return ROSTER_CACHE[k];
-    var l = __rosterLocal()[k];
-    if (l && l.length) return l;
-    return ROSTER_FALLBACK[k] || [];
-}
-function fetchRoster(k) {
-    var ctl = window.AbortController ? new AbortController() : null;
-    var t = ctl ? setTimeout(function () { ctl.abort(); }, 8000) : null;
-    return fetch(SB_URL + '/rest/v1/class_students?select=full_name&class_no=eq.' + k + '&order=ord.asc', { headers: { apikey: SB_KEY }, signal: ctl ? ctl.signal : undefined })
-        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-        .then(function (rows) {
-            clearTimeout(t);
-            var a = rows.map(function (x) { return x.full_name; });
-            if (a.length) { ROSTER_CACHE[k] = a; var all = __rosterLocal(); all[k] = a; __lsSet(ROSTER_LS, JSON.stringify(all)); }
-            return a;
-        }, function (e) { clearTimeout(t); throw e; });
-}
-function loadRoster(cn) {
-    var k = classKey(cn);
-    if (!k) return Promise.resolve([]);
-    var now = rosterNow(k);
-    return now.length ? Promise.resolve(now) : fetchRoster(k);
-}
+/* لیست اسامی دانش‌آموزان دیگر در سایت عمومی نمایش داده نمی‌شود؛ فقط از پنل مدیریت دیده می‌شود. کش قدیمی مرورگر پاک می‌شود. */
+try { localStorage.removeItem('bagheri_roster_v1'); } catch (e) { }
 function classCellHtml(lt) {
     if (!lt || !lt.trim()) return '<td class="wk-cell wk-empty"><span class="wk-dash">—</span></td>';
     if (lt === "زنگ آزمون") return '<td class="wk-cell wk-special"><div class="wk-sub">📝 آزمون</div></td>';
@@ -3573,32 +3574,40 @@ function classMatrixHtml(classData) {
     });
     return h + '</tbody></table></div>';
 }
-function classRosterHtml(cn) {
-    return '<div class="roster" id="rosterBox" data-class="' + esc(cn) + '" hidden><div class="roster-title">👥 لیست کلاسی ' + esc(cn) + '</div><div class="roster-msg" id="rosterMsg"></div><ul class="roster-list" id="rosterList"></ul></div>';
-}
-function toggleRoster() {
-    var box = document.getElementById("rosterBox"), btn = document.getElementById("rosterBtn"), txt = document.getElementById("rosterBtnTxt");
-    if (!box || !btn) return;
-    var open = box.hasAttribute("hidden");
-    if (open) box.removeAttribute("hidden"); else box.setAttribute("hidden", "");
-    btn.setAttribute("aria-expanded", open ? "true" : "false");
-    if (txt) txt.textContent = open ? "بستن لیست کلاسی" : "لیست کلاسی";
-    if (!open) return;
-    var list = document.getElementById("rosterList"), msg = document.getElementById("rosterMsg");
-    box.scrollIntoView({ behavior: "smooth", block: "start" });
-    var k = classKey(box.getAttribute("data-class"));
-    function draw(names) { msg.textContent = ""; list.innerHTML = names.map(function (nm) { return '<li>' + esc(nm) + '</li>'; }).join(''); }
-    if (!k) { msg.textContent = "لیست این کلاس هنوز ثبت نشده است."; return; }
-    var shown = rosterNow(k);
-    if (shown.length) draw(shown); else if (!list.children.length) msg.textContent = "در حال دریافت لیست…";
-    if (list.getAttribute("data-fresh") === "1") return;
-    fetchRoster(k).then(function (names) {
-        list.setAttribute("data-fresh", "1");
-        if (!names.length) { if (!shown.length) msg.textContent = "لیست این کلاس هنوز ثبت نشده است."; return; }
-        if (JSON.stringify(names) !== JSON.stringify(shown)) draw(names);
-    }).catch(function () {
-        if (!shown.length) msg.textContent = "دریافت لیست ناموفق بود؛ اتصال اینترنت را بررسی کنید و دوباره امتحان کنید.";
-    });
+/* چاپ تمیز برنامه‌ی کلاس روی A4 (بدون رنگ تیره و تزئینات) */
+function printClassSchedule() {
+    var h = document.querySelector("#classRes .teacher-header h2");
+    var cn = h ? h.textContent : "";
+    var data = null;
+    rawData.forEach(function (item) { if (item[0] === cn) data = item[1]; });
+    if (!data) return;
+    ["printSheet", "printPageStyle"].forEach(function (id) { var o = document.getElementById(id); if (o) o.remove(); });
+    var tbl = classMatrixHtml(data)
+        .replace(/<div class="wk-title">[^<]*<\/div>/, "")
+        .replace(/ class="wk-today"/g, "")
+        .replace(/(📝|🎯)\s*/g, "");
+    var d = "";
+    try { d = new Date().toLocaleDateString("fa-IR"); } catch (e) { }
+    var sheet = document.createElement("div");
+    sheet.id = "printSheet";
+    sheet.innerHTML = '<div class="ps-head"><div class="ps-school">دبیرستان شهید حسن باقری</div><div class="ps-class">برنامه‌ی هفتگی کلاس ' + esc(cn) + '</div></div>' + tbl + '<div class="ps-foot">تاریخ چاپ: ' + d + '</div>';
+    document.body.appendChild(sheet);
+    var st = document.createElement("style");
+    st.id = "printPageStyle";
+    st.textContent = "@page{size:A4 landscape;margin:12mm}";
+    document.head.appendChild(st);
+    document.body.classList.add("printing-class");
+    var cleaned = false;
+    function done() {
+        if (cleaned) return;
+        cleaned = true;
+        document.body.classList.remove("printing-class");
+        ["printSheet", "printPageStyle"].forEach(function (id) { var o = document.getElementById(id); if (o) o.remove(); });
+        window.removeEventListener("afterprint", done);
+    }
+    window.addEventListener("afterprint", done);
+    setTimeout(function () { window.print(); }, 60);
+    setTimeout(done, 60000);
 }
 function showClassSchedule(className) {
     var res = document.getElementById("classRes");
@@ -3621,10 +3630,9 @@ function showClassSchedule(className) {
     html += classMatrixHtml(classData);
     html += (typeof classExamHtml === 'function' ? classExamHtml(className) : '');
     html += '<div class="teacher-actions">';
-    html += '<button type="button" class="action-btn primary" id="rosterBtn" aria-expanded="false" aria-controls="rosterBox" onclick="toggleRoster()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span id="rosterBtnTxt">لیست کلاسی</span></button>';
     html += '<button type="button" class="action-btn" onclick="renderClassesList()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span>بازگشت</span></button>';
+    html += '<button type="button" class="action-btn" onclick="printClassSchedule()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="6" y="14" width="12" height="7" rx="1"/><path d="M6 17H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/></svg><span>چاپ / PDF</span></button>';
     html += '</div>';
-    html += classRosterHtml(className);
     res.innerHTML = html;
     res.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -4248,11 +4256,55 @@ function showToast(msg, isError) {
         toast.className = "toast";
     }, 2500);
 }
+/* ===== لینک مستقیم: ?class=ریاضی ۱۰۱  و  ?teacher=نام دبیر ===== */
+var __dlParams = new URLSearchParams(window.location.search);
+function __dlKey(v) {
+    return String(v == null ? "" : v)
+        .replace(/[۰-۹]/g, function (d) { return "۰۱۲۳۴۵۶۷۸۹".indexOf(d); })
+        .replace(/[٠-٩]/g, function (d) { return "٠١٢٣٤٥٦٧٨٩".indexOf(d); })
+        .replace(/ي/g, "ی").replace(/ى/g, "ی").replace(/ك/g, "ک")
+        .replace(/[\u064B-\u0652\u0670\u0640]/g, "")
+        .replace(/[\u200c\u200d\u200e\u200f\s_+\-]+/g, "")
+        .toLowerCase();
+}
+function __dlFindClass(q) {
+    var names = rawData.map(function (it) { return it[0]; });
+    var k = __dlKey(q);
+    if (!k) return [];
+    var hit = names.filter(function (n) { return __dlKey(n) === k; });
+    if (hit.length) return hit.slice(0, 1);
+    if (/^\d+$/.test(k)) {
+        hit = names.filter(function (n) { return classKey(n) === k; });
+        if (hit.length) return hit;
+    }
+    return names.filter(function (n) { return __dlKey(n).indexOf(k) > -1; });
+}
+function __dlSync(key, value) {
+    try {
+        var q = value ? "?" + key + "=" + encodeURIComponent(value) : "";
+        var now = window.location.search;
+        if (q === now) return;
+        history.replaceState(null, "", window.location.pathname + q + window.location.hash);
+    } catch (e) { }
+}
 function checkURLParam() {
-    var params = new URLSearchParams(window.location.search);
-    var teacher = params.get("teacher");
+    var cls = __dlParams.get("class");
+    var teacher = __dlParams.get("teacher");
+    if (cls) {
+        var found = __dlFindClass(cls);
+        switchTab("classes");
+        if (found.length === 1) {
+            showClassSchedule(found[0]);
+        } else {
+            var ci = document.getElementById("classSearch");
+            ci.value = cls;
+            ci.dispatchEvent(new Event("input"));
+        }
+        return;
+    }
     if (teacher) {
-        var decoded = decodeURIComponent(teacher);
+        var decoded = teacher;
+        if (/%[0-9a-f]{2}/i.test(decoded)) { try { decoded = decodeURIComponent(decoded); } catch (e) { } }
         document.getElementById("si").value = decoded;
         doSearch();
     }
@@ -4316,9 +4368,29 @@ document.addEventListener("keydown", function (e) {
     }
 });
 window.addEventListener('DOMContentLoaded', function () { if (typeof renderAdminClassesTable === 'function') renderAdminClassesTable(); });
-checkURLParam();
 switchTab("search");
-if (window.innerWidth > 600) {
+/* همگام‌سازی نشانی صفحه با کلاس/دبیر باز شده (بدون هیچ تغییر ظاهری): نشانی را می‌شود کپی یا QR کرد */
+(function () {
+    var _sw = switchTab, _sc = showClassSchedule, _ds = doSearch, _st = selectTeacher, _rl = renderClassesList;
+    function classSync() {
+        var h = document.querySelector("#classRes .teacher-header h2");
+        if (h) __dlSync("class", h.textContent); else __dlSync(null);
+    }
+    switchTab = function (t) {
+        var r = _sw.apply(this, arguments);
+        if (t === "search") __dlSync(currentTeacher ? "teacher" : null, currentTeacher);
+        else if (t === "classes") classSync();
+        else __dlSync(null);
+        return r;
+    };
+    showClassSchedule = function () { var r = _sc.apply(this, arguments); classSync(); return r; };
+    renderClassesList = function () { var r = _rl.apply(this, arguments); __dlSync(null); return r; };
+    doSearch = function () { var r = _ds.apply(this, arguments); if (currentTab === "search") __dlSync(currentTeacher ? "teacher" : null, currentTeacher); return r; };
+    selectTeacher = function () { var r = _st.apply(this, arguments); __dlSync(currentTeacher ? "teacher" : null, currentTeacher); return r; };
+    document.getElementById("classSearch").addEventListener("input", function () { classSync(); });
+})();
+checkURLParam();
+if (window.innerWidth > 600 && currentTab === "search") {
     setTimeout(function () {
         si.focus();
     }, 300);
@@ -5153,5 +5225,36 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 </script>
 
+
+
+<script id="exbar-js">
+/* نوار باریک بالای صفحه: فقط در روز آزمون نمایش داده می‌شود؛ در بقیه‌ی روزها اصلاً ساخته نمی‌شود */
+(function () {
+  function j2g(jy,jm,jd){jy+=1595;var days=-355668+365*jy+~~(jy/33)*8+~~(((jy%33)+3)/4)+jd+(jm<7?(jm-1)*31:(jm-7)*30+186),gy=400*~~(days/146097);days%=146097;if(days>36524){gy+=100*~~(--days/36524);days%=36524;if(days>=365)days++}gy+=4*~~(days/1461);days%=1461;if(days>365){gy+=~~((days-1)/365);days=(days-1)%365}var gd=days+1,s=[0,31,(gy%4==0&&gy%100!=0)||gy%400==0?29:28,31,30,31,30,31,31,30,31,30,31],gm=0;for(;gm<13&&gd>s[gm];gm++)gd-=s[gm];return[gy,gm,gd]}
+  function isExamDay() {
+    var plan = window.EXAM_PLAN || [], n = new Date();
+    for (var i = 0; i < plan.length; i++) {
+      var e = plan[i], p = String(e[0]).split('/').map(Number);
+      if (p.length < 3 || p.some(isNaN)) continue;
+      var g = j2g(p[0], p[1], p[2]);
+      if (g[0] === n.getFullYear() && g[1] === n.getMonth() + 1 && g[2] === n.getDate() && String(e[2] || '').replace(/[|\s-]/g, '')) return true;
+    }
+    return false;
+  }
+  function apply() {
+    var bar = document.getElementById('exBar'), on = false;
+    try { on = isExamDay(); } catch (e) { on = false; }
+    if (on && !bar) {
+      bar = document.createElement('div');
+      bar.id = 'exBar'; bar.className = 'ex-bar'; bar.setAttribute('role', 'status');
+      bar.textContent = 'امروز آزمون هفتگی دارید: زنگ ' + (window.toFa ? toFa(4) : '۴');
+      document.body.appendChild(bar);
+    } else if (!on && bar) { bar.remove(); }
+    document.documentElement.classList.toggle('ex-on', on);
+  }
+  apply();
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) apply(); });
+})();
+</script>
 </body>
 </html>
